@@ -1,5 +1,11 @@
 package net.minecraft.src;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
 public class LMM_ContainerInventory extends ContainerPlayer {
 	
 	protected LMM_InventoryLittleMaid littlemaidInventory;
@@ -9,7 +15,7 @@ public class LMM_ContainerInventory extends ContainerPlayer {
 
 	public LMM_ContainerInventory(IInventory iinventory, LMM_EntityLittleMaid pEntity) {
 		// >
-		// Forge‘ÎôAContainerPlayerŒp³‚Å‚È‚¯‚ê‚Î—v‚ç‚È‚¢ASlotArmor—p
+		// Forgeï¿½Îï¿½AContainerPlayerï¿½pï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½Î—vï¿½ï¿½È‚ï¿½ï¿½ASlotArmorï¿½p
 		super(pEntity.maidInventory, !pEntity.worldObj.isRemote, pEntity.maidAvatar);
 		inventorySlots.clear();
 		inventoryItemStacks.clear();
@@ -40,13 +46,15 @@ public class LMM_ContainerInventory extends ContainerPlayer {
 		
 		for (int j = 0; j < 3; j++) {
 			int j1 = j + 1;
-			addSlotToContainer(new SlotArmor(this, linventory, linventory.getSizeInventory() - 2 - j, 8, 8 + j * 18, j1));
+			//XXX: experimenting
+			//addSlotToContainer(new SlotArmor(this, linventory, linventory.getSizeInventory() - 2 - j, 8, 8 + j * 18, j1));
+			addSlotToContainer(new Slot( linventory, linventory.getSizeInventory() - 2 - j, 8, 8 + j * 18));
 		}
 	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
-		// ŠJ‚¯‚é‚©‚Ç‚¤‚©‚Ì”»’è
+		// ï¿½Jï¿½ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
 		LMM_EntityLittleMaid entitylittlemaid = littlemaidInventory.entityLittleMaid; 
 		if(entitylittlemaid.isDead) {
 //		if(entitylittlemaid.isDead || entitylittlemaid.isOpenInventory()) {

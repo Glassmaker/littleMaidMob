@@ -5,6 +5,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatMessageComponent;
+
 import org.lwjgl.opengl.GL11;
 
 public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand {
@@ -13,7 +23,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	
 	
 	/**
-	 * ŠeíÀŒ±—pB 
+	 * ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½B 
 	 */
 	public LMM_EntityMode_Test(LMM_EntityLittleMaid pEntity) {
 		super(pEntity);
@@ -38,7 +48,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	public void showSpecial(LMM_RenderLittleMaid prenderlittlemaid, double px, double py, double pz) {
 		if (!isEnable) return;
 		
-		// –¼‘O‚Æ‚©‚Ì•\¦—p
+		// ï¿½ï¿½ï¿½Oï¿½Æ‚ï¿½ï¿½Ì•\ï¿½ï¿½ï¿½p
 		List<String> llist = new ArrayList<String>();
 		double ld;
 		
@@ -49,12 +59,12 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 			llist.add(String.format("R:%d, [L]:%d, I:%d", owner.mstatSwingStatus[0].index, owner.mstatSwingStatus[1].index, owner.maidInventory.currentItem));
 			llist.add(String.format("swing[L]:%b:%f", owner.getSwingStatusDominant().isSwingInProgress, owner.getSwingStatusDominant().swingProgress));
 		}
-		llist.add(String.format("health:%f, death:%d, Exp:%d", owner.func_110143_aJ(), owner.deathTime, owner.experienceValue));
+		llist.add(String.format("health:%f, death:%d, Exp:%d", owner.getHealth(), owner.deathTime, owner.experienceValue));
 //		llist.add("stat:" + owner.statusMessage);
 		llist.add(String.format("working:%b, sneak:%b, sugar:%b", owner.isWorking(), owner.isSneaking(), owner.isLookSuger()));
 		llist.add(String.format("%s[%s]", owner.getMaidModeString(), owner.maidActiveModeClass == null ? "" : owner.maidActiveModeClass.getClass().getSimpleName()));
 		llist.add(String.format("Limit: %b[%b]", owner.isContract(), owner.isContractEX()));
-		int li = owner.dataWatcher.getWatchableObjectInt(LMM_Statics.dataWatch_Texture);
+		int li = owner.getDataWatcher().getWatchableObjectInt(LMM_Statics.dataWatch_Texture);
 		llist.add(String.format("Texture=%s(%x/ %x), %s(%x / %x)",
 				owner.textureData.getTextureName(0), owner.textureData.textureIndex[0], li & 0xffff,
 				owner.textureData.getTextureName(1), owner.textureData.textureIndex[1], (li >>> 16)
@@ -62,7 +72,8 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 		
 		ld = (double)llist.size() * 0.25D - 0.5D;
 		for (String ls : llist) {
-			prenderlittlemaid.renderLivingLabel(owner, ls, px, py + ld, pz, 64);
+			//XXX: disabled for compiling
+			//prenderlittlemaid.renderLivingLabel(owner, ls, px, py + ld, pz, 64);
 			ld -= 0.25D;
 		}
 /*		
@@ -84,7 +95,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	}
 
 	
-	// ƒfƒoƒbƒO•\¦ƒRƒ}ƒ“ƒh’Ç‰Á—p
+	// ï¿½fï¿½oï¿½bï¿½Oï¿½\ï¿½ï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½Ç‰ï¿½ï¿½p
 	
 	@Override
 	public int compareTo(Object arg0) {
@@ -122,24 +133,24 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 			case 2:
 				// textureIndex
 				
-				var1.sendChatToPlayer(ChatMessageComponent.func_111066_d("textureServer:"));
+				var1.sendChatToPlayer(ChatMessageComponent.createFromText("textureServer:"));
 				for (int li = 0; li < MMM_TextureManager.instance.textureServer.size(); li++) {
 					MMM_TextureBoxServer lb = MMM_TextureManager.instance.getTextureBoxServer(li);
-					var1.sendChatToPlayer(ChatMessageComponent.func_111066_d(String.format("%4d : %04x : %s", li, lb.wildColor, lb.textureName)));
+					var1.sendChatToPlayer(ChatMessageComponent.createFromText(String.format("%4d : %04x : %s", li, lb.wildColor, lb.textureName)));
 				}
 				break;
 			case 3:
 				// textures
-				var1.sendChatToPlayer(ChatMessageComponent.func_111066_d("textures:"));
+				var1.sendChatToPlayer(ChatMessageComponent.createFromText("textures:"));
 				for (MMM_TextureBox ltb : MMM_TextureManager.instance.textures) {
-					var1.sendChatToPlayer(ChatMessageComponent.func_111066_d(ltb.textureName));
+					var1.sendChatToPlayer(ChatMessageComponent.createFromText(ltb.textureName));
 				}
 				break;
 			case 4:
 				// textures
-				var1.sendChatToPlayer(ChatMessageComponent.func_111066_d("textureServerIndex:"));
+				var1.sendChatToPlayer(ChatMessageComponent.createFromText("textureServerIndex:"));
 				for (Entry<MMM_TextureBox, Integer> ltb : MMM_TextureManager.instance.textureServerIndex.entrySet()) {
-					var1.sendChatToPlayer(ChatMessageComponent.func_111066_d(String.format("%04x, %s", ltb.getValue(), ltb.getKey().textureName)));
+					var1.sendChatToPlayer(ChatMessageComponent.createFromText(String.format("%04x, %s", ltb.getValue(), ltb.getKey().textureName)));
 				}
 				break;
 			}
@@ -158,7 +169,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 
 	@Override
 	public List addTabCompletionOptions(ICommandSender var1, String[] var2) {
-		// “Á‚É•ÏŠ·‚µ‚È‚¢
+		// ï¿½ï¿½ï¿½É•ÏŠï¿½ï¿½ï¿½ï¿½È‚ï¿½
 		return null;
 	}
 

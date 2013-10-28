@@ -3,6 +3,23 @@ package net.minecraft.src;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAILeapAtTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.ai.EntityAIWatchClosest2;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemAppleGold;
+import net.minecraft.item.ItemBucketMilk;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+
 public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	public static final int mmode_Wild		= 0x0000;
@@ -36,9 +53,9 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 		ModLoader.addLocalization("littleMaidMob.mode.Strike", "Strike");
 		ModLoader.addLocalization("littleMaidMob.mode.Wait", "Wait");
 		ModLoader.addLocalization("littleMaidMob.mode.Wild", "Wild");
-		ModLoader.addLocalization("littleMaidMob.mode.Wild", "ja_JP", "–ì¶í");
+		ModLoader.addLocalization("littleMaidMob.mode.Wild", "ja_JP", "ï¿½ì¶ï¿½ï¿½");
 		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "Escorter");
-		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "ja_JP", "]Ò");
+		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "ja_JP", "ï¿½]ï¿½ï¿½");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Escorter", "Freedom");
 		ModLoader.addLocalization("littleMaidMob.mode.D-Escorter", "D-Escorter");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Escorter", "Tracer");
@@ -64,9 +81,9 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 		ltasks[0].addTask(9, owner.aiCollectItem);
 		ltasks[0].addTask(10, new EntityAILeapAtTarget(owner, 0.3F));
 		ltasks[0].addTask(11, owner.aiWander);
-		ltasks[0].addTask(12, new EntityAIWatchClosest2(owner, net.minecraft.src.EntityLivingBase.class, 10F, 0.02F));
+		ltasks[0].addTask(12, new EntityAIWatchClosest2(owner, EntityLivingBase.class, 10F, 0.02F));
 		ltasks[0].addTask(13, new EntityAIWatchClosest2(owner, net.minecraft.src.LMM_EntityLittleMaid.class, 10F, 0.02F));
-		ltasks[0].addTask(13, new EntityAIWatchClosest2(owner, net.minecraft.src.EntityPlayer.class, 10F, 0.02F));
+		ltasks[0].addTask(13, new EntityAIWatchClosest2(owner, EntityPlayer.class, 10F, 0.02F));
 		ltasks[0].addTask(13, new EntityAILookIdle(owner));
 
 		ltasks[1].addTask(1, new LMM_EntityAIHurtByTarget(owner, false));
@@ -83,7 +100,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean changeMode(EntityPlayer pentityplayer) {
-		// ‹­§“I‚ÉŠ„‚è“–‚Ä‚é
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ÉŠï¿½ï¿½è“–ï¿½Ä‚ï¿½
 		owner.setMaidMode("Escorter");
 		return true;
 	}
@@ -120,7 +137,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	public boolean isSearchBlock() {
 		if (owner.getMaidModeInt() == mmode_Escorter && owner.isFreedom() &&
 				owner.maidInventory.getFirstEmptyStack() == -1) {
-			// ‘ÎÛ‚ğ‚Ü‚¾Œ©‚Â‚¯‚Ä‚¢‚È‚¢‚Æ‚«‚ÍŒŸõ‚ğs‚¤B
+			// ï¿½ÎÛ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½Æ‚ï¿½ï¿½ÍŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½B
 			fDistance = 100F;
 			return myInventory == null;
 		}
@@ -141,15 +158,15 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		if (((IInventory)ltile).getSizeInventory() < 18) {
-			// ƒCƒ“ƒxƒ“ƒgƒŠ‚ÌƒTƒCƒY‚ª‚P‚WˆÈ‰º‚È‚ç‘ÎÛ‚Æ‚µ‚È‚¢B
+			// ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ÌƒTï¿½Cï¿½Yï¿½ï¿½ï¿½Pï¿½Wï¿½È‰ï¿½ï¿½È‚ï¿½ÎÛ‚Æ‚ï¿½ï¿½È‚ï¿½ï¿½B
 			return false;
 		}
 		
-		// ¢ŠE‚ÌƒƒCƒh‚©‚ç
+		// ï¿½ï¿½ï¿½Eï¿½Ìƒï¿½ï¿½Cï¿½hï¿½ï¿½ï¿½ï¿½
 		if (checkWorldMaid(ltile)) return false;
-		// g—pÏ‚İƒ`ƒFƒbƒN
+		// ï¿½gï¿½pï¿½Ï‚İƒ`ï¿½Fï¿½bï¿½N
 		if (fusedTiles.contains(ltile)) {
-			// Šù‚É’Ê‚è‰ß‚¬‚½êŠ‚æƒbI
+			// ï¿½ï¿½É’Ê‚ï¿½ß‚ï¿½ï¿½ï¿½ï¿½êŠï¿½ï¿½bï¿½I
 			return false;
 		}
 		
@@ -163,17 +180,17 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean overlooksBlock(int pMode) {
-		// ƒ`ƒFƒXƒgƒJ[ƒg‚ÌŒŸõ
+		// ï¿½`ï¿½Fï¿½Xï¿½gï¿½Jï¿½[ï¿½gï¿½ÌŒï¿½ï¿½ï¿½
 		List<Entity> list = owner.worldObj.getEntitiesWithinAABB(IInventory.class, owner.boundingBox.expand(8D, 2D, 8D));
 		double cartl = 256D;
 		for (Entity lentity : list) {
 			if (!fusedTiles.contains(lentity)) {
 				if (((IInventory)lentity).getSizeInventory() < 18) {
-					// ƒCƒ“ƒxƒ“ƒgƒŠ‚ªˆê’èƒTƒCƒYˆÈ‰º‚ÍƒXƒLƒbƒv
+					// ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Tï¿½Cï¿½Yï¿½È‰ï¿½ï¿½ÍƒXï¿½Lï¿½bï¿½v
 					continue;
 				}
 				double lr = lentity.getDistanceSqToEntity(owner);
-				// Œ©‚¦‚éˆÊ’u‚É‚ ‚éÅ‚à‹ß‚¢’²‚×‚Ä‚¢‚È‚¢ƒJ[ƒgƒ`ƒFƒXƒg
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½É‚ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ß‚ï¿½ï¿½ï¿½ï¿½×‚Ä‚ï¿½ï¿½È‚ï¿½ï¿½Jï¿½[ï¿½gï¿½`ï¿½Fï¿½Xï¿½g
 				
 				if (fDistance > lr && owner.getEntitySenses().canSee(lentity)) {
 					myInventory = (IInventory)lentity;
@@ -218,34 +235,34 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	public boolean executeBlock(int pMode, int px, int py, int pz) {
 //		isMaidChaseWait = true;
 		if (myInventory instanceof TileEntityChest) {
-			// ƒuƒƒbƒNŒn‚Ìƒ`ƒFƒXƒg
+			// ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½nï¿½Ìƒ`ï¿½Fï¿½Xï¿½g
 			TileEntityChest lchest = (TileEntityChest)myInventory;
 			if (!lchest.isInvalid()) {
-				// g—p’¼‘O‚É‰Â‹”»’è
+				// ï¿½gï¿½pï¿½ï¿½ï¿½Oï¿½É‰Âï¿½ï¿½ï¿½ï¿½ï¿½
 				if (MMM_Helper.canBlockBeSeen(owner, lchest.xCoord, lchest.yCoord, lchest.zCoord, false, true, false)) {
 					if (myChest == null) {
 						getChest();
 						if (myChest != null) {
 							myChest.openChest();
 						} else {
-							// ŠJ‚©‚È‚¢ƒ`ƒFƒXƒg
+							// ï¿½Jï¿½ï¿½ï¿½È‚ï¿½ï¿½`ï¿½Fï¿½Xï¿½g
 							myInventory = null;
 						}
 					}
-					// ƒ`ƒFƒXƒg‚Éû”[
+					// ï¿½`ï¿½Fï¿½Xï¿½gï¿½Éï¿½[
 					owner.setWorking(true);
 					putChest();
 					return true;
 				} else {
-					// Œ©¸‚Á‚½
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					clearMy();
 				}
 			} else {
-				// Tile‚ÌÁ¸
+				// Tileï¿½Ìï¿½ï¿½ï¿½
 				clearMy();
 			}
 		} else {
-			// ‘z’èŠO‚ÌƒCƒ“ƒxƒ“ƒgƒŠ
+			// ï¿½zï¿½ï¿½Oï¿½ÌƒCï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½
 			if (myInventory != null) {
 				fusedTiles.add(myInventory);
 			}
@@ -256,17 +273,19 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean outrangeBlock(int pMode, int pX, int pY, int pZ) {
-		// ƒ`ƒFƒXƒg‚Ü‚Å‚ÌƒpƒX‚ğì‚é
+		// ï¿½`ï¿½Fï¿½Xï¿½gï¿½Ü‚Å‚Ìƒpï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½
 		boolean lf = false;
 		if (!owner.isMaidWaitEx()) {
 			double distance;
 			if (myInventory instanceof TileEntity) {
 				distance = owner.getDistanceTilePos();
 				if (distance == lastdistance) {
-					// TODO:Œ»ó–³ˆÓ–¡
-					// ˆÚ“®‚ªŒÅ‚Ü‚ç‚È‚¢‚æ‚¤‚É—”‰Á‘¬
+					// TODO:ï¿½ï¿½ï¿½ó–³ˆÓ–ï¿½
+					// ï¿½Ú“ï¿½ï¿½ï¿½ï¿½Å‚Ü‚ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					mod_LMM_littleMaidMob.Debug("Assert.");
-					owner.updateWanderPath();
+					//XXX: experimental
+					//owner.updateWanderPath();
+					owner.onLivingUpdate();
 					lf = true;
 				} else {
 					lf = MMM_Helper.setPathToTile(owner, (TileEntity)myInventory, false);
@@ -275,7 +294,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 				distance = 0;
 			}
 			lastdistance = distance;
-			// ƒŒƒ“ƒWŠO‚Ìƒ`ƒFƒXƒg‚Í•Â‚¶‚é
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½Oï¿½Ìƒ`ï¿½Fï¿½Xï¿½gï¿½Í•Â‚ï¿½ï¿½ï¿½
 			if (myChest != null) {
 				myChest.closeChest();
 				myChest = null;
@@ -292,11 +311,11 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 
 	protected boolean getChest() {
-		// ƒ`ƒFƒXƒg‚ğŠl“¾
+		// ï¿½`ï¿½Fï¿½Xï¿½gï¿½ï¿½ï¿½lï¿½ï¿½
 		if (myInventory == null) {
 			return false;
 		}
-		// ŒŸõÏ‚İ‚ÉƒXƒ^ƒbƒN
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ï‚İ‚ÉƒXï¿½^ï¿½bï¿½N
 		fusedTiles.add(myInventory);
 		if (myInventory instanceof TileEntityChest) {
 			TileEntityChest lchest = (TileEntityChest)myInventory;
@@ -320,9 +339,9 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	}
 
 	protected void putChest() {
-		// ƒ`ƒFƒXƒg‚É‹ßÚ
+		// ï¿½`ï¿½Fï¿½Xï¿½gï¿½É‹ßï¿½
 		if (owner.getSwingStatusDominant().canAttack() && myChest != null) {
-			// »“œAŒvA”í‚Á‚Ä‚¢‚éƒwƒ‹ƒ€ˆÈŠO‚ÌƒAƒCƒeƒ€‚ğ“Ë‚Á‚Ş
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½vï¿½Aï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½ï¿½ÈŠOï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½ï¿½
 			ItemStack is;
 			mod_LMM_littleMaidMob.Debug(String.format("getChest:%d", maidSearchCount));
 			while ((is = owner.maidInventory.getStackInSlot(maidSearchCount)) == null && maidSearchCount < owner.maidInventory.mainInventory.length) {
@@ -373,12 +392,12 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 			}
 //			mod_littleMaidMob.Debug(String.format("getchest3:%d", maidSearchCount));
 			if (++maidSearchCount >= owner.maidInventory.mainInventory.length) {
-				// ŒŸõÏ‚İ‚Ì‘ÎÛ‚ğƒXƒ^ƒbƒN
+				// ï¿½ï¿½ï¿½ï¿½ï¿½Ï‚İ‚Ì‘ÎÛ‚ï¿½ï¿½Xï¿½^ï¿½bï¿½N
 //				serchedChest.add(myChest);
 				clearMy();
 				lastdistance = 0D;
 				mod_LMM_littleMaidMob.Debug("endChest.");
-				// ‹ó‚«‚ª‚Å‚«‚½‚ç‘{õI—¹
+				// ï¿½ó‚«‚ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½Iï¿½ï¿½
 				if (owner.maidInventory.getFirstEmptyStack() > -1) {
 					mod_LMM_littleMaidMob.Debug("Search clear.");
 					fusedTiles.clear();
@@ -390,7 +409,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	@Override
 	public boolean attackEntityAsMob(int pMode, Entity pEntity) {
 		if (pEntity == myInventory) {
-			// ƒ`ƒFƒXƒg•tƒJ[ƒg‚Æ‚©
+			// ï¿½`ï¿½Fï¿½Xï¿½gï¿½tï¿½Jï¿½[ï¿½gï¿½Æ‚ï¿½
 			Entity lentity = (Entity)myInventory;
 			if (!lentity.isDead) {
 				if (owner.getDistanceSqToEntity(lentity) < 5D)	{
@@ -403,16 +422,18 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 					if (myChest != null) {
 						owner.getLookHelper().setLookPositionWithEntity(lentity, 30F, 40F);
 					}
-					// ƒ`ƒFƒXƒg‚Éû”[
+					// ï¿½`ï¿½Fï¿½Xï¿½gï¿½Éï¿½[
 					putChest();
 				} else {
-					// ƒ`ƒFƒXƒg‚Ü‚Å‚ÌƒpƒX‚ğì‚é
+					// ï¿½`ï¿½Fï¿½Xï¿½gï¿½Ü‚Å‚Ìƒpï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½
 					if (!owner.isMaidWaitEx()) {
 						double distance = owner.getDistanceSqToEntity(lentity);
 						if (distance == lastdistance) {
-							// TODO: Œ»ó–³ˆÓ–¡
+							// TODO: ï¿½ï¿½ï¿½ó–³ˆÓ–ï¿½
 							mod_LMM_littleMaidMob.Debug("Assert.");
-							owner.updateWanderPath();
+							//XXX: exprimental 
+							//owner.updateWanderPath();
+							owner.onLivingUpdate();
 						} else {
 							owner.getNavigator().tryMoveToXYZ(lentity.posX, lentity.posY, lentity.posZ, 1.0F);
 						}
@@ -425,12 +446,12 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 					}
 				}
 			} else {
-				// Entity‚Ì€–S
+				// Entityï¿½Ìï¿½ï¿½S
 				clearMy();
 			}
 			return true;
 		} else {
-			// ƒ^[ƒQƒbƒg‚ª•Ï‚í‚Á‚Ä‚éH
+			// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½Ï‚ï¿½ï¿½ï¿½Ä‚ï¿½H
 			clearMy();
 		}
 		return true;
@@ -446,27 +467,29 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean preInteract(EntityPlayer pentityplayer, ItemStack pitemstack) {
-		// ‚µ‚á‚ª‚İ‚Íˆ—–³Œø
+		// ï¿½ï¿½ï¿½á‚ªï¿½İï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (pentityplayer.isSneaking()) {
 			return false;
 		}
 		if (owner.isContract()) {
-			// Œ_–ñó‘Ô
+			// ï¿½_ï¿½ï¿½ï¿½ï¿½
 			if (owner.isEntityAlive() && owner.isMaidContractOwner(pentityplayer)) {
 				if (pitemstack != null) {
-					// ’Ç‰Á•ª‚Ìˆ—
+					// ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 					owner.setPathToEntity(null);
 					if (owner.isRemainsContract()) {
 						if (pitemstack.getItem() instanceof ItemAppleGold) {
-							// ƒS[ƒ‹ƒfƒ“ƒAƒbƒ|[
+							// ï¿½Sï¿½[ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Aï¿½bï¿½|ï¿½[
 							if(!owner.worldObj.isRemote) {
-								((ItemAppleGold)pitemstack.getItem()).onFoodEaten(pitemstack, owner.worldObj, owner.maidAvatar);
+								//XXX: experimenting
+								//((ItemAppleGold)pitemstack.getItem()).onFoodEaten(pitemstack, owner.worldObj, owner.maidAvatar);
+								((ItemAppleGold)pitemstack.getItem()).onEaten(pitemstack, owner.worldObj, owner.maidAvatar);
 							}
 							MMM_Helper.decPlayerInventory(pentityplayer, -1, 1);
 							return true;
 						}
 						else if (pitemstack.getItem() instanceof ItemBucketMilk && !owner.getActivePotionEffects().isEmpty()) {
-							// ‹“û‚É‘Š’k‚¾
+							// ï¿½ï¿½ï¿½ï¿½É‘ï¿½ï¿½kï¿½ï¿½
 							if(!owner.worldObj.isRemote) {
 								owner.clearActivePotions();
 							}

@@ -1,5 +1,10 @@
 package net.minecraft.src;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+
 public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityAI {
 	
 	protected LMM_EntityLittleMaid theMaid; 
@@ -40,8 +45,8 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 
 	@Override
 	public void startExecuting() {
-		// ƒ‹[ƒgô’è
-		// ƒ^[ƒQƒbƒg‚ğƒT[ƒ`
+		// ï¿½ï¿½ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½
+		// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½Tï¿½[ï¿½`
 		int ox = MathHelper.floor_double(theMaid.posX);
 		int oy = MathHelper.floor_double(theMaid.posY);
 		int oz = MathHelper.floor_double(theMaid.posZ);
@@ -55,7 +60,7 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 		MMM_EntityDummy.clearDummyEntity(theMaid);
 		boolean flagdammy = false;
 		
-		// CW•ûŒü‚ÉŒŸõ—Ìˆæ‚ğL‚°‚é 
+		// CWï¿½ï¿½ï¿½ÉŒï¿½ï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ 
 		for (int d = 0; d < 4; d++) {
 			for (int a = 2; a < 14; a += 2) {
 				int del = a / 2;
@@ -85,7 +90,7 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 					for (int c = 0; c < 3; c++) {
 						yy = oy + (c == 2 ? -1 : c);
 						if (checkBlock(xx, yy, zz)) {
-							// Å‚à‹ß‚¢ƒ|ƒCƒ“ƒg‚Ì”»’è
+							// ï¿½Å‚ï¿½ï¿½ß‚ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½gï¿½Ì”ï¿½ï¿½ï¿½
 							double lr = theMaid.getDistanceSq(xx, yy, zz);
 							if (lr < lrange) {
 								if (doFindBlock(xx, yy, zz)) {
@@ -93,8 +98,7 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 									tileX = xx;
 									tileY = yy;
 									tileZ = zz;
-									theMaid.func_110171_b(xx, yy, zz, 16);
-//									theMaid.setHomeArea(xx, yy, zz, 16);
+									theMaid.setHomeArea(xx, yy, zz, 16);
 									// TODO:Dummay
 									MMM_EntityDummy.setDummyEntity(theMaid, 0x004f4fff, xx, yy, zz);
 									flagdammy = true;
@@ -134,15 +138,15 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 	}
 
 	/**
-	 * w’èÀ•W‚ÌƒuƒƒbƒN‚Í’T‚µ‚Ä‚¢‚é‚à‚Ì‚©H
+	 * ï¿½wï¿½ï¿½ï¿½ï¿½Wï¿½Ìƒuï¿½ï¿½ï¿½bï¿½Nï¿½Í’Tï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½H
 	 */
 	protected boolean checkBlock(int px, int py, int pz) {
 		return world.getBlockPowerInput(px, py, pz) > 0 && (world.getBlockMaterial(px, py + 1, pz) == Material.air);
 	}
 
 	/**
-	 * Œ©‚Â‚¯‚½ƒuƒƒbƒN‚É‘Î‚·‚é“®ìB
-	 * true‚ğ•Ô‚·‚Æƒ‹[ƒvI—¹B
+	 * ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½É‘Î‚ï¿½ï¿½é“®ï¿½ï¿½B
+	 * trueï¿½ï¿½Ô‚ï¿½ï¿½Æƒï¿½ï¿½[ï¿½vï¿½Iï¿½ï¿½ï¿½B
 	 */
 	protected boolean doFindBlock(int px, int py, int pz) {
 		return theMaid.getNavigator().tryMoveToXYZ(px, py, pz, 1.0F);

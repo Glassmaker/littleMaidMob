@@ -1,5 +1,12 @@
 package net.minecraft.src;
 
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemWritableBook;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+
 public class LMM_EntityMode_BookDecorder extends LMM_EntityModeBase {
 
 	public LMM_EntityMode_BookDecorder(LMM_EntityLittleMaid pEntity) {

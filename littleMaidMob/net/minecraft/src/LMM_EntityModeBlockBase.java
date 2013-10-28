@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import net.minecraft.tileentity.TileEntity;
+
 public abstract class LMM_EntityModeBlockBase extends LMM_EntityModeBase {
 
 //	protected TileEntity fTile;
@@ -12,12 +14,12 @@ public abstract class LMM_EntityModeBlockBase extends LMM_EntityModeBase {
 
 	@Override
 	public void updateBlock() {
-		// Šî€‚Æ‚È‚éTile‚ğƒZƒbƒg
+		// ï¿½î€ï¿½Æ‚È‚ï¿½Tileï¿½ï¿½ï¿½Zï¿½bï¿½g
 		owner.setTilePos(0);
 	}
 
 	/**
-	 * ‚·‚Å‚Ég—p’†‚ÌTile‚ª‚ ‚éê‡‚ÍshouldBlock‚Ö”ò‚Ô‚æ‚¤‚É‚·‚éB
+	 * ï¿½ï¿½ï¿½Å‚Égï¿½pï¿½ï¿½ï¿½ï¿½Tileï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½shouldBlockï¿½Ö”ï¿½Ô‚æ‚¤ï¿½É‚ï¿½ï¿½ï¿½B
 	 */
 	@Override
 	public boolean isSearchBlock() {
@@ -46,17 +48,17 @@ public abstract class LMM_EntityModeBlockBase extends LMM_EntityModeBase {
 
 
 	/**
-	 * ‘¼‚ÌƒƒCƒh‚ªg—p‚µ‚Ä‚¢‚é‚©‚ğƒ`ƒFƒbƒNB
+	 * ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½hï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½B
 	 * @return
 	 */
 	protected boolean checkWorldMaid(TileEntity pTile) {
-		// ¢ŠE‚ÌƒƒCƒh‚©‚ç
+		// ï¿½ï¿½ï¿½Eï¿½Ìƒï¿½ï¿½Cï¿½hï¿½ï¿½ï¿½ï¿½
 		for (Object lo : owner.worldObj.loadedEntityList) {
 			if (lo == owner) continue;
 			if (lo instanceof LMM_EntityLittleMaid) {
 				LMM_EntityLittleMaid lem = (LMM_EntityLittleMaid)lo;
 				if (lem.isUsingTile(pTile)) {
-					// ’N‚©‚ªg—p’†
+					// ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½
 					return true;
 				}
 			}

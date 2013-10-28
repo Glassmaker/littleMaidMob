@@ -2,6 +2,13 @@ package net.minecraft.src;
 
 import java.util.List;
 
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.RandomPositionGenerator;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.util.Vec3;
+
 public class LMM_EntityAIAvoidPlayer extends EntityAIBase implements
 		LMM_IEntityAI {
 
@@ -37,21 +44,21 @@ public class LMM_EntityAIAvoidPlayer extends EntityAIBase implements
 
 		theMaster = theMaid.mstatMasterEntity;
 
-		// ‘ÎÛ‚ÍŒ©‚¦‚é‚©H‚Ä‚©‚±‚ê‚¢‚ç‚È‚­‚ËH
+		// ï¿½ÎÛ‚ÍŒï¿½ï¿½ï¿½ï¿½é‚©ï¿½Hï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ê‚¢ï¿½ï¿½È‚ï¿½ï¿½ËH
 		if (!theMaid.getEntitySenses().canSee(theMaster)) {
 			return false;
 		}
 
-		// ˆÚ“®æ‚ğô’è
+		// ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(
 				theMaid, minDist, 7, Vec3.createVectorHelper(theMaster.posX,
 						theMaster.posY, theMaster.posZ));
 
-		// ˆÚ“®æ‚ª–³‚¢
+		// ï¿½Ú“ï¿½ï¿½æ‚ªï¿½ï¿½ï¿½ï¿½
 		if (vec3d == null) {
 			return false;
 		}
-		// ˆÚ“®æ‚Ì‹——£‚ª‹ß‚¢
+		// ï¿½Ú“ï¿½ï¿½ï¿½Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
 		if (theMaster.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) < theMaid.mstatMasterDistanceSq) {
 			return false;
 		}
@@ -81,11 +88,11 @@ public class LMM_EntityAIAvoidPlayer extends EntityAIBase implements
 	}
 
 	public void setActive() {
-		// “®ìŠJn
+		// ï¿½ï¿½ï¿½ï¿½Jï¿½n
 		isActive = true;
 	}
 
-	// Às‰Â”\ƒtƒ‰ƒO
+	// ï¿½ï¿½ï¿½sï¿½Â”\ï¿½tï¿½ï¿½ï¿½O
 	@Override
 	public void setEnable(boolean pFlag) {
 		isEnable = pFlag;

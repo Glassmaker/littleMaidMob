@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.item.ItemStack;
+
 /**
- * ƒ‚[ƒhØ‚è‘Ö‚¦—pƒgƒŠƒK[ƒAƒCƒeƒ€‚ÌƒRƒ“ƒeƒiB
- * ƒ}ƒ‹ƒ`‘Îô—pB
- * ƒf[ƒ^‚Ì“Ç‚İ‚İ‚ÍIFF‚Ås‚Á‚Ä‚¢‚éB
+ * Æ’â€šï¿½[Æ’hï¿½Ã˜â€šÃ¨â€˜Ã–â€šÂ¦â€”pÆ’gÆ’Å Æ’Kï¿½[Æ’AÆ’CÆ’eÆ’â‚¬â€šÃŒÆ’RÆ’â€œÆ’eÆ’iï¿½B
+ * Æ’}Æ’â€¹Æ’`â€˜Ãï¿½Ã´â€”pï¿½B
+ * Æ’fï¿½[Æ’^â€šÃŒâ€œÃ‡â€šÃï¿½Å¾â€šÃâ€šÃIFFâ€šÃ…ï¿½sâ€šÃâ€šÃ„â€šÂ¢â€šÃ©ï¿½B
  */
 public class LMM_TriggerSelect {
 
@@ -22,13 +24,13 @@ public class LMM_TriggerSelect {
 			return defaultTrigger;
 		}
 		if (MMM_Helper.isLocalPlay()) {
-			// ƒVƒ“ƒOƒ‹Às‚Í–¼Ìƒuƒ‰ƒ“ƒN‚ÉB
+			// Æ’VÆ’â€œÆ’OÆ’â€¹Å½Ã€ï¿½sÅ½Å¾â€šÃâ€“Â¼ï¿½ÃŒÆ’uÆ’â€°Æ’â€œÆ’Nâ€šÃ‰ï¿½B
 			pUsername = "";
 		}
-		// ‘¶İƒ`ƒFƒbƒNA–³‚©‚Á‚½‚ç’Ç‰Á
+		// â€˜Â¶ï¿½ÃÆ’`Æ’FÆ’bÆ’Nï¿½Aâ€“Â³â€šÂ©â€šÃâ€šÂ½â€šÃ§â€™Ã‡â€°Ã
 		if (!usersTrigger.containsKey(pUsername)) {
 			if (pUsername.isEmpty()) {
-				// –¼Ì‚ªƒuƒ‰ƒ“ƒN‚Ì‚ÍƒfƒtƒHƒ‹ƒg‚Ì‚à‚Ì‚ÖƒŠƒ“ƒNB
+				// â€“Â¼ï¿½ÃŒâ€šÂªÆ’uÆ’â€°Æ’â€œÆ’Nâ€šÃŒÅ½Å¾â€šÃÆ’fÆ’tÆ’HÆ’â€¹Æ’gâ€šÃŒâ€šÃ â€šÃŒâ€šÃ–Æ’Å Æ’â€œÆ’Nï¿½B
 				usersTrigger.put(pUsername, defaultTrigger);
 			} else {
 				Map<Integer, List<Integer>> lmap = new HashMap<Integer, List<Integer>>();
@@ -58,15 +60,15 @@ public class LMM_TriggerSelect {
 
 
 	/**
-	 * ƒ†[ƒU[–ˆ‚ÉƒgƒŠƒK[ƒAƒCƒeƒ€‚ğİ’è‚·‚éB
+	 * Æ’â€ ï¿½[Æ’Uï¿½[â€“Ë†â€šÃ‰Æ’gÆ’Å Æ’Kï¿½[Æ’AÆ’CÆ’eÆ’â‚¬â€šÃ°ï¿½Ãâ€™Ã¨â€šÂ·â€šÃ©ï¿½B
 	 */
 	public static void appendTriggerItem(String pUsername, String pSelector, String pIndexstr) {
-		// ƒgƒŠƒK[ƒAƒCƒeƒ€‚Ì’Ç‰Á
+		// Æ’gÆ’Å Æ’Kï¿½[Æ’AÆ’CÆ’eÆ’â‚¬â€šÃŒâ€™Ã‡â€°Ã
 		appendWeaponsIndex(pIndexstr, getuserTriggerList(pUsername, pSelector));
 	}
 
 	/**
-	 * ƒgƒŠƒK[ƒAƒCƒeƒ€‚ğ‰ğÍ‚µ‚Ä“o˜^B
+	 * Æ’gÆ’Å Æ’Kï¿½[Æ’AÆ’CÆ’eÆ’â‚¬â€šÃ°â€°Ã°ï¿½Ãâ€šÂµâ€šÃ„â€œoËœ^ï¿½B
 	 */
 	private static void appendWeaponsIndex(String indexstr, List<Integer> indexlist) {
 		if (indexstr.isEmpty()) return;
@@ -77,7 +79,7 @@ public class LMM_TriggerSelect {
 	}
 
 	/**
-	 * ƒAƒCƒeƒ€‚ªw’è‚³‚ê‚½ƒgƒŠƒK[‚É“o˜^‚³‚ê‚Ä‚¢‚é‚©‚ğ”»’è
+	 * Æ’AÆ’CÆ’eÆ’â‚¬â€šÂªÅ½wâ€™Ã¨â€šÂ³â€šÃªâ€šÂ½Æ’gÆ’Å Æ’Kï¿½[â€šÃ‰â€œoËœ^â€šÂ³â€šÃªâ€šÃ„â€šÂ¢â€šÃ©â€šÂ©â€šÃ°â€Â»â€™Ã¨
 	 */
 	public static boolean checkWeapon(String pUsername, String pSelector, ItemStack pItemStack) {
 		if (!selector.contains(pSelector)) {

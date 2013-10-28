@@ -1,12 +1,30 @@
 package net.minecraft.src;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.EXTRescaleNormal;
-import org.lwjgl.opengl.GL11;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
+
+import net.minecraft.block.material.Material;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiButtonMerchant;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+
+import org.lwjgl.opengl.EXTRescaleNormal;
+import org.lwjgl.opengl.GL11;
 
 public class LMM_GuiInventory extends GuiContainer {
 	// Field
@@ -19,7 +37,7 @@ public class LMM_GuiInventory extends GuiContainer {
 	private int updateCounter;
 	public LMM_EntityLittleMaid entitylittlemaid;
 	
-	public GuiButtonNextPage txbutton[] = new GuiButtonNextPage[4];
+	public GuiButtonMerchant txbutton[] =  new GuiButtonMerchant[4];
 	public GuiButton selectbutton;
 	public boolean isChangeTexture;
 	
@@ -47,10 +65,10 @@ public class LMM_GuiInventory extends GuiContainer {
 		if (!entitylittlemaid.getActivePotionEffects().isEmpty()) {
 			guiLeft = 160 + (width - xSize - 200) / 2;
 		}
-		buttonList.add(txbutton[0] = new GuiButtonNextPage(100, guiLeft + 25, guiTop + 7, false));
-		buttonList.add(txbutton[1] = new GuiButtonNextPage(101, guiLeft + 55, guiTop + 7, true));
-		buttonList.add(txbutton[2] = new GuiButtonNextPage(110, guiLeft + 25, guiTop + 47, false));
-		buttonList.add(txbutton[3] = new GuiButtonNextPage(111, guiLeft + 55, guiTop + 47, true));
+		buttonList.add(txbutton[0] = new GuiButtonMerchant(100, guiLeft + 25, guiTop + 7, false));
+		buttonList.add(txbutton[1] = new GuiButtonMerchant(101, guiLeft + 55, guiTop + 7, true));
+		buttonList.add(txbutton[2] = new GuiButtonMerchant(110, guiLeft + 25, guiTop + 47, false));
+		buttonList.add(txbutton[3] = new GuiButtonMerchant(111, guiLeft + 55, guiTop + 47, true));
 		buttonList.add(selectbutton = new GuiButton(200, guiLeft + 25, guiTop + 25, 53, 17, "select"));
 	}
 
@@ -72,7 +90,7 @@ public class LMM_GuiInventory extends GuiContainer {
 				"littleMaidMob.mode.".concat(entitylittlemaid.getMaidModeString())), 86, 61, 0x404040);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
-		// ƒLƒƒƒ‰
+		// ï¿½Lï¿½ï¿½ï¿½ï¿½
 		int lj = 0;
 		int lk = 0;
 		GL11.glEnable(EXTRescaleNormal.GL_RESCALE_NORMAL_EXT);
@@ -113,7 +131,7 @@ public class LMM_GuiInventory extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-		// ”wŒi
+		// ï¿½wï¿½i
 		ResourceLocation lrl = entitylittlemaid.textureData.getGUITexture();
 		if (lrl == null) {
 			lrl = fguiTex;
@@ -195,19 +213,19 @@ public class LMM_GuiInventory extends GuiContainer {
 			var3 = false;
 		}
 		
-		MMM_Client.setTexture(field_110324_m);
+		MMM_Client.setTexture(icons);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		int lhealth = MathHelper.ceiling_float_int(entitylittlemaid.func_110143_aJ());
+		int lhealth = MathHelper.ceiling_float_int(entitylittlemaid.getHealth());
 		int llasthealth = MathHelper.ceiling_float_int(entitylittlemaid.prevHealth);
 		this.rand.setSeed((long) (updateCounter * 312871));
 		boolean var6 = false;
 //		FoodStats var7 = entitylittlemaid.getFoodStats();
 //		int var8 = var7.getFoodLevel();
 //		int var9 = var7.getPrevFoodLevel();
-		AttributeInstance var10 = entitylittlemaid.func_110148_a(SharedMonsterAttributes.field_111267_a);
+		AttributeInstance var10 = entitylittlemaid.getEntityAttribute(SharedMonsterAttributes.maxHealth);
 		int var13 = par2 - 39;
-		float var14 = (float) var10.func_111126_e();
+		float var14 = (float) var10.getAttributeValue();
 		float var15 = entitylittlemaid.func_110139_bj();
 		int var16 = MathHelper.ceiling_float_int((var14 + var15) / 2.0F / 10.0F);
 		int var17 = Math.max(10 - (var16 - 2), 3);
@@ -317,14 +335,14 @@ public class LMM_GuiInventory extends GuiContainer {
 		int ii = i - guiLeft;
 		int jj = j - guiTop;
 		if (ii > 25 && ii < 78 && jj > 7 && jj < 60) {
-			// ƒ{ƒ^ƒ“‚Ì•\Ž¦
+			// ï¿½{ï¿½^ï¿½ï¿½ï¿½Ì•\ï¿½ï¿½
 			txbutton[0].drawButton = true;
 			txbutton[1].drawButton = true;
 			txbutton[2].drawButton = true;
 			txbutton[3].drawButton = true;
 			selectbutton.drawButton = true;
 			
-			// ƒeƒNƒXƒ`ƒƒ–¼Ì‚Ì•\Ž¦
+			// ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Ì•\ï¿½ï¿½
 			GL11.glPushMatrix();
 			GL11.glTranslatef(i - ii, j - jj, 0.0F);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -376,11 +394,11 @@ public class LMM_GuiInventory extends GuiContainer {
 		int ii = i - guiLeft;
 		int jj = j - guiTop;
 		
-		// TODO:ƒƒCƒhƒAƒZƒ“ƒuƒ‹‰æ–Ê‚ðì‚é
+		// TODO:ï¿½ï¿½ï¿½Cï¿½hï¿½Aï¿½Zï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½Ê‚ï¿½ï¿½ï¿½ï¿½
 		if (ii > 25 && ii < 78 && jj > 7 && jj < 60) {
-			// ‰¾—…•\Ž¦—Ìˆæ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Ìˆï¿½
 			if (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54)) {
-				// Shift+‚Å‹tŽü‚è
+				// Shift+ï¿½Å‹tï¿½ï¿½ï¿½
 				LMM_Client.setPrevTexturePackege(entitylittlemaid, k);
 			} else {
 				LMM_Client.setNextTexturePackege(entitylittlemaid, k);
@@ -435,7 +453,7 @@ public class LMM_GuiInventory extends GuiContainer {
 	}
 
 	private void displayDebuffEffects() {
-		// ƒ|[ƒVƒ‡ƒ“ƒGƒtƒFƒNƒg‚Ì•\Ž¦
+		// ï¿½|ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½Ì•\ï¿½ï¿½
 		int lx = guiLeft - 124;
 		int ly = guiTop;
 		Collection collection = entitylittlemaid.getActivePotionEffects();

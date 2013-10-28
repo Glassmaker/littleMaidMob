@@ -4,6 +4,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.PathPoint;
+import net.minecraft.util.MathHelper;
+
 public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackableTarget {
 
 	protected LMM_EntityLittleMaid theMaid;
@@ -39,13 +46,13 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 //		} else if (theMaid.getAttackTarget() != null) {
 //			return true;
 		} else {
-			double lfollowRange = this.func_111175_f();
+			double lfollowRange = this.getTargetDistance();
 			List llist = this.taskOwner.worldObj.getEntitiesWithinAABB(targetClass, taskOwner.boundingBox.expand(lfollowRange, 8.0D, lfollowRange));
 			if (theMaid.mstatMasterEntity != null && !theMaid.isBloodsuck()) {
-				// ƒ\[ƒ^[‚ğå’†S‚Ö
+				// ï¿½\ï¿½[ï¿½^ï¿½[ï¿½ï¿½ï¿½å’†ï¿½Sï¿½ï¿½
 				theNearestAttackableTargetSorter.setEntity(theMaid.mstatMasterEntity);
 			} else {
-				// ©•ª’†S‚Éƒ\[ƒg
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½Éƒ\ï¿½[ï¿½g
 				theNearestAttackableTargetSorter.setEntity(theMaid);
 			}
 			Collections.sort(llist, theNearestAttackableTargetSorter);
@@ -76,8 +83,8 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 
 //	@Override
 	protected boolean isSuitableTargetLM(Entity pTarget, boolean par2) {
-		// LMM—p‚ÉƒJƒXƒ^ƒ€
-		// ”ñ¶•¨‚à‘ÎÛ‚Ì‚½‚ß•ÊƒNƒ‰ƒX
+		// LMMï¿½pï¿½ÉƒJï¿½Xï¿½^ï¿½ï¿½
+		// ï¿½ñ¶•ï¿½ï¿½ï¿½ï¿½ÎÛ‚Ì‚ï¿½ï¿½ß•ÊƒNï¿½ï¿½ï¿½X
 		if (pTarget == null) {
 			return false;
 		}
@@ -104,18 +111,18 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 			}
 		}
 /*		
-		// Šî“_‚©‚çˆê’è‹——£—£‚ê‚Ä‚¢‚éê‡‚àUŒ‚‚µ‚È‚¢
+		// ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½è‹—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
 		if (!taskOwner.func_110176_b(MathHelper.floor_double(pTarget.posX), MathHelper.floor_double(pTarget.posY), MathHelper.floor_double(pTarget.posZ))) {
 //		if (!taskOwner.isWithinHomeDistance(MathHelper.floor_double(par1EntityLiving.posX), MathHelper.floor_double(par1EntityLiving.posY), MathHelper.floor_double(par1EntityLiving.posZ))) {
 			return false;
 		}
 */		
-		// ƒ^[ƒQƒbƒg‚ªŒ©‚¦‚È‚¢
+		// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
 		if (shouldCheckSight && !taskOwner.getEntitySenses().canSee(pTarget)) {
 			return false;
 		}
 		
-		// UŒ‚’†~”»’èH
+		// ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½ï¿½ï¿½ï¿½H
 		if (this.fretarget) {
 			if (--this.fretryCounter <= 0) {
 				this.fcanAttack = 0;
@@ -133,7 +140,7 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 		return true;
 	}
 
-	// ÅIˆÊ’u‚ªUŒ‚‚ÌŠÔ‡‚¢‚Å‚È‚¯‚ê‚Î¸”s
+	// ï¿½ÅIï¿½Ê’uï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½ÌŠÔï¿½ï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½Îï¿½ï¿½s
 	protected boolean func_75295_a(Entity par1EntityLiving) {
 		this.fretryCounter = 10 + this.taskOwner.getRNG().nextInt(5);
 		PathEntity var2 = taskOwner.getNavigator().getPathToXYZ(par1EntityLiving.posX, par1EntityLiving.posY, par1EntityLiving.posZ);

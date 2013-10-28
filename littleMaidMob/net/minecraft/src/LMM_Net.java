@@ -1,7 +1,18 @@
 package net.minecraft.src;
 
-import static net.minecraft.src.LMM_Statics.*;
-import java.util.Map.Entry;
+import static net.minecraft.src.LMM_Statics.LMN_Client_SetIFFValue;
+import static net.minecraft.src.LMM_Statics.LMN_Server_DecDyePowder;
+import static net.minecraft.src.LMM_Statics.LMN_Server_GetIFFValue;
+import static net.minecraft.src.LMM_Statics.LMN_Server_SaveIFF;
+import static net.minecraft.src.LMM_Statics.LMN_Server_SetIFFValue;
+import static net.minecraft.src.LMM_Statics.LMN_Server_UpdateSlots;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.NetServerHandler;
+import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class LMM_Net {
 	
@@ -12,7 +23,7 @@ public class LMM_Net {
 	
 	
 	/**
-	 * “n‚³‚ê‚½ƒf[ƒ^‚Ìæ“ª‚É©•ª‚ÌEntityID‚ğ•t—^‚µ‚Ä‘S‚Ä‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚Ö‘—M
+	 * â€œnâ€šÂ³â€šÃªâ€šÂ½Æ’fï¿½[Æ’^â€šÃŒï¿½Ã¦â€œÂªâ€šÃ‰Å½Â©â€¢Âªâ€šÃŒEntityIDâ€šÃ°â€¢tâ€”^â€šÂµâ€šÃ„â€˜Sâ€šÃ„â€šÃŒÆ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gâ€šÃ–â€˜â€”ï¿½M
 	 */
 	public static void sendToAllEClient(LMM_EntityLittleMaid pEntity, byte[] pData) {
 		MMM_Helper.setInt(pData, 1, pEntity.entityId);
@@ -20,7 +31,7 @@ public class LMM_Net {
 	}
 
 	/**
-	 * “n‚³‚ê‚½ƒf[ƒ^‚Ìæ“ª‚É©•ª‚ÌEntityID‚ğ•t—^‚µ‚Ä“Á’è‚Ì‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚Ö‘—M
+	 * â€œnâ€šÂ³â€šÃªâ€šÂ½Æ’fï¿½[Æ’^â€šÃŒï¿½Ã¦â€œÂªâ€šÃ‰Å½Â©â€¢Âªâ€šÃŒEntityIDâ€šÃ°â€¢tâ€”^â€šÂµâ€šÃ„â€œÃâ€™Ã¨â€šÃŒâ€šÃŒÆ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gâ€šÃ–â€˜â€”ï¿½M
 	 */
 	public static void sendToEClient(NetServerHandler pHandler, LMM_EntityLittleMaid pEntity, byte[] pData) {
 		MMM_Helper.setInt(pData, 1, pEntity.entityId);
@@ -32,7 +43,7 @@ public class LMM_Net {
 	}
 
 	/**
-	 * “n‚³‚ê‚½ƒf[ƒ^‚Ìæ“ª‚ÉEntityID‚ğ•t—^‚µ‚ÄƒT[ƒo[‚Ö‘—MB
+	 * â€œnâ€šÂ³â€šÃªâ€šÂ½Æ’fï¿½[Æ’^â€šÃŒï¿½Ã¦â€œÂªâ€šÃ‰EntityIDâ€šÃ°â€¢tâ€”^â€šÂµâ€šÃ„Æ’Tï¿½[Æ’oï¿½[â€šÃ–â€˜â€”ï¿½Mï¿½B
 	 * 0:Mode, 1-4:EntityID, 5-:Data
 	 */
 	public static void sendToEServer(LMM_EntityLittleMaid pEntity, byte[] pData) {
@@ -47,14 +58,14 @@ public class LMM_Net {
 	}
 
 	/**
-	 * ƒT[ƒo[‚ÖIFF‚ÌƒZ[ƒu‚ğƒŠƒNƒGƒXƒg
+	 * Æ’Tï¿½[Æ’oï¿½[â€šÃ–IFFâ€šÃŒÆ’Zï¿½[Æ’uâ€šÃ°Æ’Å Æ’NÆ’GÆ’XÆ’g
 	 */
 	public static void saveIFF() {
 		sendToServer(new byte[] {LMN_Server_SaveIFF});
 	}
 
 	/**
-	 * littleMaid‚ÌEntity‚ğ•Ô‚·B
+	 * littleMaidâ€šÃŒEntityâ€šÃ°â€¢Ã”â€šÂ·ï¿½B
 	 */
 	public static LMM_EntityLittleMaid getLittleMaid(byte[] pData, int pIndex, World pWorld) {
 		Entity lentity = MMM_Helper.getEntity(pData, pIndex, pWorld);
@@ -65,10 +76,10 @@ public class LMM_Net {
 		}
 	}
 
-	// óMƒpƒPƒbƒg‚Ìˆ—
+	// Å½Ã³ï¿½MÆ’pÆ’PÆ’bÆ’gâ€šÃŒï¿½Ë†â€”ï¿½
 	
 	public static void serverCustomPayload(NetServerHandler pNetHandler, Packet250CustomPayload pPayload) {
-		// ƒT[ƒo‘¤‚Ì“®ì
+		// Æ’Tï¿½[Æ’oâ€˜Â¤â€šÃŒâ€œÂ®ï¿½Ã¬
 		byte lmode = pPayload.data[0];
 		int leid = 0;
 		LMM_EntityLittleMaid lemaid = null;
@@ -85,8 +96,8 @@ public class LMM_Net {
 		
 		switch (lmode) {
 		case LMN_Server_UpdateSlots : 
-			// ‰‰ñXV‚Æ‚©
-			// ƒCƒ“ƒxƒ“ƒgƒŠ‚ÌXV
+			// ï¿½â€°â€°Ã±ï¿½Xï¿½Vâ€šÃ†â€šÂ©
+			// Æ’CÆ’â€œÆ’xÆ’â€œÆ’gÆ’Å â€šÃŒï¿½Xï¿½V
 			lemaid.maidInventory.clearChanged();
 			for (LMM_SwingStatus lswing : lemaid.mstatSwingStatus) {
 				lswing.lastIndex = -1;
@@ -94,8 +105,8 @@ public class LMM_Net {
 			break;
 			
 		case LMN_Server_DecDyePowder:
-			// ƒJƒ‰[”Ô†‚ğƒNƒ‰ƒCƒAƒ“ƒg‚©‚çó‚¯æ‚é
-			// ƒCƒ“ƒxƒ“ƒgƒŠ‚©‚çõ—¿‚ğŒ¸‚ç‚·B
+			// Æ’JÆ’â€°ï¿½[â€Ã”ï¿½â€ â€šÃ°Æ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gâ€šÂ©â€šÃ§Å½Ã³â€šÂ¯Å½Ã¦â€šÃ©
+			// Æ’CÆ’â€œÆ’xÆ’â€œÆ’gÆ’Å â€šÂ©â€šÃ§ï¿½Ãµâ€”Â¿â€šÃ°Å’Â¸â€šÃ§â€šÂ·ï¿½B
 			int lcolor2 = pPayload.data[1];
 			if (!pNetHandler.playerEntity.capabilities.isCreativeMode) {
 				for (int li = 0; li < pNetHandler.playerEntity.inventory.mainInventory.length; li++) {
@@ -110,7 +121,7 @@ public class LMM_Net {
 			break;
 			
 		case LMN_Server_SetIFFValue:
-			// IFF‚Ìİ’è’l‚ğóM
+			// IFFâ€šÃŒï¿½Ãâ€™Ã¨â€™lâ€šÃ°Å½Ã³ï¿½M
 			lval = pPayload.data[1];
 			lindex = MMM_Helper.getInt(pPayload.data, 2);
 			lname = MMM_Helper.getStr(pPayload.data, 6);
@@ -127,7 +138,7 @@ public class LMM_Net {
 			sendIFFValue(pNetHandler, lval, lindex);
 			break;
 		case LMN_Server_SaveIFF:
-			// IFFƒtƒ@ƒCƒ‹‚Ì•Û‘¶
+			// IFFÆ’tÆ’@Æ’CÆ’â€¹â€šÃŒâ€¢Ã›â€˜Â¶
 			LMM_IFF.saveIFF(pNetHandler.playerEntity.username);
 			if (!MMM_Helper.isClient) {
 				LMM_IFF.saveIFF("");
@@ -138,7 +149,7 @@ public class LMM_Net {
 	}
 
 	/**
-	 * ƒNƒ‰ƒCƒAƒ“ƒg‚ÖIFF‚Ìİ’è’l‚ğ’Ê’m‚·‚éB
+	 * Æ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gâ€šÃ–IFFâ€šÃŒï¿½Ãâ€™Ã¨â€™lâ€šÃ°â€™ÃŠâ€™mâ€šÂ·â€šÃ©ï¿½B
 	 * @param pNetHandler
 	 * @param pValue
 	 * @param pIndex

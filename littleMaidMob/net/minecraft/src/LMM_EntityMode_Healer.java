@@ -3,6 +3,15 @@ package net.minecraft.src;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+
 public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 
 	public static final int mmode_Healer		= 0x0082;
@@ -19,7 +28,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 
 	@Override
 	public void init() {
-		// “o˜^ƒ‚[ƒh‚Ì–¼Ì’Ç‰Á
+		// ï¿½oï¿½^ï¿½ï¿½ï¿½[ï¿½hï¿½Ì–ï¿½ï¿½Ì’Ç‰ï¿½
 		ModLoader.addLocalization("littleMaidMob.mode.Healer", "Healer");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Healer", "F-Healer");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Healer", "T-Healer");
@@ -33,7 +42,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 		ltasks[0] = pDefaultMove;
 		ltasks[1] = new EntityAITasks(owner.aiProfiler);
 		
-		// õ“GŒn
+		// ï¿½ï¿½ï¿½Gï¿½n
 		ltasks[1].addTask(1, new EntityAIHurtByTarget(owner, true));
 		owner.addMaidMode(ltasks, "Healer", mmode_Healer);
 	}
@@ -71,7 +80,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 			for (int i = 0; i < owner.maidInventory.getSizeInventory(); i++) {
 				ItemStack is = owner.maidInventory.getStackInSlot(i);
 				if (is == null) continue;
-				// ‘ÎÛ‚ÍH—¿‚©ƒ|[ƒVƒ‡ƒ“
+				// ï¿½ÎÛ‚ÍHï¿½ï¿½ï¿½ï¿½ï¿½|ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
 				if (is.getItem() instanceof ItemFood || (is.getItem() instanceof ItemPotion && MMM_Helper.hasEffect(is))) {
 					return i;
 				}
@@ -89,20 +98,20 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 	@Override
 	public void updateAITick(int pMode) {
 		if (pMode == mmode_Healer) {
-			// ‹ßÚ‚µ‚½å‚ÉH•¨‚ğ“Ë‚Á‚Ş
+			// ï¿½ßÚ‚ï¿½ï¿½ï¿½ï¿½ï¿½ÉHï¿½ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½ï¿½
 			if (owner.getSwingStatusDominant().canAttack()) {
-				// å‚Ì‰ñ•œ
+				// ï¿½ï¿½Ì‰ï¿½
 				if (owner.isContractEX() && owner.mstatMasterDistanceSq < 16D
 						&& owner.mstatMasterEntity != null && owner.mstatMasterEntity.isEntityAlive()
 						&& owner.mstatMasterEntity instanceof EntityPlayer
 						&& owner.canEntityBeSeen(owner.mstatMasterEntity)) {
 					EntityPlayer lmaster = owner.mstatMasterEntity; 
-					int h = lmaster.foodStats.getFoodLevel();
-					// ƒ}ƒXƒNƒhƒƒCƒh‚ÍŒ«‚¢‚È
+					int h = lmaster.getFoodStats().getFoodLevel();
+					// ï¿½}ï¿½Xï¿½Nï¿½hï¿½ï¿½ï¿½Cï¿½hï¿½ÍŒï¿½ï¿½ï¿½ï¿½ï¿½
 					while (owner.isMaskedMaid()) {
-						// å‚Ìó‘Ô‚É‡‚í‚¹‚ÄƒAƒCƒeƒ€‚ğ‘I‘ğ
-						if (lmaster.func_110143_aJ() < 9F) {
-							// HP‚ªŒ¸‚Á‚Ä‚¢‚é‚Æ‚«‚Íƒ|[ƒVƒ‡ƒ“‚ğg‚¤
+						// ï¿½ï¿½Ìï¿½Ô‚Éï¿½ï¿½í‚¹ï¿½ÄƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
+						if (lmaster.getHealth() < 9F) {
+							// HPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Íƒ|ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½
 							int j = owner.maidInventory.getInventorySlotContainItemPotion(false, Potion.heal.id, lmaster.isEntityUndead());
 							if (j > -1) {
 								owner.setEquipItem(j);
@@ -110,7 +119,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 							}
 						} 
 						if (h < 18) {
-							// ©‘R‰ñ•œ‚Å‚«‚È‚¢• ‹ï‡‚È‚çH—¿
+							// ï¿½ï¿½ï¿½Rï¿½ñ•œ‚Å‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï‡ï¿½È‚ï¿½Hï¿½ï¿½
 							int j = owner.maidInventory.getInventorySlotContainItemFood();
 							if (j > -1) {
 								owner.setEquipItem(j);
@@ -123,7 +132,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 					ItemStack itemstack1 = owner.maidInventory.getCurrentItem();
 					if (itemstack1 != null) {
 						if (itemstack1.getItem() instanceof ItemFood) {
-							// H—¿‚ğ“Ë‚Á‚Ş
+							// ï¿½Hï¿½ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½ï¿½
 							if (h < 18) {
 								owner.setSwing(10, LMM_EnumSound.healing);
 								itemstack1 = itemstack1.onFoodEaten(owner.worldObj, lmaster);
@@ -137,14 +146,14 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 						}
 						else if (itemstack1.getItem() instanceof ItemPotion) {
 							boolean lswing = true;
-							// ƒ|[ƒVƒ‡ƒ“‚ÌŒø‰Ê‚ªd•¡‚µ‚È‚¢‚æ‚¤‚Ég‚¤
+							// ï¿½|ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½Ê‚ï¿½ï¿½dï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½Égï¿½ï¿½
 							List list = ((ItemPotion)itemstack1.getItem()).getEffects(itemstack1);
 							if (list != null) {
 								PotionEffect potioneffect;
 								for(Iterator iterator = list.iterator(); iterator.hasNext();) {
 									potioneffect = (PotionEffect)iterator.next();
 									if (potioneffect.getPotionID() == Potion.heal.id) {
-										if ((6 << potioneffect.getAmplifier()) <= (lmaster.func_110138_aP() - lmaster.func_110143_aJ())) {
+										if ((6 << potioneffect.getAmplifier()) <= (lmaster.getMaxHealth() - lmaster.getHealth())) {
 //	                                    	mod_littleMaidMob.Debug(String.format("%d <= %d", (6 << potioneffect.getAmplifier()), (masterEntity.func_40117_c() - masterEntity.health)));
 											lswing = true;
 										} else {

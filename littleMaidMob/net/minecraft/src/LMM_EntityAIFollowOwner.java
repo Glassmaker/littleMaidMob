@@ -1,5 +1,10 @@
 package net.minecraft.src;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.world.World;
+
 public class LMM_EntityAIFollowOwner extends EntityAIBase implements LMM_IEntityAI {
 
 	private LMM_EntityLittleMaid theMaid;
@@ -92,7 +97,7 @@ public class LMM_EntityAIFollowOwner extends EntityAIBase implements LMM_IEntity
 		if (theMaid.isSitting()) {
 			return;
 		}
-		// w’è‹——£ˆÈã‚È‚çƒ_ƒbƒVƒ…
+		// ï¿½wï¿½è‹—ï¿½ï¿½ï¿½Èï¿½È‚ï¿½_ï¿½bï¿½Vï¿½ï¿½
 		theMaid.setSprinting(toDistance > sprintDist);
 		if (--field_48310_h > 0) {
 			return;

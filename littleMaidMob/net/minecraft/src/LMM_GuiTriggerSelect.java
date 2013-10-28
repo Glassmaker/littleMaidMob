@@ -2,6 +2,15 @@ package net.minecraft.src;
 
 import java.util.List;
 
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -54,7 +63,7 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 
 	@Override
 	public void onGuiClosed() {
-		// �ݒ�l�̃f�R�[�h
+		// �Ý’è’l‚ÌƒfƒR�[ƒh
 		setItemList();
 
 		super.onGuiClosed();
@@ -98,7 +107,7 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 				ItemStack itemstack4 = slot.getStack();
 				if (itemstack1 != null && itemstack4 != null
 						&& itemstack1.itemID == itemstack4.itemID) {
-					// �I���A�C�e������ł͂Ȃ���
+					// ‘I‘ðƒAƒCƒeƒ€‚ª‹ó‚Å‚Í‚È‚¢Žž
 					if (j != 0) {
 						inventoryplayer.setItemStack(null);
 					}
@@ -116,7 +125,7 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 //								(slot.slotNumber - inventorySlots.inventorySlots.size()) + 9 + 36);
 			}
 		} else {
-			// Slot�ȊO�̂Ƃ���͎̂Ă�
+			// SlotˆÈŠO‚Ì‚Æ‚±‚ë‚ÍŽÌ‚Ä‚é
 			InventoryPlayer inventoryplayer1 = mc.thePlayer.inventory;
 			inventoryplayer1.setItemStack(null);
 		}
@@ -134,7 +143,7 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 		int i = Mouse.getEventDWheel();
 		if (i != 0) {
 			if (lastY < height / 2) {
-				int j = (inventoryTrigger.itemList.size() / 8 - 5) + 1;
+				int j = (inventoryTrigger.getItemList().size() / 8 - 5) + 1;
 				if (i > 0) {
 					i = 1;
 				}
@@ -148,7 +157,8 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 				if (scrolleContainer > 1.0F) {
 					scrolleContainer = 1.0F;
 				}
-				inventoryTrigger.scrollTo(scrolleContainer);
+				//XXX: experimenting
+				//inventoryTrigger.scrollTo(scrolleContainer);
 			} else {
 				int j = (inventoryTrigger.weaponSelect.size() / 8 - 4) + 1;
 				if (i > 0) {
@@ -198,7 +208,8 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 			if (scrolleContainer > 1.0F) {
 				scrolleContainer = 1.0F;
 			}
-			inventoryTrigger.scrollTo(scrolleContainer);
+			//XXX: experimenting
+			//inventoryTrigger.scrollTo(scrolleContainer);
 		}
 		j1 = l + 120;
 		l1 = j1 + 72;

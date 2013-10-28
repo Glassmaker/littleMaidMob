@@ -1,8 +1,20 @@
 package net.minecraft.src;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.activation.MailcapCommandMap;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 
 public class LMM_EntityAICollectItem extends EntityAIBase {
 	
@@ -10,6 +22,7 @@ public class LMM_EntityAICollectItem extends EntityAIBase {
 	protected float moveSpeed;
 	protected EntityItem targetItem;
 	protected boolean lastAvoidWater;
+	protected Random rand = new Random();
 	
 	
 	public LMM_EntityAICollectItem(LMM_EntityLittleMaid pEntityLittleMaid, float pmoveSpeed) {
@@ -24,7 +37,7 @@ public class LMM_EntityAICollectItem extends EntityAIBase {
 		if (theMaid.maidInventory.getFirstEmptyStack() > -1) {
 			List llist = theMaid.worldObj.getEntitiesWithinAABB(EntityItem.class, theMaid.boundingBox.expand(8F, 2D, 8F));
 			if (!llist.isEmpty()) {
-				int li = theMaid.rand.nextInt(llist.size());
+				int li = rand.nextInt(llist.size());
 				EntityItem ei = (EntityItem)llist.get(li);
 				EntityPlayer ep = theMaid.mstatMasterEntity != null ? theMaid.mstatMasterEntity : theMaid.worldObj.getClosestPlayerToEntity(theMaid, 16F);
 				
@@ -78,7 +91,7 @@ public class LMM_EntityAICollectItem extends EntityAIBase {
 		
 		PathNavigate lnavigater = theMaid.getNavigator();
 		if (lnavigater.noPath()) {
-			if (targetItem.inWater) {
+			if (targetItem.isInWater()) {
 				lnavigater.setAvoidsWater(false);
 			}
 			PathEntity lpath = lnavigater.getPathToXYZ(targetItem.posX, targetItem.posY, targetItem.posZ);
@@ -87,7 +100,7 @@ public class LMM_EntityAICollectItem extends EntityAIBase {
 	}
 
 	public boolean canEntityItemBeSeen(Entity entity) {
-		// ƒAƒCƒeƒ€‚Ì‰ÂŽ‹”»’è
+		// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ì‰ÂŽï¿½ï¿½ï¿½ï¿½ï¿½
 		return theMaid.worldObj.clip(Vec3.createVectorHelper(theMaid.posX, theMaid.posY + (double)theMaid.getEyeHeight(), theMaid.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + ((entity.boundingBox.minY - entity.boundingBox.minY) / 2), entity.posZ)) == null;
 	}
 

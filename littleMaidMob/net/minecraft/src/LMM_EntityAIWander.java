@@ -1,5 +1,8 @@
 package net.minecraft.src;
 
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.ai.EntityAIWander;
+
 public class LMM_EntityAIWander extends EntityAIWander implements LMM_IEntityAI {
 
 	protected boolean isEnable;

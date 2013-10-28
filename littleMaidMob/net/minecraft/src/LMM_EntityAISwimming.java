@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAISwimming;
+
 public class LMM_EntityAISwimming extends EntityAISwimming {
 
 	protected EntityLiving theEntity;
@@ -11,7 +15,7 @@ public class LMM_EntityAISwimming extends EntityAISwimming {
 
 	@Override
 	public boolean shouldExecute() {
-		// ‘«‚ª‚Â‚­‚È‚ç‰j‚ª‚È‚¢
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½È‚ï¿½jï¿½ï¿½ï¿½È‚ï¿½
 		return (theEntity.getNavigator().noPath() ?
 				(!theEntity.onGround || theEntity.isInsideOfMaterial(Material.water)) : theEntity.isInWater())
 				|| theEntity.handleLavaMovement();

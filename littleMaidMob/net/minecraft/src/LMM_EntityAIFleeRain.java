@@ -2,6 +2,12 @@ package net.minecraft.src;
 
 import java.util.Random;
 
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+
 public class LMM_EntityAIFleeRain extends EntityAIBase implements LMM_IEntityAI {
 
 	protected EntityCreature theCreature;
@@ -79,7 +85,7 @@ public class LMM_EntityAIFleeRain extends EntityAIBase implements LMM_IEntityAI 
 		return null;
 	}
 
-	// Às‰Â”\ƒtƒ‰ƒO
+	// ï¿½ï¿½ï¿½sï¿½Â”\ï¿½tï¿½ï¿½ï¿½O
 	@Override
 	public void setEnable(boolean pFlag) {
 		isEnable = pFlag;

@@ -1,13 +1,24 @@
 package net.minecraft.src;
 
-import static net.minecraft.src.LMM_Statics.*;
+import static net.minecraft.src.LMM_Statics.LMN_Client_PlaySound;
+import static net.minecraft.src.LMM_Statics.LMN_Client_SetIFFValue;
+import static net.minecraft.src.LMM_Statics.LMN_Client_SwingArm;
+
 import java.util.Map;
-import java.util.Map.Entry;
+
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.multiplayer.NetClientHandler;
+import net.minecraft.client.particle.EntityCrit2FX;
+import net.minecraft.client.particle.EntityPickupFX;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.packet.Packet250CustomPayload;
 
 /**
- * ƒNƒ‰ƒCƒAƒ“ƒgê—pˆ—B
- * ƒ}ƒ‹ƒ`—p‚É•ª—£B
- * •ª—£‚µ‚Æ‚©‚È‚¢‚ÆNoSuchMethod‚Å—‚¿‚éB
+ * Æ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gï¿½Ãªâ€”pï¿½Ë†â€”ï¿½ï¿½B
+ * Æ’}Æ’â€¹Æ’`â€”pâ€šÃ‰â€¢Âªâ€”Â£ï¿½B
+ * â€¢Âªâ€”Â£â€šÂµâ€šÃ†â€šÂ©â€šÃˆâ€šÂ¢â€šÃ†NoSuchMethodâ€šÃ…â€”Å½â€šÂ¿â€šÃ©ï¿½B
  */
 public class LMM_Client {
 
@@ -38,8 +49,8 @@ public class LMM_Client {
 // Avatarr
 	
 	public static void onItemPickup(LMM_EntityLittleMaidAvatar pAvatar, Entity entity, int i) {
-		// ƒAƒCƒeƒ€‰ñû‚ÌƒGƒtƒFƒNƒg
-		// TODO:‚±‚Á‚¿‚ğg‚¤‚©H
+		// Æ’AÆ’CÆ’eÆ’â‚¬â€°Ã±Å½Ã»â€šÃŒÆ’GÆ’tÆ’FÆ’NÆ’g
+		// TODO:â€šÂ±â€šÃâ€šÂ¿â€šÃ°Å½gâ€šÂ¤â€šÂ©ï¿½H
 //        mc.effectRenderer.addEffect(new EntityPickupFX(mc.theWorld, entity, avatar, -0.5F));
 		MMM_Helper.mc.effectRenderer.addEffect(new EntityPickupFX(MMM_Helper.mc.theWorld, entity, pAvatar.avatar, 0.1F));
 	}
@@ -57,7 +68,7 @@ public class LMM_Client {
 // Network
 
 	public static void clientCustomPayload(NetClientHandler var1, Packet250CustomPayload var2) {
-		// ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Ì“ÁêƒpƒPƒbƒgóM“®ì
+		// Æ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gâ€˜Â¤â€šÃŒâ€œÃÅ½ÃªÆ’pÆ’PÆ’bÆ’gÅ½Ã³ï¿½Mâ€œÂ®ï¿½Ã¬
 		byte lmode = var2.data[0];
 		int leid = 0;
 		LMM_EntityLittleMaid lemaid = null;
@@ -70,7 +81,7 @@ public class LMM_Client {
 		
 		switch (lmode) {
 		case LMN_Client_SwingArm : 
-			// ˜rU‚è
+			// Ëœrï¿½Uâ€šÃ¨
 			byte larm = var2.data[5];
 			LMM_EnumSound lsound = LMM_EnumSound.getEnumSound(MMM_Helper.getInt(var2.data, 6));
 			lemaid.setSwinging(larm, lsound);
@@ -78,7 +89,7 @@ public class LMM_Client {
 			break;
 			
 		case LMN_Client_SetIFFValue:
-			// IFF‚Ìİ’è’l‚ğóM
+			// IFFâ€šÃŒï¿½Ãâ€™Ã¨â€™lâ€šÃ°Å½Ã³ï¿½M
 			int lval = var2.data[1];
 			int lindex = MMM_Helper.getInt(var2.data, 2);
 			String lname = (String)LMM_IFF.DefaultIFF.keySet().toArray()[lindex];
@@ -87,7 +98,7 @@ public class LMM_Client {
 			break;
 			
 		case LMN_Client_PlaySound : 
-			// ‰¹ºÄ¶
+			// â€°Â¹ï¿½Âºï¿½Ã„ï¿½Â¶
 			LMM_EnumSound lsound9 = LMM_EnumSound.getEnumSound(MMM_Helper.getInt(var2.data, 5));
 			lemaid.playLittleMaidSound(lsound9, true);
 			mod_LMM_littleMaidMob.Debug(String.format("playSound:%s", lsound9.name()));

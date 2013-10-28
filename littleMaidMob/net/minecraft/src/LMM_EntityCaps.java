@@ -3,10 +3,13 @@ package net.minecraft.src;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
+
 
 /**
- * Entity‚Ìƒf[ƒ^“Ç‚İæ‚è—p‚ÌƒNƒ‰ƒX
- * •Ê‚ÉEntity‚ÉƒCƒ“ƒ^[ƒtƒF[ƒX•t‚¯‚Ä‚àOK
+ * Entityï¿½Ìƒfï¿½[ï¿½^ï¿½Ç‚İï¿½ï¿½pï¿½ÌƒNï¿½ï¿½ï¿½X
+ * ï¿½Ê‚ï¿½Entityï¿½ÉƒCï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½tï¿½ï¿½ï¿½Ä‚ï¿½OK
  */
 public class LMM_EntityCaps extends MMM_EntityCaps {
 

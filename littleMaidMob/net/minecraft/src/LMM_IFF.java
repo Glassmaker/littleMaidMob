@@ -12,11 +12,18 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TreeMap;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityOwnable;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.server.MinecraftServer;
 
 /**
- * IFF‚ğŠÇ—‚·‚é‚½‚ß‚ÌƒNƒ‰ƒXA‚Ù‚Úƒ}ƒ‹ƒ`—pB
- * username : null=ƒ[ƒJƒ‹ƒvƒŒƒCADefault‚ğg‚¤
+ * IFFâ€šÃ°Å Ã‡â€”ï¿½â€šÂ·â€šÃ©â€šÂ½â€šÃŸâ€šÃŒÆ’NÆ’â€°Æ’Xï¿½Aâ€šÃ™â€šÃšÆ’}Æ’â€¹Æ’`â€”pï¿½B
+ * username : null=Æ’ï¿½ï¿½[Æ’JÆ’â€¹Æ’vÆ’Å’Æ’CÅ½Å¾ï¿½ADefaultâ€šÃ°Å½gâ€šÂ¤
  */
 public class LMM_IFF {
 
@@ -25,16 +32,16 @@ public class LMM_IFF {
 	public static final int iff_Friendry = 2;
 
 	/**
-	 * ƒ[ƒJƒ‹—pAá‚µ‚­‚Íƒ}ƒ‹ƒ`‚ÌƒfƒtƒHƒ‹ƒgİ’è
+	 * Æ’ï¿½ï¿½[Æ’JÆ’â€¹â€”pï¿½AÅ½Ã¡â€šÂµâ€šÂ­â€šÃÆ’}Æ’â€¹Æ’`â€šÃŒÆ’fÆ’tÆ’HÆ’â€¹Æ’gï¿½Ãâ€™Ã¨
 	 */
 	public static Map<String, Integer> DefaultIFF = new TreeMap<String, Integer>();
 	/**
-	 * ƒ†[ƒU–ˆ‚ÌIFF
+	 * Æ’â€ ï¿½[Æ’Uâ€“Ë†â€šÃŒIFF
 	 */
 	public static Map<String, Map<String, Integer>> UserIFF = new HashMap<String, Map<String, Integer>>();
 
 	/**
-	 * IFF‚ÌƒQƒbƒg
+	 * IFFâ€šÃŒÆ’QÆ’bÆ’g
 	 */
 	public static Map<String, Integer> getUserIFF(String pUsername) {
 		if (pUsername == null) {
@@ -45,7 +52,7 @@ public class LMM_IFF {
 		}
 		
 		if (!UserIFF.containsKey(pUsername)) {
-			// IFF‚ª‚È‚¢‚Ì‚Åì¬
+			// IFFâ€šÂªâ€šÃˆâ€šÂ¢â€šÃŒâ€šÃ…ï¿½Ã¬ï¿½Â¬
 			if (pUsername.isEmpty()) {
 				UserIFF.put(pUsername, DefaultIFF);
 			} else {
@@ -54,7 +61,7 @@ public class LMM_IFF {
 				UserIFF.put(pUsername, lmap);
 			}
 		}
-		// Šù‚É‚ ‚é
+		// Å Ã¹â€šÃ‰â€šÂ â€šÃ©
 		return UserIFF.get(pUsername);
 	}
 
@@ -70,17 +77,17 @@ public class LMM_IFF {
 			if (pEntity instanceof LMM_EntityLittleMaid) {
 				switch (pIndex) {
 				case 0:
-					// –ì¶í
+					// â€“Ã¬ï¿½Â¶Å½Ã­
 					liff = LMM_IFF.iff_Unknown;
 					break;
 				case 1:
-					// ©•ª‚ÌŒ_–ñÒ
+					// Å½Â©â€¢Âªâ€šÃŒÅ’_â€“Ã±Å½Ã’
 					pName = (new StringBuilder()).append(pName).append(":Contract").toString();
 					((LMM_EntityLittleMaid) pEntity).setContract(true);
 					liff = LMM_IFF.iff_Friendry;
 					break;
 				case 2:
-					// ‘¼l‚ÌŒ_–ñÒ
+					// â€˜Â¼ï¿½lâ€šÃŒÅ’_â€“Ã±Å½Ã’
 					pName = (new StringBuilder()).append(pName).append(":Others").toString();
 					((LMM_EntityLittleMaid) pEntity).setContract(true);
 					liff = LMM_IFF.iff_Friendry;
@@ -89,10 +96,10 @@ public class LMM_IFF {
 			} else if (pEntity instanceof EntityOwnable) {
 				switch (pIndex) {
 				case 0:
-					// –ì¶í
+					// â€“Ã¬ï¿½Â¶Å½Ã­
 					break;
 				case 1:
-					// ©•ª‚Ì‰Æ’{
+					// Å½Â©â€¢Âªâ€šÃŒâ€°Ã†â€™{
 					pName = (new StringBuilder()).append(pName).append(":Taim").toString();
 					if (pEntity instanceof EntityTameable) {
 						((EntityTameable) pEntity).setTamed(true);
@@ -100,7 +107,7 @@ public class LMM_IFF {
 					liff = LMM_IFF.iff_Friendry;
 					break;
 				case 2:
-					// ‘¼l‚Ì‰Æ’{
+					// â€˜Â¼ï¿½lâ€šÃŒâ€°Ã†â€™{
 					pName = (new StringBuilder()).append(pName).append(":Others").toString();
 					if (pEntity instanceof EntityTameable) {
 						((EntityTameable) pEntity).setTamed(true);
@@ -115,12 +122,12 @@ public class LMM_IFF {
 				}
 			}
 			if (pMap != null) {
-				// •\¦—pEntity‚Ì’Ç‰Á
+				// â€¢\Å½Â¦â€”pEntityâ€šÃŒâ€™Ã‡â€°Ã
 				pMap.put(pName, pEntity);
 				mod_LMM_littleMaidMob.Debug(pName + " added.");
 			}
 			
-			// IFF‚Ì‰Šú’l
+			// IFFâ€šÃŒï¿½â€°Å Ãºâ€™l
 			if (!DefaultIFF.containsKey(pName)) {
 				if (pEntity instanceof IMob) {
 					liff = LMM_IFF.iff_Enemy;
@@ -133,7 +140,7 @@ public class LMM_IFF {
 	}
 
 	/**
-	 * “G–¡•û¯•Ê”»’è
+	 * â€œGâ€“Â¡â€¢Ã»Å½Â¯â€¢ÃŠâ€Â»â€™Ã¨
 	 */
 	public static int getIFF(String pUsername, String entityname) {
 		if (entityname == null) {
@@ -144,11 +151,11 @@ public class LMM_IFF {
 		if (lmap.containsKey(entityname)) {
 			lt = lmap.get(entityname);
 		} else if (lmap != DefaultIFF && DefaultIFF.containsKey(entityname)) {
-			// –¢“o˜^‚¾‚¯‚ÇDefault‚É‚Íİ’è‚ª‚ ‚é‚Í’l‚ğƒRƒs[
+			// â€“Â¢â€œoËœ^â€šÂ¾â€šÂ¯â€šÃ‡Defaultâ€šÃ‰â€šÃï¿½Ãâ€™Ã¨â€šÂªâ€šÂ â€šÃ©Å½Å¾â€šÃâ€™lâ€šÃ°Æ’RÆ’sï¿½[
 			lt = DefaultIFF.get(entityname);
 			lmap.put(entityname, lt);
 		} else {
-			// –¢“o˜^Entity‚Ìê‡‚Í“o˜^“®ì
+			// â€“Â¢â€œoËœ^Entityâ€šÃŒï¿½Ãªï¿½â€¡â€šÃâ€œoËœ^â€œÂ®ï¿½Ã¬
 			int li = entityname.indexOf(":");
 			String ls;
 			if (li > -1) {
@@ -174,7 +181,7 @@ public class LMM_IFF {
 	}
 
 	/**
-	 * “G–¡•û¯•Ê”»’è
+	 * â€œGâ€“Â¡â€¢Ã»Å½Â¯â€¢ÃŠâ€Â»â€™Ã¨
 	 */
 	public static int getIFF(String pUsername, Entity entity) {
 		if (entity == null || !(entity instanceof EntityLivingBase)) {
@@ -183,7 +190,7 @@ public class LMM_IFF {
 		String lename = EntityList.getEntityString(entity);
 		String lcname = lename;
 		if (lename == null) {
-			// –¼Ì–¢’è‹`MOBAƒvƒŒ[ƒ„[‚Æ‚©H
+			// â€“Â¼ï¿½ÃŒâ€“Â¢â€™Ã¨â€¹`MOBï¿½AÆ’vÆ’Å’ï¿½[Æ’â€ï¿½[â€šÃ†â€šÂ©ï¿½H
 			return iff_Friendry;
 			// return mod_LMM_littleMaidMob.Aggressive ? iff_Unknown :
 			// iff_Friendry;
@@ -192,11 +199,11 @@ public class LMM_IFF {
 		if (entity instanceof LMM_EntityLittleMaid) {
 			if (((LMM_EntityLittleMaid) entity).isContract()) {
 				if (((LMM_EntityLittleMaid) entity).getMaidMaster().contentEquals(pUsername)) {
-					// ©•ª‚Ì
+					// Å½Â©â€¢Âªâ€šÃŒ
 					lcname = (new StringBuilder()).append(lename).append(":Contract").toString();
 					li = 1;
 				} else {
-					// ‘¼l‚Ì
+					// â€˜Â¼ï¿½lâ€šÃŒ
 					lcname = (new StringBuilder()).append(lename).append(":Others").toString();
 					li = 2;
 				}
@@ -205,11 +212,11 @@ public class LMM_IFF {
 			String loname = ((EntityOwnable)entity).getOwnerName();
 			if (!loname.isEmpty()) {
 				if (loname.contentEquals(pUsername)) {
-					// ©•ª‚Ì
+					// Å½Â©â€¢Âªâ€šÃŒ
 					lcname = (new StringBuilder()).append(lename).append(":Taim").toString();
 					li = 1;
 				} else {
-					// ‘¼l‚Ì
+					// â€˜Â¼ï¿½lâ€šÃŒ
 					lcname = (new StringBuilder()).append(lename).append(":Others").toString();
 					li = 2;
 				}
@@ -222,9 +229,9 @@ public class LMM_IFF {
 	}
 
 	public static void loadIFFs() {
-		// ƒT[ƒo[‘¤‚Ì
+		// Æ’Tï¿½[Æ’oï¿½[â€˜Â¤â€šÃŒ
 		if (!MMM_Helper.isClient) {
-			// ƒT[ƒo[‘¤ˆ—
+			// Æ’Tï¿½[Æ’oï¿½[â€˜Â¤ï¿½Ë†â€”ï¿½
 			loadIFF("");
 			File lfile = MinecraftServer.getServer().getFile("");
 			for (File lf : lfile.listFiles()) {
@@ -235,7 +242,7 @@ public class LMM_IFF {
 				}
 			}
 		} else {
-			// ƒNƒ‰ƒCƒAƒ“ƒg‘¤
+			// Æ’NÆ’â€°Æ’CÆ’AÆ’â€œÆ’gâ€˜Â¤
 			loadIFF(null);
 		}
 	}
@@ -258,8 +265,8 @@ public class LMM_IFF {
 	}
 
 	public static void loadIFF(String pUsername) {
-		// IFF ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ
-		// “®ì‚ÍƒT[ƒo[‘¤‚Å‘z’è
+		// IFF Æ’tÆ’@Æ’CÆ’â€¹â€šÃŒâ€œÃ‡ï¿½Å¾â€šÃ
+		// â€œÂ®ï¿½Ã¬â€šÃÆ’Tï¿½[Æ’oï¿½[â€˜Â¤â€šÃ…â€˜zâ€™Ã¨
 		File lfile = getFile(pUsername);
 		if (!(lfile.exists() && lfile.canRead())) {
 			return;
@@ -294,7 +301,7 @@ public class LMM_IFF {
 	}
 
 	public static void saveIFF(String pUsername) {
-		// IFF ƒtƒ@ƒCƒ‹‚Ì‘‚İ
+		// IFF Æ’tÆ’@Æ’CÆ’â€¹â€šÃŒï¿½â€˜ï¿½Å¾â€šÃ
 		File lfile = getFile(MMM_Helper.isClient ? null : pUsername);
 		Map<String, Integer> lmap = getUserIFF(pUsername);
 		
@@ -303,7 +310,7 @@ public class LMM_IFF {
 				FileWriter fw = new FileWriter(lfile);
 				BufferedWriter bw = new BufferedWriter(fw);
 				
-				// ƒgƒŠƒK[ƒAƒCƒeƒ€‚ÌƒŠƒXƒg
+				// Æ’gÆ’Å Æ’Kï¿½[Æ’AÆ’CÆ’eÆ’â‚¬â€šÃŒÆ’Å Æ’XÆ’g
 				for (Entry<Integer, List<Integer>> le : LMM_TriggerSelect
 						.getUserTrigger(pUsername).entrySet()) {
 					StringBuilder sb = new StringBuilder();

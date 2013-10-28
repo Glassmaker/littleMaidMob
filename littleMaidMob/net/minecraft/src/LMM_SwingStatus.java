@@ -1,5 +1,14 @@
 package net.minecraft.src;
 
+import java.util.Random;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
+
 public class LMM_SwingStatus {
 
 	public int index;
@@ -13,6 +22,7 @@ public class LMM_SwingStatus {
 //	public int usingCount;
 	public int itemInUseCount;
 	protected ItemStack itemInUse;
+	protected Random rand = new Random();
 
 
 
@@ -27,14 +37,14 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * TODO:”’l‚ÌXV—pAonEntityUpdate“à‚ÅŒÄ‚Ô–:‚¢‚ç‚ñ‚©H
+	 * TODO:ï¿½â€â€™lâ€šÃŒï¿½Xï¿½Vâ€”pï¿½AonEntityUpdateâ€œÃ â€šÃ…Å’Ã„â€šÃ”Å½â€“:â€šÂ¢â€šÃ§â€šÃ±â€šÂ©ï¿½H
 	 */
 	public void onEntityUpdate(LMM_EntityLittleMaid pEntity) {
 		prevSwingProgress = swingProgress;
 	}
 
 	/**
-	 * ”’l‚ÌXV—pAonUpdate“à‚ÅŒÄ‚Ô–
+	 * ï¿½â€â€™lâ€šÃŒï¿½Xï¿½Vâ€”pï¿½AonUpdateâ€œÃ â€šÃ…Å’Ã„â€šÃ”Å½â€“
 	 */
 	public void onUpdate(LMM_EntityLittleMaid pEntity) {
 		prevSwingProgress = swingProgress;
@@ -42,7 +52,7 @@ public class LMM_SwingStatus {
 			attackTime--;
 		}
 		
-		// ˜rU‚è
+		// Ëœrï¿½Uâ€šÃ¨
 		int li = pEntity.getSwingSpeedModifier();
 		if (isSwingInProgress) {
 			swingProgressInt++;
@@ -63,7 +73,7 @@ public class LMM_SwingStatus {
 				clearItemInUse(lrentity);
 			} else {
 				if (itemInUseCount <= 25 && itemInUseCount % 4 == 0) {
-					// H‚×‚©‚·‚Æ‚©
+					// ï¿½Hâ€šÃ—â€šÂ©â€šÂ·â€šÃ†â€šÂ©
 					updateItemUse(pEntity, 5);
 				}
 				if (--itemInUseCount <= 0 && lrentity != null) {
@@ -74,7 +84,7 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * ‘I‘ğ’†‚ÌƒXƒƒbƒg”Ô†‚ğİ’è
+	 * â€˜Iâ€˜Ã°â€™â€ â€šÃŒÆ’XÆ’ï¿½Æ’bÆ’gâ€Ã”ï¿½â€ â€šÃ°ï¿½Ãâ€™Ã¨
 	 */
 	public void setSlotIndex(int pIndex) {
 		index = pIndex;
@@ -82,7 +92,7 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * ‘I‘ğ’†‚ÌƒCƒ“ƒxƒ“ƒgƒŠ“àƒAƒCƒeƒ€ƒXƒ^ƒbƒN‚ğ•Ô‚·
+	 * â€˜Iâ€˜Ã°â€™â€ â€šÃŒÆ’CÆ’â€œÆ’xÆ’â€œÆ’gÆ’Å â€œÃ Æ’AÆ’CÆ’eÆ’â‚¬Æ’XÆ’^Æ’bÆ’Nâ€šÃ°â€¢Ã”â€šÂ·
 	 */
 	public ItemStack getItemStack(LMM_EntityLittleMaid pEntity) {
 		if (index > -1) {
@@ -98,7 +108,7 @@ public class LMM_SwingStatus {
 
 
 
-// ˜rU‚èŠÖŒW
+// Ëœrï¿½Uâ€šÃ¨Å Ã–Å’W
 
 
 	public float getSwingProgress(float ltime) {
@@ -122,7 +132,7 @@ public class LMM_SwingStatus {
 
 
 	/**
-	 * •ÏX‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğ•Ô‚µAƒtƒ‰ƒO‚ğƒNƒŠƒA‚·‚éB
+	 * â€¢Ãï¿½Xâ€šÂªâ€šÂ â€šÃ©â€šÂ©â€šÃ‡â€šÂ¤â€šÂ©â€šÃ°â€¢Ã”â€šÂµï¿½AÆ’tÆ’â€°Æ’Oâ€šÃ°Æ’NÆ’Å Æ’Aâ€šÂ·â€šÃ©ï¿½B
 	 */
 	public boolean checkChanged() {
 		boolean lflag = index != lastIndex;
@@ -130,7 +140,7 @@ public class LMM_SwingStatus {
 		return lflag;
 	}
 
-// ƒAƒCƒeƒ€‚Ìg—p‚ÉŠÖ‚í‚éŠÖ”ŒQ
+// Æ’AÆ’CÆ’eÆ’â‚¬â€šÃŒÅ½gâ€”pâ€šÃ‰Å Ã–â€šÃ­â€šÃ©Å Ã–ï¿½â€Å’Q
 
 	public ItemStack getItemInUse() {
 		return itemInUse;
@@ -151,7 +161,7 @@ public class LMM_SwingStatus {
 	/**
 	 * 
 	 * @param pEntity
-	 * ƒT[ƒo[‚Ì‚ÍEntity‚ğİ’è‚·‚éB
+	 * Æ’Tï¿½[Æ’oï¿½[â€šÃŒÅ½Å¾â€šÃEntityâ€šÃ°ï¿½Ãâ€™Ã¨â€šÂ·â€šÃ©ï¿½B
 	 */
 	public void stopUsingItem(Entity pEntity) {
 		if (itemInUse != null && pEntity instanceof EntityPlayer) {
@@ -164,7 +174,7 @@ public class LMM_SwingStatus {
 	/**
 	 * 
 	 * @param pEntity
-	 * ƒT[ƒo[‚Ì‚ÍEntity‚ğİ’è‚·‚éB
+	 * Æ’Tï¿½[Æ’oï¿½[â€šÃŒÅ½Å¾â€šÃEntityâ€šÃ°ï¿½Ãâ€™Ã¨â€šÂ·â€šÃ©ï¿½B
 	 */
 	public void clearItemInUse(Entity pEntity) {
 		itemInUse = null;
@@ -184,7 +194,7 @@ public class LMM_SwingStatus {
 	 * @param par1ItemStack
 	 * @param par2
 	 * @param pEntity
-	 * ƒT[ƒo[‚Ì‚ÍEntity‚ğİ’è‚·‚éB
+	 * Æ’Tï¿½[Æ’oï¿½[â€šÃŒÅ½Å¾â€šÃEntityâ€šÃ°ï¿½Ãâ€™Ã¨â€šÂ·â€šÃ©ï¿½B
 	 */
 	public void setItemInUse(ItemStack par1ItemStack, int par2, Entity pEntity) {
 		if (par1ItemStack != itemInUse) {
@@ -204,17 +214,17 @@ public class LMM_SwingStatus {
 		
 		if (itemInUse.getItemUseAction() == EnumAction.eat) {
 			for (int var3 = 0; var3 < par2; ++var3) {
-				Vec3 var4 = pEntity.worldObj.getWorldVec3Pool().getVecFromPool(((double)pEntity.rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
+				Vec3 var4 = pEntity.worldObj.getWorldVec3Pool().getVecFromPool(((double)rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
 				var4.rotateAroundX(-pEntity.rotationPitch * (float)Math.PI / 180.0F);
 				var4.rotateAroundY(-pEntity.rotationYaw * (float)Math.PI / 180.0F);
-				Vec3 var5 = pEntity.worldObj.getWorldVec3Pool().getVecFromPool(((double)pEntity.rand.nextFloat() - 0.5D) * 0.3D, (double)(-pEntity.rand.nextFloat()) * 0.6D - 0.3D, 0.6D);
+				Vec3 var5 = pEntity.worldObj.getWorldVec3Pool().getVecFromPool(((double)rand.nextFloat() - 0.5D) * 0.3D, (double)(-rand.nextFloat()) * 0.6D - 0.3D, 0.6D);
 				var5.rotateAroundX(-pEntity.rotationPitch * (float)Math.PI / 180.0F);
 				var5.rotateAroundY(-pEntity.rotationYaw * (float)Math.PI / 180.0F);
 				var5 = var5.addVector(pEntity.posX, pEntity.posY + (double)pEntity.getEyeHeight(), pEntity.posZ);
 				pEntity.worldObj.spawnParticle("iconcrack_" + itemInUse.getItem().itemID, var5.xCoord, var5.yCoord, var5.zCoord, var4.xCoord, var4.yCoord + 0.05D, var4.zCoord);
 			}
 			
-			pEntity.playSound("random.eat", 0.5F + 0.5F * (float)pEntity.rand.nextInt(2), (pEntity.rand.nextFloat() - pEntity.rand.nextFloat()) * 0.2F + 1.0F);
+			pEntity.playSound("random.eat", 0.5F + 0.5F * (float)rand.nextInt(2), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
 		}
 	}
 

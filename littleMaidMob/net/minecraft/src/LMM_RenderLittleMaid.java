@@ -4,6 +4,12 @@ import java.util.Map.Entry;
 
 import javax.jws.Oneway;
 
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -43,12 +49,12 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		modelMain.setCapsValue(MMM_IModelCaps.caps_entityIdFactor, lmaid.entityIdFactor);
 		modelMain.setCapsValue(MMM_IModelCaps.caps_ticksExisted, lmaid.ticksExisted);
 		modelMain.setCapsValue(MMM_IModelCaps.caps_dominantArm, lmaid.maidDominantArm);
-		// ‚¾‚ª–³ˆÓ–¡‚¾
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó–ï¿½ï¿½ï¿½
 //		plittleMaid.textureModel0.isChild = plittleMaid.textureModel1.isChild = plittleMaid.textureModel2.isChild = plittleMaid.isChild();
 	}
 
 	protected void renderString(LMM_EntityLittleMaid plittleMaid, double px, double py, double pz, float f, float f1) {
-		// ‚Ğ‚à
+		// ï¿½Ğ‚ï¿½
 		if(plittleMaid.mstatgotcha != null && plittleMaid.mstatgotcha instanceof EntityLivingBase) {
 			EntityLivingBase lel = (EntityLivingBase)plittleMaid.mstatgotcha;
 			py -= 0.5D;
@@ -99,12 +105,12 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 	}
 /*
 	public void doRenderLitlleMaid(LMM_EntityLittleMaid plittleMaid, double px, double py, double pz, float f, float f1) {
-		// ‚¢‚­‚Â‚©d•¡‚µ‚Ä‚é‚Ì‚Å‚ ‚Æ‚ÅŠm”F
-		// p¨‚É‚æ‚é‚‚³’²®
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½dï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½Ì‚Å‚ï¿½ï¿½Æ‚ÅŠmï¿½F
+		// ï¿½pï¿½ï¿½ï¿½É‚ï¿½é‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
-		// ‚±‚±‚Í–{—ˆ“I‚É‚Í—v‚ç‚È‚¢B
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Í–{ï¿½ï¿½ï¿½Iï¿½É‚Í—vï¿½ï¿½È‚ï¿½ï¿½B
 		if (plittleMaid.worldObj instanceof WorldServer) {
-			// RSHUD-ACV—p
+			// RSHUD-ACVï¿½p
 			MMM_TextureBox ltbox0 = ((MMM_TextureBoxServer)plittleMaid.textureData.textureBox[0]).localBox;
 			MMM_TextureBox ltbox1 = ((MMM_TextureBoxServer)plittleMaid.textureData.textureBox[1]).localBox;
 			modelMain.model = ltbox0.models[0];
@@ -140,7 +146,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 //		doRenderLitlleMaid(lmm, par2, par4, par6, par8, par9);
 		renderModelMulti(lmm, par2, par4, par6, par8, par9, fcaps);
 		renderString(lmm, par2, par4, par6, par8, par9);
-		// ƒ[ƒv
+		// ï¿½ï¿½ï¿½[ï¿½v
 //		func_110827_b(lmm, par2, par4 - modelMain.model.getLeashOffset(lmm.maidCaps), par6, par8, par9);
 	}
 
@@ -152,7 +158,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		} else {
 			modelMain.setArmorRendering(false);
 		}
-		// ƒAƒCƒeƒ€‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOˆÊ’u‚ğŠl“¾‚·‚é‚½‚ßrender‚ğŒÄ‚Ô•K—v‚ª‚ ‚é
+		// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ìƒï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½Ê’uï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ï¿½renderï¿½ï¿½ï¿½Ä‚Ô•Kï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		mainModel.render(par1EntityLiving, par2, par3, par4, par5, par6, par7);
 	}
 
@@ -161,7 +167,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		super.passSpecialRender(par1EntityLiving, par2, par4, par6);
 		
 		LMM_EntityLittleMaid llmm = (LMM_EntityLittleMaid)par1EntityLiving;
-		// ’Ç‰Á•ª
+		// ï¿½Ç‰ï¿½ï¿½ï¿½
 		for (int li = 0; li < llmm.maidEntityModeList.size(); li++) {
 			llmm.maidEntityModeList.get(li).showSpecial(this, par2, par4, par6);
 		}

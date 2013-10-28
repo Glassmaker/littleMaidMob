@@ -3,15 +3,25 @@ package net.minecraft.src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LMM_ContainerTriggerSelect extends ContainerCreative {
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
+//XXX: experimenting
+//public class LMM_ContainerTriggerSelect extends ContainerCreative {
+public class LMM_ContainerTriggerSelect extends Container {
 	public List<ItemStack> weaponSelect = new ArrayList<ItemStack>();
 	public String weaponSelectName;
 	public List<Integer> weaponSelectList;
 	public int weaponOffset;
 
 	public LMM_ContainerTriggerSelect(EntityPlayer entityplayer) {
-		super(entityplayer);
+		//XXX: experimenting
+		//super(entityplayer);
+		super();
 
 		inventorySlots.clear();
 		for (int l2 = 0; l2 < 5; l2++) {
@@ -32,13 +42,15 @@ public class LMM_ContainerTriggerSelect extends ContainerCreative {
 		setWeaponSelect(entityplayer.username, LMM_TriggerSelect.selector.get(0));
 		
 		initAllSelections();
-		scrollTo(0.0F);
+		//XXX: experimenting
+		//scrollTo(0.0F);
 		setWeaponlist(0.0F);
 	}
 
 	private void initAllSelections() {
-		// ƒRƒ“ƒeƒi•\Ž¦—pƒAƒCƒeƒ€‚ÌÝ’è
-		this.itemList.clear();
+		// Æ’RÆ’â€œÆ’eÆ’iâ€¢\Å½Â¦â€”pÆ’AÆ’CÆ’eÆ’â‚¬â€šÃŒï¿½Ãâ€™Ã¨
+		//XXX: experimenting
+		//this.itemList.clear();
 		Item[] var2 = Item.itemsList;
 		int var3 = var2.length;
 		
@@ -46,7 +58,8 @@ public class LMM_ContainerTriggerSelect extends ContainerCreative {
 			Item var5 = var2[var4];
 			
 			if (var5 != null && var5.getCreativeTab() != null) {
-				var5.getSubItems(var5.itemID, (CreativeTabs) null, this.itemList);
+				//XXX: experimenting
+				//var5.getSubItems(var5.itemID, (CreativeTabs) null, this.itemList);
 			}
 		}
 	}
@@ -55,10 +68,12 @@ public class LMM_ContainerTriggerSelect extends ContainerCreative {
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return true;
 	}
-
+	
+	//XXX: experimenting
+	/*
 	@Override
 	public void scrollTo(float f) {
-		// ƒXƒNƒ[ƒ‹ƒ|ƒWƒVƒ‡ƒ“
+		// Æ’XÆ’NÆ’ï¿½ï¿½[Æ’â€¹Æ’|Æ’WÆ’VÆ’â€¡Æ’â€œ
 		int i = (itemList.size() / 8 - 5) + 1;
 		int j = (int) ((double) (f * (float) i) + 0.5D);
 		if (j < 0) {
@@ -76,12 +91,12 @@ public class LMM_ContainerTriggerSelect extends ContainerCreative {
 
 		}
 
-	}
+	}*/
 
 	@Override
 	public ItemStack slotClick(int i, int j, int flag, EntityPlayer entityplayer) {
 		if (i >= 40) {
-			// ƒZƒbƒg‚³‚ê‚½ƒAƒCƒeƒ€‚ð’è‹`
+			// Æ’ZÆ’bÆ’gâ€šÂ³â€šÃªâ€šÂ½Æ’AÆ’CÆ’eÆ’â‚¬â€šÃ°â€™Ã¨â€¹`
 			int lk = (i - 40) + weaponOffset * 8;
 			for (; weaponSelect.size() <= lk + 7;) {
 				weaponSelect.add(null);
@@ -99,7 +114,7 @@ public class LMM_ContainerTriggerSelect extends ContainerCreative {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int i) {
-		// ShiftƒNƒŠƒbƒNŽž‚Ì”½‰ž
+		// ShiftÆ’NÆ’Å Æ’bÆ’NÅ½Å¾â€šÃŒâ€Â½â€°Å¾
 		ItemStack itemstack = null;
 		Slot slot = (Slot) inventorySlots.get(i);
 		if (slot != null && slot.getHasStack()) {
@@ -116,16 +131,16 @@ public class LMM_ContainerTriggerSelect extends ContainerCreative {
 
 	@Override
 	protected boolean mergeItemStack(ItemStack itemstack, int i, int j, boolean flag) {
-		// itemstackˆÈŠO‚Í–³Œø
+		// itemstackË†ÃˆÅ Oâ€šÃâ€“Â³Å’Ã¸
 		boolean flag1 = false;
 		int k = 0;
 		
-		// “¯‚¶‚Ì‚ª‚ ‚Á‚½‚Æ‚«‚Í’Ç‰Á‚µ‚È‚¢
+		// â€œÂ¯â€šÂ¶â€šÃŒâ€šÂªâ€šÂ â€šÃâ€šÂ½â€šÃ†â€šÂ«â€šÃâ€™Ã‡â€°Ãâ€šÂµâ€šÃˆâ€šÂ¢
 		while (itemstack.stackSize > 0 && k < weaponSelect.size()) {
 			ItemStack itemstack1 = weaponSelect.get(k);
 			if (itemstack1 != null) {
 				if (itemstack1.isItemEqual(itemstack)) {
-					// “¯ˆêƒAƒCƒeƒ€‚Å‚ ‚é
+					// â€œÂ¯Ë†ÃªÆ’AÆ’CÆ’eÆ’â‚¬â€šÃ…â€šÂ â€šÃ©
 					flag1 = true;
 					break;
 				}
@@ -154,7 +169,7 @@ public class LMM_ContainerTriggerSelect extends ContainerCreative {
 	}
 
 	public void setWeaponlist(float f) {
-		// ƒXƒNƒ[ƒ‹ƒ|ƒWƒVƒ‡ƒ“
+		// Æ’XÆ’NÆ’ï¿½ï¿½[Æ’â€¹Æ’|Æ’WÆ’VÆ’â€¡Æ’â€œ
 		int i = (weaponSelect.size() / 8 - 4) + 1;
 		weaponOffset = (int) ((double) (f * (float) i) + 0.5D);
 		if (weaponOffset < 0) {

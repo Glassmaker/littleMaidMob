@@ -1,5 +1,15 @@
 package net.minecraft.src;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+
 public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEntityAI {
 
 	protected boolean fEnable;
@@ -103,18 +113,18 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 		theMaid.getLookHelper().setLookPositionWithEntity(entityTarget, 30F, 30F);
 		
 //		if ((isReroute || theMaid.getEntitySenses().canSee(entityTarget)) && --rerouteTimer <= 0) {
-//			// ƒŠƒ‹[ƒg
+//			// ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½g
 //			rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 //			theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 //		}
 		if (--rerouteTimer <= 0) {
 			if (isReroute) {
-				// ƒŠƒ‹[ƒg
+				// ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½g
 				rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 				theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 			}
 			if (theMaid.getEntitySenses().canSee(entityTarget)) {
-				// ƒŠƒ‹[ƒg
+				// ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½g
 				rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 				theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 			} else {
@@ -145,7 +155,7 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 		if (!theMaid.getSwingStatusDominant().canAttack()) {
 			return;
 		} else {
-			// ³–Ê‚©‚ç110“x•ûŒü‚ªUŒ‚”ÍˆÍ
+			// ï¿½ï¿½ï¿½Ê‚ï¿½ï¿½ï¿½110ï¿½xï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½Íˆï¿½
 			double tdx = entityTarget.posX - theMaid.posX;
 			double tdz = entityTarget.posZ - theMaid.posZ;
 			double vdx = -Math.sin(theMaid.renderYawOffset * 3.1415926535897932384626433832795F / 180F);
@@ -156,10 +166,10 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 				return;
 			}
 			
-			// UŒ‚
+			// ï¿½Uï¿½ï¿½
 			theMaid.attackEntityAsMob(entityTarget);
 			if (theMaid.getActiveModeClass().isChangeTartget(entityTarget)) {
-				// ‘ÎÛ‚ðÄÝ’è‚³‚¹‚é
+				// ï¿½ÎÛ‚ï¿½ï¿½ÄÝ’è‚³ï¿½ï¿½ï¿½ï¿½
 				theMaid.setAttackTarget(null);
 				theMaid.setTarget(null);
 				theMaid.getNavigator().clearPathEntity();

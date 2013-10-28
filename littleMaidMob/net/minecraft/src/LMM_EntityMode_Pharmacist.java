@@ -3,6 +3,14 @@ package net.minecraft.src;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityBrewingStand;
+
 public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 
 	public static final int mmode_Pharmacist = 0x0022;
@@ -70,7 +78,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ƒ‚[ƒh‚É‰‚¶‚½¯•Ê”»’èA‘¬“x—Dæ
+		// ï¿½ï¿½ï¿½[ï¿½hï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê”ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½xï¿½Dï¿½ï¿½
 		switch (pMode) {
 		case mmode_Pharmacist :
 			litemstack = owner.getCurrentEquippedItem();
@@ -78,7 +86,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 				for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
 					litemstack = owner.maidInventory.getStackInSlot(li);
 					if (litemstack != null) {
-						// ‘ÎÛ‚Í…ƒ|[ƒVƒ‡ƒ“
+						// ï¿½ÎÛ‚Íï¿½ï¿½|ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
 						if (litemstack.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack)) {
 							return li;
 						}
@@ -111,7 +119,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean shouldBlock(int pMode) {
-		// Às’†”»’è
+		// ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return owner.maidTileEntity instanceof TileEntityBrewingStand &&
 				(((TileEntityBrewingStand)owner.maidTileEntity).getBrewTime() > 0 ||
 						(owner.getCurrentEquippedItem() != null) || inventryPos > 0);
@@ -127,9 +135,9 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		
-		// ¢ŠE‚ÌƒƒCƒh‚©‚ç
+		// ï¿½ï¿½ï¿½Eï¿½Ìƒï¿½ï¿½Cï¿½hï¿½ï¿½ï¿½ï¿½
 		checkWorldMaid(ltile);
-		// g—p‚µ‚Ä‚¢‚½ö—¯Ší‚È‚ç‚»‚±‚ÅI—¹
+		// ï¿½gï¿½pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ç‚»ï¿½ï¿½ï¿½ÅIï¿½ï¿½
 		if (owner.isUsingTile(ltile)) return true;
 		
 		double ldis = owner.getDistanceTilePosSq(ltile);
@@ -152,10 +160,10 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 		boolean lflag = false;
 		LMM_SwingStatus lswing = owner.getSwingStatusDominant();
 		
-		// ö—¯‘Ò‹@
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ò‹@
 //    	isMaidChaseWait = true;
 		if (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null || ltile.getStackInSlot(3) != null || !lswing.canAttack()) {
-			// ‚¨d–’†
+			// ï¿½ï¿½ï¿½dï¿½ï¿½ï¿½ï¿½
 			owner.setWorking(true);
 		}
 		
@@ -163,7 +171,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			ItemStack litemstack2 = ltile.getStackInSlot(3);
 			
 			if (litemstack2 != null && ltile.getBrewTime() <= 0) {
-				// ö—¯•s”\‚È‚Ì‚Å‰ñû
+				// ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½\ï¿½È‚Ì‚Å‰ï¿½ï¿½
 				if (py <= owner.posY) {
 					owner.setSneaking(true);
 				}
@@ -174,9 +182,9 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 					owner.setSwing(5, LMM_EnumSound.Null);
 				}
 			}
-			// Š®¬•i
+			// ï¿½ï¿½ï¿½ï¿½ï¿½i
 			if (!lflag && inventryPos > owner.maidInventory.mainInventory.length) {
-				// ƒ|[ƒVƒ‡ƒ“‚Ì‰ñû
+				// ï¿½|ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½
 				for (int li = 0; li < 3 && !lflag; li ++) {
 					litemstack1 = ltile.getStackInSlot(li);
 					if (litemstack1 != null && owner.maidInventory.addItemStackToInventory(litemstack1)) {
@@ -195,7 +203,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			
 			litemstack1 = owner.maidInventory.getCurrentItem();
 			if (!lflag && (litemstack1 != null && litemstack1.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack1))) {
-				// …•r‚ğ‚°‚Á‚Æ‚ê‚Å‚¡
+				// ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½Å‚ï¿½
 				int li = 0;
 				for (li = 0; li < 3 && !lflag; li++) {
 					if (ltile.getStackInSlot(li) == null) {
@@ -210,7 +218,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			if (!lflag && (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null)
 					&& (owner.maidInventory.currentItem == -1 || (litemstack1 != null && litemstack1.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack1)))) {
-				// ƒ|[ƒVƒ‡ƒ“ˆÈŠO‚ğŒŸõ
+				// ï¿½|ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÈŠOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //				for (inventryPos = 0; inventryPos < owner.maidInventory.mainInventory.length; inventryPos++) {
 				for (; inventryPos < owner.maidInventory.mainInventory.length; inventryPos++) {
 					litemstack1 = owner.maidInventory.getStackInSlot(inventryPos);
@@ -223,7 +231,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			
 			if (!lflag && litemstack2 == null && (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null)) {
-				// è‚¿‚ÌƒAƒCƒeƒ€‚ğ‚Û[‚¢
+				// ï¿½èï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½Û[ï¿½ï¿½
 				if (litemstack1 != null && !(litemstack1.getItem() instanceof ItemPotion) && litemstack1.getItem().isPotionIngredient()) {
 					ltile.setInventorySlotContents(3, litemstack1);
 					owner.maidInventory.setInventorySlotContents(inventryPos, null);
@@ -232,7 +240,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 					lflag = true;
 				} 
 				else if (litemstack1 == null || (litemstack1.getItem() instanceof ItemPotion && MMM_Helper.hasEffect(litemstack1)) || !litemstack1.getItem().isPotionIngredient()) {
-					// ‘ÎÛŠOƒAƒCƒeƒ€‚ğ”­Œ©‚µ‚½‚ÉI—¹
+					// ï¿½ÎÛŠOï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ğ”­Œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉIï¿½ï¿½
 					inventryPos = owner.maidInventory.mainInventory.length;
 					lflag = true;
 				}
@@ -242,7 +250,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			
 			
-			// I—¹ó‘Ô‚ÌƒLƒƒƒ“ƒZƒ‹
+			// ï¿½Iï¿½ï¿½ï¿½ï¿½Ô‚ÌƒLï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½
 			if (owner.getSwingStatusDominant().index == -1 && litemstack2 == null) {
 				owner.getNextEquipItem();
 			}

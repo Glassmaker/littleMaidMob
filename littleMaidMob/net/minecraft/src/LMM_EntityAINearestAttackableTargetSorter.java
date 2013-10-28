@@ -2,6 +2,8 @@ package net.minecraft.src;
 
 import java.util.Comparator;
 
+import net.minecraft.entity.Entity;
+
 public class LMM_EntityAINearestAttackableTargetSorter implements Comparator {
 
 	private Entity theEntity;

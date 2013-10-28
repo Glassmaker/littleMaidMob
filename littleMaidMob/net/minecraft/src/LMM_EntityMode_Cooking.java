@@ -3,6 +3,15 @@ package net.minecraft.src;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.MathHelper;
+
 public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 
 	public static final int mmode_Cooking = 0x0021;
@@ -68,11 +77,11 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ѓ‚Ѓ[ѓh‚Й‰ћ‚¶‚ЅЋЇ•К”»’иЃA‘¬“x—Dђж
+		// пїЅпїЅпїЅ[пїЅhпїЅЙ‰пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅК”пїЅпїЅпїЅAпїЅпїЅпїЅxпїЅDпїЅпїЅ
 		switch (pMode) {
 		case mmode_Cooking :
 			for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
-				// ’І—ќ
+				// пїЅпїЅпїЅпїЅ
 				if (owner.maidInventory.isItemBurned(li)) {
 					return li;
 				}
@@ -92,7 +101,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 	public boolean isSearchBlock() {
 		if (!super.isSearchBlock()) return false;
 		
-		// ”RЏДѓAѓCѓeѓЂ‚рЋќ‚Б‚Д‚ў‚йЃH
+		// пїЅRпїЅДѓAпїЅCпїЅeпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅД‚пїЅпїЅпїЅH
 		if (owner.getCurrentEquippedItem() != null && owner.maidInventory.getSmeltingItem() > -1) {
 			fDistance = Double.MAX_VALUE;
 			owner.clearTilePos();
@@ -116,9 +125,9 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		
-		// ђўЉE‚МѓЃѓCѓh‚©‚з
+		// пїЅпїЅпїЅEпїЅМѓпїЅпїЅCпїЅhпїЅпїЅпїЅпїЅ
 		if (checkWorldMaid(ltile)) return false;
-		// Ћg—p‚µ‚Д‚ў‚Ѕв}‚И‚з‚»‚±‚ЕЏI—№
+		// пїЅgпїЅpпїЅпїЅпїЅД‚пїЅпїЅпїЅпїЅ}пїЅИ‚з‚»пїЅпїЅпїЅЕЏIпїЅпїЅ
 		if (owner.isUsingTile(ltile)) return true;
 		
 		double ldis = owner.getDistanceTilePosSq(ltile);
@@ -142,7 +151,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 		int li;
 		
 		if (owner.getSwingStatusDominant().canAttack()) {
-			// Љ®ђ¬•i‰сЋы
+			// пїЅпїЅпїЅпїЅпїЅiпїЅпїЅпїЅ
 			litemstack = ltile.getStackInSlot(2);
 			if (litemstack != null) {
 				if (litemstack.stackSize > 0) {
@@ -160,14 +169,14 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				ltile.setInventorySlotContents(2, null);
 			}
 				
-			// ’І—ќ‰В”\•i‚рв}‚Й‚ЫЃ[‚ў
+			// пїЅпїЅпїЅпїЅпїЅВ”\пїЅiпїЅпїЅпїЅ}пїЅЙ‚ЫЃ[пїЅпїЅ
 			if (!lflag && ltile.getStackInSlot(0) == null) {
 				litemstack = ltile.getStackInSlot(2);
 				li = owner.maidInventory.getSmeltingItem();
 				owner.setEquipItem(li);
 				if (li > -1) {
 					litemstack = owner.maidInventory.getStackInSlot(li);
-					// ѓЊѓVѓs‘О‰ћ•i
+					// пїЅпїЅпїЅVпїЅsпїЅО‰пїЅпїЅi
 					if (litemstack.stackSize >= ltile.getInventoryStackLimit()) {
 						ltile.setInventorySlotContents(0, litemstack.splitStack(ltile.getInventoryStackLimit()));
 					} else {
@@ -182,7 +191,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				}
 			}
 			
-			// ЋиЋќ‚ї‚М”R—ї‚р‚ЫЃ[‚ў
+			// пїЅиЋќпїЅпїЅпїЅМ”RпїЅпїЅпїЅпїЅпїЅЫЃ[пїЅпїЅ
 			if (!lflag && ltile.getStackInSlot(1) == null && ltile.getStackInSlot(0) != null) {
 				owner.getNextEquipItem();
 				litemstack = owner.getCurrentEquippedItem();
@@ -203,7 +212,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 					if (ltile.isBurning()) {
 						lflag = true;
 					} else {
-						// ”R‚в‚№‚йѓAѓCѓeѓЂ‚рЋќ‚Б‚Д‚И‚ў‚М‚Е’І—ќ‰В”\•i‚р‰сЋы
+						// пїЅRпїЅв‚№пїЅпїЅAпїЅCпїЅeпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅД‚И‚пїЅпїЅМ‚Е’пїЅпїЅпїЅпїЅВ”\пїЅiпїЅпїЅпїЅпїЅпїЅ
 						ItemStack litemstack2 = ltile.getStackInSlotOnClosing(0);
 						if (owner.maidInventory.addItemStackToInventory(litemstack2)) {
 							owner.playSound("random.pop");
@@ -217,7 +226,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				}
 			} 
 			
-			// ”R‚¦ЏI‚н‚Б‚Д‚й‚М‚Й”R—їЊы‚Й‰Ѕ‚©‚ ‚й‚И‚з‰сЋы‚·‚й
+			// пїЅRпїЅпїЅпїЅIпїЅпїЅпїЅпїЅД‚пїЅМ‚Й”RпїЅпїЅпїЅпїЅЙ‰пїЅпїЅпїЅпїЅпїЅпїЅпїЅИ‚пїЅпїЅпїЅпїЅ
 			if (!lflag && !ltile.isBurning() && ltile.getStackInSlot(1) != null) {
 				ItemStack litemstack2 = ltile.getStackInSlotOnClosing(1);
 				if (owner.maidInventory.addItemStackToInventory(litemstack2)) {

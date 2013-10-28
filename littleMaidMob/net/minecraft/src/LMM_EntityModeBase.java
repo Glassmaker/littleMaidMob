@@ -2,11 +2,24 @@ package net.minecraft.src;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+
 /**
- * LMM—p“Æ©AIˆ—‚Ég—pB
- * ‚±‚ÌŒp³ƒNƒ‰ƒX‚ğAIˆ—‚Æ‚µ‚Ä“n‚·‚±‚Æ‚ª‚Å‚«‚éB
- * ‚Ü‚½AAIˆ—‘I‘ğ’†‚Í“Á’è‚ÌŠÖ”‚ğœ‚¢‚Ä‘I‘ğ’†‚ÌƒNƒ‰ƒX‚Ì‚İ‚ªˆ—‚³‚ê‚éB
- * ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚·‚é–‚É‚æ‚èƒ[ƒJƒ‹•Ï”‚ğ•ÛB
+ * LMMï¿½pï¿½Æï¿½AIï¿½ï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½B
+ * ï¿½ï¿½ï¿½ÌŒpï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½AIï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ä“nï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Å‚ï¿½ï¿½ï¿½B
+ * ï¿½Ü‚ï¿½ï¿½AAIï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ğ’†‚Í“ï¿½ï¿½ï¿½ÌŠÖï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‘Iï¿½ğ’†‚ÌƒNï¿½ï¿½ï¿½Xï¿½Ì‚İ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+ * ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½é–ï¿½É‚ï¿½èƒï¿½[ï¿½Jï¿½ï¿½ï¿½Ïï¿½ï¿½ï¿½Ûï¿½ï¿½B
  */
 public abstract class LMM_EntityModeBase {
 
@@ -14,7 +27,7 @@ public abstract class LMM_EntityModeBase {
 
 
 	/**
-	 * ‰Šú‰»
+	 * ï¿½ï¿½ï¿½ï¿½
 	 */
 	public LMM_EntityModeBase(LMM_EntityLittleMaid pEntity) {
 		owner = pEntity;
@@ -22,143 +35,143 @@ public abstract class LMM_EntityModeBase {
 
 	public int fpriority;
 	/**
-	 * —Dæ‡ˆÊB
-	 * ”Ô†‚ªá‚¢‚Ù‚¤‚ªæ‚Éˆ—‚³‚ê‚éB
-	 * ‰º“ñŒ…‚ª00‚Ì‚à‚Ì‚ÍƒVƒXƒeƒ€—\–ñB
+	 * ï¿½Dï¿½æ‡ï¿½ÊB
+	 * ï¿½Ôï¿½ï¿½ï¿½ï¿½á‚¢ï¿½Ù‚ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	 * ï¿½ï¿½ï¿½ñŒ…‚ï¿½00ï¿½Ì‚ï¿½ï¿½Ì‚ÍƒVï¿½Xï¿½eï¿½ï¿½ï¿½\ï¿½ï¿½B
 	 */
 	public abstract int priority();
 
 	/**
-	 * ‹N“®‚Ì‰Šú‰»B
+	 * ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½B
 	 */
 	public void init() {
 	}
 
 	/**
-	 * Entity‰Šú‰»‚ÌÀs•”
+	 * Entityï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½sï¿½ï¿½
 	 */
 	public void initEntity() {
 	}
 
 	/**
-	 * ƒ‚[ƒh‚Ì’Ç‰ÁB
+	 * ï¿½ï¿½ï¿½[ï¿½hï¿½Ì’Ç‰ï¿½ï¿½B
 	 */
 	public abstract void addEntityMode(EntityAITasks pDefaultMove, EntityAITasks pDefaultTargeting);
 
 	/**
-	 * “Æ©ƒf[ƒ^•Û‘¶—pB
+	 * ï¿½Æï¿½ï¿½fï¿½[ï¿½^ï¿½Û‘ï¿½ï¿½pï¿½B
 	 */
 	public void writeEntityToNBT(NBTTagCompound par1nbtTagCompound) {
 	}
 	/**
-	 * “Æ©ƒf[ƒ^“Ç—pB
+	 * ï¿½Æï¿½ï¿½fï¿½[ï¿½^ï¿½Çï¿½ï¿½pï¿½B
 	 */
 	public void readEntityFromNBT(NBTTagCompound par1nbtTagCompound) {
 	}
 
 	/**
-	 * renderSpecial‚Ì’Ç‰ÁÀ‘•—pB
+	 * renderSpecialï¿½Ì’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½B
 	 */
 	public void showSpecial(LMM_RenderLittleMaid prenderlittlemaid, double px, double py, double pz) {
 	}
 
 	/**
-	 * ƒT[ƒo[‘¤‚Ì‚İ‚Ì–ˆˆ—B
-	 * AIˆ—‚ÌŒã‚Ì•û‚ÉŒÄ‚Î‚ê‚éB
+	 * ï¿½Tï¿½[ï¿½oï¿½[ï¿½ï¿½ï¿½Ì‚İ‚Ì–ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	 * AIï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½Ì•ï¿½ÉŒÄ‚Î‚ï¿½ï¿½B
 	 */
 	public void updateAITick(int pMode) {
 	}
 
 	/**
-	 * –ˆˆ—B
-	 * ‘¼‚Ìˆ—‚Ì‘O‚ÉŒÄ‚Î‚ê‚é
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	 * ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Ì‘Oï¿½ÉŒÄ‚Î‚ï¿½ï¿½
 	 */
 	public void onUpdate(int pMode) {
 	}
 
 	/**
-	 * ‚±‚Ì‚Ö‚ñ‚Ìˆ—‚ÍáŠ±ŠÔ‚©‚©‚Á‚Ä‚à—Ç‚µB
-	 * ‘¼‚ÌƒAƒCƒeƒ€‚ğg—p‚µ‚½‚¢B
-	 * •âŠ®ˆ—‚Éæ‚ñ‚¶‚ÄÀs‚³‚ê‚éA‚»‚Ì‘ã‚í‚è”»’è‚à‘S•”©•ª‚¿B
+	 * ï¿½ï¿½ï¿½Ì‚Ö‚ï¿½Ìï¿½ï¿½ï¿½ï¿½ÍáŠ±ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ç‚ï¿½ï¿½B
+	 * ï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	 * ï¿½âŠ®ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ñ‚¶‚Äï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Ì‘ï¿½ï¿½è”»ï¿½ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 */
 	public boolean preInteract(EntityPlayer pentityplayer, ItemStack pitemstack) {
 		return false;
 	}
 	/**
-	 * ‚±‚Ì‚Ö‚ñ‚Ìˆ—‚ÍáŠ±ŠÔ‚©‚©‚Á‚Ä‚à—Ç‚µB
-	 * ‘¼‚ÌƒAƒCƒeƒ€‚ğg—p‚µ‚½‚¢B
+	 * ï¿½ï¿½ï¿½Ì‚Ö‚ï¿½Ìï¿½ï¿½ï¿½ï¿½ÍáŠ±ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ç‚ï¿½ï¿½B
+	 * ï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 */
 	public boolean interact(EntityPlayer pentityplayer, ItemStack pitemstack) {
 		return false;
 	}
 
 	/**
-	 * »“œ‚Åƒ‚[ƒhƒ`ƒFƒ“ƒW‚µ‚½B
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Åƒï¿½ï¿½[ï¿½hï¿½`ï¿½Fï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 */
 	public boolean changeMode(EntityPlayer pentityplayer) {
 		return false;
 	}
 
 	/**
-	 * ƒ‚[ƒhƒ`ƒFƒ“ƒW‚Ìİ’èˆ—‚Ì–{‘ÌB
-	 * ‚±‚Á‚¿‚Éˆ—‚ğ‘‚©‚È‚¢‚Æƒ[ƒh‚É‚¨‚©‚µ‚­‚È‚é‚©‚àH
+	 * ï¿½ï¿½ï¿½[ï¿½hï¿½`ï¿½Fï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Ìİ’èˆï¿½ï¿½ï¿½Ì–{ï¿½ÌB
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Æƒï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚é‚©ï¿½ï¿½ï¿½H
 	 */
 	public boolean setMode(int pMode) {
 		return false;
 	}
 
 	/**
-	 * g—pƒAƒCƒeƒ€‚Ì‘I‘ğB
-	 * –ß‚è’l‚ÍƒXƒƒbƒg”Ô†
+	 * ï¿½gï¿½pï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ì‘Iï¿½ï¿½ï¿½B
+	 * ï¿½ß‚ï¿½lï¿½ÍƒXï¿½ï¿½ï¿½bï¿½gï¿½Ôï¿½
 	 */
 	public int getNextEquipItem(int pMode) {
-		// –¢‘I‘ğ
+		// ï¿½ï¿½ï¿½Iï¿½ï¿½
 		return -1;
 	}
 	
 	/**
-	 * ƒAƒCƒeƒ€‰ñû‰Â”Û‚Ì”»’è®B
-	 * E‚¢‚És‚­ƒAƒCƒeƒ€‚Ì”»’èB
+	 * ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½Â”Û‚Ì”ï¿½ï¿½è®ï¿½B
+	 * ï¿½Eï¿½ï¿½ï¿½Ésï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½B
 	 */
 	public boolean checkItemStack(ItemStack pItemStack) {
-		// ‰ñû‘ÎÛƒAƒCƒeƒ€‚Ìİ’è‚È‚µ
+		// ï¿½ï¿½ï¿½ÎÛƒAï¿½Cï¿½eï¿½ï¿½ï¿½Ìİ’ï¿½È‚ï¿½
 		return false;
 	}
 
 	/**
-	 * UŒ‚”»’èˆ—B
-	 * “Áê‚ÈUŒ‚“®ì‚Í‚±‚±‚ÅÀ‘•B
+	 * ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½èˆï¿½ï¿½ï¿½B
+	 * ï¿½ï¿½ï¿½ï¿½ÈUï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½B
 	 */
 	public boolean attackEntityAsMob(int pMode, Entity pEntity) {
-		// “ÁêUŒ‚‚Ìİ’è‚È‚µ
+		// ï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½Ìİ’ï¿½È‚ï¿½
 		return false;
 	}
 
 	/**
-	 * ƒuƒƒbƒN‚Ìƒ`ƒFƒbƒN”»’è‚ğ‚·‚é‚©‚Ç‚¤‚©B
-	 * ”»’è®‚Ì‚Ç‚¿‚ç‚ğg‚¤‚©‚ğ‚±‚ê‚Å‘I‘ğB
+	 * ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½Ìƒ`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½B
+	 * ï¿½ï¿½ï¿½è®ï¿½Ì‚Ç‚ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å‘Iï¿½ï¿½ï¿½B
 	 */
 	public boolean isSearchBlock() {
 		return false;
 	}
 
 	/**
-	 * isSearchBlock=false‚Ì‚Æ‚«‚É”»’è‚³‚ê‚éB
+	 * isSearchBlock=falseï¿½Ì‚Æ‚ï¿½ï¿½É”ï¿½ï¿½è‚³ï¿½ï¿½ï¿½B
 	 */
 	public boolean shouldBlock(int pMode) {
 		return false;
 	}
 
 	/**
-	 * ’T‚µ‹‚ß‚½ƒuƒƒbƒN‚Å‚ ‚é‚©B
-	 * true‚ğ•Ô‚·‚ÆŒŸõI—¹B
+	 * ï¿½Tï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½Å‚ï¿½ï¿½é‚©ï¿½B
+	 * trueï¿½ï¿½Ô‚ï¿½ï¿½ÆŒï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½B
 	 */
 	public boolean checkBlock(int pMode, int px, int py, int pz) {
 		return false;
 	}
 
 	/**
-	 * ŒŸõ”ÍˆÍ‚Éõ“G‘ÎÛ‚ª‚È‚©‚Á‚½B
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ÍˆÍ‚Éï¿½ï¿½Gï¿½ÎÛ‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 */
 	public boolean overlooksBlock(int pMode) {
 		return false;
@@ -169,14 +182,14 @@ public abstract class LMM_EntityModeBase {
 //	}
 
 	/**
-	 * ŒÀŠE‹——£‚ğ’´‚¦‚½‚Ìˆ—
+	 * ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ğ’´‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 	 */
 	public void farrangeBlock() {
 		owner.getNavigator().clearPathEntity();
 	}
 
 	/**
-	 * —LŒøË’ö‹——£‚ğ’´‚¦‚½‚Ìˆ—
+	 * ï¿½Lï¿½ï¿½Ë’ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ’´‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 	 */
 	public boolean outrangeBlock(int pMode, int pX, int pY, int pZ) {
 		return owner.getNavigator().tryMoveToXYZ(pX, pY, pZ, 1.0F);
@@ -186,8 +199,8 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * Ë’ö‹——£‚É“ü‚Á‚½‚çÀs‚³‚ê‚éB
-	 * –ß‚è’l‚ªtrue‚Ì‚ÍI—¹‚¹‚¸‚É“®ìŒp‘±
+	 * ï¿½Ë’ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½B
+	 * ï¿½ß‚ï¿½lï¿½ï¿½trueï¿½Ìï¿½ï¿½ÍIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É“ï¿½ï¿½ï¿½pï¿½ï¿½
 	 */
 	public boolean executeBlock(int pMode, int px, int py, int pz) {
 		return false;
@@ -197,82 +210,82 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * AIÀs‚ÉŒÄ‚Î‚ê‚éB
+	 * AIï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ÉŒÄ‚Î‚ï¿½ï¿½B
 	 */
 	public void startBlock(int pMode) {
 	}
 
 	/**
-	 * AII—¹‚ÉŒÄ‚Î‚ê‚éB
+	 * AIï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ÉŒÄ‚Î‚ï¿½ï¿½B
 	 */
 	public void resetBlock(int pMode) {
 	}
 
 	/**
-	 * Œp‘±”»’è‚ğs‚¤‚ÉŒÄ‚Î‚ê‚éB
+	 * ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ÉŒÄ‚Î‚ï¿½ï¿½B
 	 */
 	public void updateBlock() {
 	}
 
 
 	/**
-	 * “Æ©õ“Gˆ—‚Ìg—p—L–³
+	 * ï¿½Æï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½ï¿½ï¿½Ìgï¿½pï¿½Lï¿½ï¿½
 	 */
 	public boolean isSearchEntity() {
 		return false;
 	}
 
 	/**
-	 * “Æ©õ“Gˆ—
+	 * ï¿½Æï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½ï¿½
 	 */
 	public boolean checkEntity(int pMode, Entity pEntity) {
 		return false;
 	}
 
 	/**
-	 * ”­Œõˆ——p
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½p
 	 */
 	public int colorMultiplier(float pLight, float pPartialTicks) {
 		return 0;
 	}
 	
 	/**
-	 * ”íƒ_ƒ‚Ìˆ—‚PB
-	 * 0ˆÈã‚ğ•Ô‚·‚Æˆ—‚ğæ‚Áæ‚éB
-	 * 1:false‚ÅŒ³‚Ìˆ—‚ğI—¹‚·‚éB
-	 * 2:true‚ÅŒ³‚Ìˆ—‚ğI—¹‚·‚éB
+	 * ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Pï¿½B
+	 * 0ï¿½Èï¿½ï¿½Ô‚ï¿½ï¿½Æï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	 * 1:falseï¿½ÅŒï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	 * 2:trueï¿½ÅŒï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 */
 	public float attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		return 0;
 	}
 	/**
-	 * ”íƒ_ƒ‚Ìˆ—‚QB
-	 * true‚ğ•Ô‚·‚Æˆ—‚ğæ‚Áæ‚éB
+	 * ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Qï¿½B
+	 * trueï¿½ï¿½Ô‚ï¿½ï¿½Æï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 */
 	public boolean damageEntity(int pMode, DamageSource par1DamageSource, float par2) {
 		return false;
 	}
 
 	/**
-	 * ©•ª‚ªg‚Á‚Ä‚¢‚éTile‚È‚çTrue‚ğ•Ô‚·B
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Tileï¿½È‚ï¿½Trueï¿½ï¿½Ô‚ï¿½ï¿½B
 	 */
 	public boolean isUsingTile(TileEntity pTile) {
 		return false;
 	}
 
 	/**
-	 * ‚Á‚Ä‚éTile‚ğ•Ô‚·B
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½Tileï¿½ï¿½Ô‚ï¿½ï¿½B
 	 */
 	public List<TileEntity> getTiles() {
 		return null;
 	}
 
 	/**
-	 * do1:“–‚½‚è”»’è‚Ìƒ`ƒFƒbƒN
-	 * do2:íƒuƒƒN”»’èA“§‰ß”»’è‚à“–‚½‚è”»’è‚à–³‹B
+	 * do1:ï¿½ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½N
+	 * do2:ï¿½íï¿½uï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ß”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 */
 	protected boolean canBlockBeSeen(int pX, int pY, int pZ, boolean toTop, boolean do1, boolean do2) {
-		// ƒuƒƒbƒN‚Ì‰Â‹”»’è
+		// ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½Ì‰Âï¿½ï¿½ï¿½ï¿½ï¿½
 		World worldObj = owner.worldObj;
 		Block lblock = Block.blocksList[worldObj.getBlockId(pX, pY, pZ)];
 		if (lblock == null) {
@@ -282,11 +295,11 @@ public abstract class LMM_EntityModeBase {
 		lblock.setBlockBoundsBasedOnState(worldObj, pX, pY, pZ);
 		
 		Vec3 vec3do = Vec3.createVectorHelper(owner.posX, owner.posY + owner.getEyeHeight(), owner.posZ);
-		Vec3 vec3dt = Vec3.createVectorHelper((double)pX + 0.5D, (double)pY + ((lblock.maxY + lblock.minY) * (toTop ? 0.9D : 0.5D)), (double)pZ + 0.5D);
+		Vec3 vec3dt = Vec3.createVectorHelper((double)pX + 0.5D, (double)pY + ((lblock.getBlockBoundsMaxY() + lblock.getBlockBoundsMinY()) * (toTop ? 0.9D : 0.5D)), (double)pZ + 0.5D);
 		MovingObjectPosition movingobjectposition = worldObj.rayTraceBlocks_do_do(vec3do, vec3dt, do1, do2);
 		
 		if (movingobjectposition != null && movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
-			// ÚGƒuƒƒbƒN‚ªw’è‚µ‚½‚à‚Ì‚È‚ç‚Î
+			// ï¿½ÚGï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½wï¿½è‚µï¿½ï¿½ï¿½ï¿½ï¿½Ì‚È‚ï¿½ï¿½
 			if (movingobjectposition.blockX == pX && 
 					movingobjectposition.blockY == pY &&
 					movingobjectposition.blockZ == pZ) {
@@ -297,7 +310,7 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * å‚Æ‚Ì‹——£Š´B
+	 * ï¿½ï¿½Æ‚Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	 * @param pIndex
 	 * 0:minRange;
 	 * 1:maxRange;
@@ -308,7 +321,7 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * UŒ‚Œã‚Éƒ^[ƒQƒbƒg‚ğÄİ’è‚³‚¹‚é‚©‚Ìw’èB
+	 * ï¿½Uï¿½ï¿½ï¿½ï¿½Éƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½Äİ’è‚³ï¿½ï¿½ï¿½é‚©ï¿½Ìwï¿½ï¿½B
 	 * @param pTarget
 	 * @return
 	 */

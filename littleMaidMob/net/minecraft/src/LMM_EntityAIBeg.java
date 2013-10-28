@@ -1,5 +1,10 @@
 package net.minecraft.src;
 
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 public class LMM_EntityAIBeg extends EntityAIBase {
 
 	protected LMM_EntityLittleMaid littleMaid;
@@ -8,7 +13,7 @@ public class LMM_EntityAIBeg extends EntityAIBase {
 	protected World worldObj;
 	protected float effectiveRange;
 	protected double effectiveRangeSq;
-	protected int field_48347_e; // ‹»–¡‚ğ‚Á‚Ä‚¢‚éŠÔH
+	protected int field_48347_e; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½éï¿½ÔH
 
 	public LMM_EntityAIBeg(LMM_EntityLittleMaid pentityLittlemaid, float par2) {
 		littleMaid = pentityLittlemaid;
@@ -70,7 +75,7 @@ public class LMM_EntityAIBeg extends EntityAIBase {
 
 	@Override
 	public void updateTask() {
-		// –Ú‚ÅE‚·
+		// ï¿½Ú‚ÅEï¿½ï¿½
 		littleMaid.getLookHelper().setLookPositionWithEntity(targetPlayer, 10F,
 				littleMaid.getVerticalFaceSpeed());
 		if (littleMaid.getNavigator().noPath()) {

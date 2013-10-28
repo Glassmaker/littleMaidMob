@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+
 public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI {
 
 	protected boolean isEnable;
@@ -32,7 +36,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 			return fmodeBase.shouldBlock(theMaid.maidMode);
 		}
 		
-		// ƒ^[ƒQƒbƒg‚ğƒT[ƒ`
+		// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½Tï¿½[ï¿½`
 		int lx = MathHelper.floor_double(theMaid.posX);
 		int ly = MathHelper.floor_double(theMaid.posY);
 		int lz = MathHelper.floor_double(theMaid.posZ);
@@ -45,7 +49,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 		MMM_EntityDummy.clearDummyEntity(theMaid);
 		boolean flagdammy = false;
 		
-		// CW•ûŒü‚ÉŒŸõ—Ìˆæ‚ğL‚°‚é 
+		// CWï¿½ï¿½ï¿½ÉŒï¿½ï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ 
 		for (int d = 0; d < 4; d++) {
 			for (int a = 0; a < 18; a += 2) {
 				int del = a / 2;
@@ -128,19 +132,19 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 	@Override
 	public boolean continueExecuting() {
 		fmodeBase.updateBlock();
-		// ˆÚ“®’†‚ÍŒp‘±
+		// ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ÍŒpï¿½ï¿½
 		if (!theMaid.getNavigator().noPath()) return true;
 		
 		double ld = theMaid.getDistanceTilePos();
 		if (ld > 100.0D) {
-			// õ“G”ÍˆÍŠO
+			// ï¿½ï¿½ï¿½Gï¿½ÍˆÍŠO
 			theMaid.getActiveModeClass().farrangeBlock();
 			return false;
 		} else if (ld > 5.0D) {
-			// Ë’ö‹——£ŠO
+			// ï¿½Ë’ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O
 			return theMaid.getActiveModeClass().outrangeBlock(theMaid.maidMode);
 		} else {
-			// Ë’ö‹——£
+			// ï¿½Ë’ï¿½ï¿½ï¿½ï¿½ï¿½
 			return theMaid.getActiveModeClass().executeBlock(theMaid.maidMode);
 		}
 	}
@@ -157,7 +161,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 
 	@Override
 	public void updateTask() {
-		// ƒ^[ƒQƒbƒg‚ğŒ©‚Â‚¯‚Ä‚¢‚é
+		// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 		theMaid.looksTilePos();
 	}
 

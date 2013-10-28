@@ -1,11 +1,20 @@
 package net.minecraft.src;
 
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityOwnable;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.StringTranslate;
+import net.minecraft.world.World;
+
 public class LMM_GuiIFF extends MMM_GuiMobSelect {
 
 	public static final String IFFString[] = {
-		"ENEMY", // ”½Œ‚Aë
-		"UNKNOWN", // ”½Œ‚
-		"FRIENDLY" // UŒ‚‚µ‚È‚¢
+		"ENEMY", // â€Â½Å’â€šï¿½AÅ½Ã«
+		"UNKNOWN", // â€Â½Å’â€š
+		"FRIENDLY" // ï¿½UÅ’â€šâ€šÂµâ€šÃˆâ€šÂ¢
 	};
 
 	protected LMM_EntityLittleMaid target;
@@ -16,7 +25,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 		screenTitle = "LittleMaid IFF";
 		target = pEntity;
 		
-		// IFF‚ğƒT[ƒo[‚©‚çæ“¾
+		// IFFâ€šÃ°Æ’Tï¿½[Æ’oï¿½[â€šÂ©â€šÃ§Å½Ã¦â€œÂ¾
 		if (!MMM_Client.isIntegratedServerRunning()) {
 			int li = 0;
 			for (String ls : LMM_IFF.DefaultIFF.keySet()) {
@@ -34,22 +43,22 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 	@Override
 	protected boolean checkEntity(String pName, Entity pEntity, int pIndex) {
 		boolean lf = false;
-		// Entity‚Ì’l‚ğİ’è
+		// Entityâ€šÃŒâ€™lâ€šÃ°ï¿½Ãâ€™Ã¨
 		int liff = LMM_IFF.checkEntityStatic(pName, pEntity, pIndex, entityMap);
 		if (pEntity instanceof EntityLivingBase) {
 			if (pEntity instanceof LMM_EntityLittleMaid) {
 				if (pIndex == 0 || pIndex == 1) {
-					// –ì¶íA©•ªŒ_–ñÒ
+					// â€“Ã¬ï¿½Â¶Å½Ã­ï¿½AÅ½Â©â€¢ÂªÅ’_â€“Ã±Å½Ã’
 					lf = true;
 				} else {
-					// ‘¼l‚ÌŒ_–ñÒ
+					// â€˜Â¼ï¿½lâ€šÃŒÅ’_â€“Ã±Å½Ã’
 				}
 			} else if (pEntity instanceof EntityOwnable) {
 				if (pIndex == 0 || pIndex == 1) {
-					// –ì¶íA©•ª‚Ì
+					// â€“Ã¬ï¿½Â¶Å½Ã­ï¿½AÅ½Â©â€¢Âªâ€šÃŒ
 					lf = true;
 				} else {
-					// ‘¼l‚Ì‰Æ’{
+					// â€˜Â¼ï¿½lâ€šÃŒâ€°Ã†â€™{
 				}
 			}
 		}
@@ -61,10 +70,8 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 	public void initGui() {
 		super.initGui();
 		
-		StringTranslate stringtranslate = StringTranslate.getInstance();
-		
 		buttonList.add(new GuiButton(200, width / 2 - 130, height - 40, 120, 20,
-				stringtranslate.translateKey("gui.done")));
+				StatCollector.translateToLocal("gui.done")));
 		buttonList.add(new GuiButton(201, width / 2 + 10, height - 40, 120, 20,
 				"Trigger Select"));
 	}
@@ -103,7 +110,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 			}
 			
 			if (!mc.isIntegratedServerRunning()) {
-				// ƒT[ƒo[‚Ö•ÏX’l‚ğ‘—‚éB
+				// Æ’Tï¿½[Æ’oï¿½[â€šÃ–â€¢Ãï¿½Xâ€™lâ€šÃ°â€˜â€”â€šÃ©ï¿½B
 				int li = 0;
 				for (String ls : LMM_IFF.DefaultIFF.keySet()) {
 					if (ls.contains(pName)) {
@@ -127,7 +134,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 	@Override
 	public void drawSlot(int pSlotindex, int pX, int pY, int pDrawheight,
 			Tessellator pTessellator, String pName, Entity pEntity) {
-		// –¼‘O‚Æ“G–¡•û¯•Ê‚Ì•`‰æ
+		// â€“Â¼â€˜Oâ€šÃ†â€œGâ€“Â¡â€¢Ã»Å½Â¯â€¢ÃŠâ€šÃŒâ€¢`â€°Ã¦
 		int tt = LMM_IFF.getIFF(null, pName);
 		int c = 0xffffff;
 		switch (tt) {
