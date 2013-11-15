@@ -62,7 +62,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	}
 
 	protected boolean checkSnows(int x, int y, int z) {
-		// ��肪�Ⴉ�H
+		// ・ｽ・ｽ閧ｪ・ｽ痰ｩ・ｽH
 		boolean f = true;
 		f &= owner.worldObj.getBlockId(x, y, z) == Block.snow.blockID;
 		f &= owner.worldObj.getBlockId(x + 1, y, z) == Block.snow.blockID;
@@ -80,7 +80,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 		int z = MathHelper.floor_double(owner.posZ);
 		PathEntity pe = null;
 		
-		// CW���Ɍ����̈���L���� 
+		// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ 
 		loop_search:
 			for (int a = 2; a < 18 && pe == null; a += 2) {
 				x--;
@@ -114,7 +114,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	protected void playingSnowWar() {
 		switch (fcounter) {
 		case 0:
-			// �L��ʑS��������
+			// ・ｽL・ｽ・ｽﾊ全・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 			owner.setSitting(false);
 			owner.setSneaking(false);
 			if (!owner.getNextEquipItem()) {
@@ -123,7 +123,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 				owner.getNavigator().clearPathEntity();
 				fcounter = 1;
 			} else if (owner.getAttackTarget() == null) {
-				// ���C�h�ƃv���[���[�i�����ʁj���^�[�Q�b�g��
+				// ・ｽ・ｽ・ｽC・ｽh・ｽﾆプ・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽ[・ｽi・ｽ・ｽ・ｽ・ｽ・ｽﾊ）・ｽ・ｽ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ
 				List<Entity> list = owner.worldObj.getEntitiesWithinAABBExcludingEntity(owner, owner.boundingBox.expand(16D, 4D, 16D));
 				for (Entity e : list) {
 					if (e != null && (e instanceof EntityPlayer || e instanceof LMM_EntityLittleMaid)) {
@@ -136,7 +136,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 			}
 			break;
 		case 1:
-			// ��������
+			// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 			owner.setAttackTarget(null);
 			if (owner.getNavigator().noPath()) {
 				fcounter = 2;
@@ -144,7 +144,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 			break;
 		
 		case 2:
-			// �ጴ��T��
+			// ・ｽ瘡ｴ・ｽ・ｽT・ｽ・ｽ
 			if (owner.getAttackTarget() == null && owner.getNavigator().noPath()) {
 				if (movePlaying()) {
 					fcounter = 3;
@@ -158,7 +158,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 //			isMaidChaseWait = true;
 			break;
 		case 3:
-			// �ጴ�֓���
+			// ・ｽ瘡ｴ・ｽﾖ難ｿｽ・ｽ・ｽ
 			if (owner.getNavigator().noPath()) {
 				if (checkSnows(
 						MathHelper.floor_double(owner.posX),
@@ -172,7 +172,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 						fcounter = 4;
 					}
 				} else {
-					// �Č���
+					// ・ｽﾄ鯉ｿｽ・ｽ・ｽ
 					fcounter = 2;
 				}
 			}
@@ -181,7 +181,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 		case 5:
 		case 6:
 		case 7:
-			// �����[�h
+			// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh
 			if (owner.attackTime <= 0) {
 				if (owner.maidInventory.addItemStackToInventory(new ItemStack(Item.snowball))) {
 					owner.playSound("random.pop");
@@ -208,7 +208,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 			owner.setSitting(true);
 			break;
 		case 8:
-			// �����[�h
+			// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh
 //			isMaidChaseWait = true;
 			if (owner.attackTime <= 0) {
 				if (owner.maidInventory.addItemStackToInventory(new ItemStack(Item.snowball))) {
@@ -236,18 +236,18 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	@Override
 	public void updateAITick(int pMode) {
 		if (owner.isFreedom()) {
-			// ���R�s�����̌ő̂͌Վ�ἁX�ƌ������������B
+			// ・ｽ・ｽ・ｽR・ｽs・ｽ・ｽ・ｽ・ｽ・ｽﾌ固体は虎趣ｿｽ眈々・ｽﾆ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 			if (owner.worldObj.isDaytime()) {
-				// ���Ԃ̂��V��
+				// ・ｽ・ｽ・ｽﾔのゑｿｽ・ｽV・ｽ・ｽ
 				
-				// �ጴ����
+				// ・ｽ瘡ｴ・ｽ・ｽ・ｽ・ｽ
 				if (!owner.isPlaying()) {
-					// TODO:���V�є���
+					// TODO:・ｽ・ｽ・ｽV・ｽﾑ費ｿｽ・ｽ・ｽ
 					int xx = MathHelper.floor_double(owner.posX);
 					int yy = MathHelper.floor_double(owner.posY);
 					int zz = MathHelper.floor_double(owner.posZ);
 					
-					// 3x3����̕����Ȃ炨�V�є��肪����
+					// 3x3・ｽ・ｽ・ｽ・ｽﾌ包ｿｽ・ｽ・ｽ・ｽﾈらお・ｽV・ｽﾑ費ｿｽ・ｽ閧ｪ・ｽ・ｽ・ｽ・ｽ
 					boolean f = true;
 					for (int z = -1; z < 2; z++) {
 						for (int x = -1; x < 2; x++) {
@@ -263,11 +263,11 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 					}
 					
 				} else if (owner.getPlayingRole() >= 0x8000) {
-					// ��̕��I��
+					// ・ｽ・ｽﾌ包ｿｽ・ｽI・ｽ・ｽ
 					owner.setPlayingRole(mpr_NULL);
 					fcounter = 0;
 				} else {
-					// ���V�т̎��s�������ɏ����H
+					// ・ｽ・ｽ・ｽV・ｽﾑの趣ｿｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽH
 					if (owner.getPlayingRole() == mpr_QuickShooter || 
 							owner.getPlayingRole() == mpr_StockShooter) {
 						playingSnowWar();
@@ -276,22 +276,22 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 				}
 				
 			} else {
-				// ��̂��V��
+				// ・ｽ・ｽﾌゑｿｽ・ｽV・ｽ・ｽ
 				if (!owner.isPlaying()) {
-					// ��������
+					// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 					
 				} else if (owner.getPlayingRole() < 0x8000) {
-					// ���̕��I��
+					// ・ｽ・ｽ・ｽﾌ包ｿｽ・ｽI・ｽ・ｽ
 					owner.setPlayingRole(mpr_NULL);
 					fcounter = 0;
 					
 				} else {
-					// ���V�т̎��s�������ɏ����H
+					// ・ｽ・ｽ・ｽV・ｽﾑの趣ｿｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽH
 					
 				}
 			}
 			
-			// �`�F�X�g����
+			// ・ｽ`・ｽF・ｽX・ｽg・ｽ・ｽ・ｽ・ｽ
 			if (owner.getAttackTarget() == null
 					&& owner.maidInventory.getFirstEmptyStack() == -1) {
 				
@@ -302,7 +302,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	@Override
 	public float attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (par1DamageSource.getSourceOfDamage() instanceof EntitySnowball) {
-			// ���V�є���p�A��ʂ��ǂ�������
+			// ・ｽ・ｽ・ｽV・ｽﾑ費ｿｽ・ｽ・ｽp・ｽA・ｽ・ｽﾊゑｿｽ・ｽﾇゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 			owner.maidDamegeSound = LMM_EnumSound.hurt_snow;
 			if (!owner.isContract() || owner.isFreedom()) {
 				owner.setPlayingRole(mpr_QuickShooter);
@@ -335,7 +335,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 				litemstack = owner.maidInventory.getStackInSlot(li);
 				if (litemstack == null) continue;
 				
-				// �ዅ
+				// ・ｽ瘠・
 				if (litemstack.getItem() instanceof ItemSnowball) {
 					return li;
 				}

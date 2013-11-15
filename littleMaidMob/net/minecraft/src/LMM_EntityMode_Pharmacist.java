@@ -78,7 +78,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ���[�h�ɉ��������ʔ���A���x�D��
+		// ・ｽ・ｽ・ｽ[・ｽh・ｽﾉ会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽA・ｽ・ｽ・ｽx・ｽD・ｽ・ｽ
 		switch (pMode) {
 		case mmode_Pharmacist :
 			litemstack = owner.getCurrentEquippedItem();
@@ -86,7 +86,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 				for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
 					litemstack = owner.maidInventory.getStackInSlot(li);
 					if (litemstack != null) {
-						// �Ώۂ͐��|�[�V����
+						// ・ｽﾎ象は撰ｿｽ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ
 						if (litemstack.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack)) {
 							return li;
 						}
@@ -119,7 +119,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean shouldBlock(int pMode) {
-		// ���s������
+		// ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 		return owner.maidTileEntity instanceof TileEntityBrewingStand &&
 				(((TileEntityBrewingStand)owner.maidTileEntity).getBrewTime() > 0 ||
 						(owner.getCurrentEquippedItem() != null) || inventryPos > 0);
@@ -135,9 +135,9 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		
-		// ���E�̃��C�h����
+		// ・ｽ・ｽ・ｽE・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽ・ｽ
 		checkWorldMaid(ltile);
-		// �g�p���Ă���������Ȃ炻���ŏI��
+		// ・ｽg・ｽp・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈらそ・ｽ・ｽ・ｽﾅ終・ｽ・ｽ
 		if (owner.isUsingTile(ltile)) return true;
 		
 		double ldis = owner.getDistanceTilePosSq(ltile);
@@ -160,10 +160,10 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 		boolean lflag = false;
 		LMM_SwingStatus lswing = owner.getSwingStatusDominant();
 		
-		// �����ҋ@
+		// ・ｽ・ｽ・ｽ・ｽ・ｽﾒ機
 //    	isMaidChaseWait = true;
 		if (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null || ltile.getStackInSlot(3) != null || !lswing.canAttack()) {
-			// ���d����
+			// ・ｽ・ｽ・ｽd・ｽ・ｽ・ｽ・ｽ
 			owner.setWorking(true);
 		}
 		
@@ -171,7 +171,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			ItemStack litemstack2 = ltile.getStackInSlot(3);
 			
 			if (litemstack2 != null && ltile.getBrewTime() <= 0) {
-				// �����s�\�Ȃ̂ŉ��
+				// ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ\・ｽﾈので会ｿｽ・ｽ
 				if (py <= owner.posY) {
 					owner.setSneaking(true);
 				}
@@ -182,9 +182,9 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 					owner.setSwing(5, LMM_EnumSound.Null);
 				}
 			}
-			// �����i
+			// ・ｽ・ｽ・ｽ・ｽ・ｽi
 			if (!lflag && inventryPos > owner.maidInventory.mainInventory.length) {
-				// �|�[�V�����̉��
+				// ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ・ｽﾌ会ｿｽ・ｽ
 				for (int li = 0; li < 3 && !lflag; li ++) {
 					litemstack1 = ltile.getStackInSlot(li);
 					if (litemstack1 != null && owner.maidInventory.addItemStackToInventory(litemstack1)) {
@@ -203,7 +203,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			
 			litemstack1 = owner.maidInventory.getCurrentItem();
 			if (!lflag && (litemstack1 != null && litemstack1.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack1))) {
-				// ���r�������Ƃ�ł�
+				// ・ｽ・ｽ・ｽr・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾆゑｿｽﾅゑｿｽ
 				int li = 0;
 				for (li = 0; li < 3 && !lflag; li++) {
 					if (ltile.getStackInSlot(li) == null) {
@@ -218,7 +218,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			if (!lflag && (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null)
 					&& (owner.maidInventory.currentItem == -1 || (litemstack1 != null && litemstack1.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack1)))) {
-				// �|�[�V�����ȊO������
+				// ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ・ｽﾈ外・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 //				for (inventryPos = 0; inventryPos < owner.maidInventory.mainInventory.length; inventryPos++) {
 				for (; inventryPos < owner.maidInventory.mainInventory.length; inventryPos++) {
 					litemstack1 = owner.maidInventory.getStackInSlot(inventryPos);
@@ -231,7 +231,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			
 			if (!lflag && litemstack2 == null && (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null)) {
-				// �莝���̃A�C�e�����ہ[��
+				// ・ｽ闔晢ｿｽ・ｽ・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽﾛー・ｽ・ｽ
 				if (litemstack1 != null && !(litemstack1.getItem() instanceof ItemPotion) && litemstack1.getItem().isPotionIngredient()) {
 					ltile.setInventorySlotContents(3, litemstack1);
 					owner.maidInventory.setInventorySlotContents(inventryPos, null);
@@ -240,7 +240,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 					lflag = true;
 				} 
 				else if (litemstack1 == null || (litemstack1.getItem() instanceof ItemPotion && MMM_Helper.hasEffect(litemstack1)) || !litemstack1.getItem().isPotionIngredient()) {
-					// �ΏۊO�A�C�e���𔭌��������ɏI��
+					// ・ｽﾎ象外・ｽA・ｽC・ｽe・ｽ・ｽ・ｽｭ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ終・ｽ・ｽ
 					inventryPos = owner.maidInventory.mainInventory.length;
 					lflag = true;
 				}
@@ -250,7 +250,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			
 			
-			// �I����Ԃ̃L�����Z��
+			// ・ｽI・ｽ・ｽ・ｽ・ｽﾔのキ・ｽ・ｽ・ｽ・ｽ・ｽZ・ｽ・ｽ
 			if (owner.getSwingStatusDominant().index == -1 && litemstack2 == null) {
 				owner.getNextEquipItem();
 			}

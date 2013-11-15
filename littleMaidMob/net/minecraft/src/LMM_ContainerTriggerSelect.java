@@ -48,7 +48,7 @@ public class LMM_ContainerTriggerSelect extends Container {
 	}
 
 	private void initAllSelections() {
-		// ƒRƒ“ƒeƒi•\Ž¦—pƒAƒCƒeƒ€‚Ì�Ý’è
+		// ﾆ坦ﾆ停愴弾ﾆ段窶｢\ﾅｽﾂｦ窶廃ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙鯉ｿｽﾃ昶凖ｨ
 		//XXX: experimenting
 		//this.itemList.clear();
 		Item[] var2 = Item.itemsList;
@@ -73,7 +73,7 @@ public class LMM_ContainerTriggerSelect extends Container {
 	/*
 	@Override
 	public void scrollTo(float f) {
-		// ƒXƒNƒ��[ƒ‹ƒ|ƒWƒVƒ‡ƒ“
+		// ﾆ湛ﾆ誰ﾆ抵ｿｽ・ｽ[ﾆ停ｹﾆ竹ﾆ淡ﾆ歎ﾆ停｡ﾆ停・
 		int i = (itemList.size() / 8 - 5) + 1;
 		int j = (int) ((double) (f * (float) i) + 0.5D);
 		if (j < 0) {
@@ -96,7 +96,7 @@ public class LMM_ContainerTriggerSelect extends Container {
 	@Override
 	public ItemStack slotClick(int i, int j, int flag, EntityPlayer entityplayer) {
 		if (i >= 40) {
-			// ƒZƒbƒg‚³‚ê‚½ƒAƒCƒeƒ€‚ð’è‹`
+			// ﾆ短ﾆ鍛ﾆ暖窶堋ｳ窶堙ｪ窶堋ｽﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙ｰ窶凖ｨ窶ｹ`
 			int lk = (i - 40) + weaponOffset * 8;
 			for (; weaponSelect.size() <= lk + 7;) {
 				weaponSelect.add(null);
@@ -114,7 +114,7 @@ public class LMM_ContainerTriggerSelect extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int i) {
-		// ShiftƒNƒŠƒbƒNŽž‚Ì”½‰ž
+		// Shiftﾆ誰ﾆ椎ﾆ鍛ﾆ誰ﾅｽﾅｾ窶堙娯敖ｽ窶ｰﾅｾ
 		ItemStack itemstack = null;
 		Slot slot = (Slot) inventorySlots.get(i);
 		if (slot != null && slot.getHasStack()) {
@@ -131,16 +131,16 @@ public class LMM_ContainerTriggerSelect extends Container {
 
 	@Override
 	protected boolean mergeItemStack(ItemStack itemstack, int i, int j, boolean flag) {
-		// itemstackˆÈŠO‚Í–³Œø
+		// itemstackﾋ・闇O窶堙坂督ｳﾅ津ｸ
 		boolean flag1 = false;
 		int k = 0;
 		
-		// “¯‚¶‚Ì‚ª‚ ‚Á‚½‚Æ‚«‚Í’Ç‰Á‚µ‚È‚¢
+		// 窶慊ｯ窶堋ｶ窶堙娯堋ｪ窶堋窶堙≫堋ｽ窶堙・堋ｫ窶堙坂凖・ｰﾃ≫堋ｵ窶堙遺堋｢
 		while (itemstack.stackSize > 0 && k < weaponSelect.size()) {
 			ItemStack itemstack1 = weaponSelect.get(k);
 			if (itemstack1 != null) {
 				if (itemstack1.isItemEqual(itemstack)) {
-					// “¯ˆêƒAƒCƒeƒ€‚Å‚ ‚é
+					// 窶慊ｯﾋ・ｪﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙・堋窶堙ｩ
 					flag1 = true;
 					break;
 				}
@@ -169,7 +169,7 @@ public class LMM_ContainerTriggerSelect extends Container {
 	}
 
 	public void setWeaponlist(float f) {
-		// ƒXƒNƒ��[ƒ‹ƒ|ƒWƒVƒ‡ƒ“
+		// ﾆ湛ﾆ誰ﾆ抵ｿｽ・ｽ[ﾆ停ｹﾆ竹ﾆ淡ﾆ歎ﾆ停｡ﾆ停・
 		int i = (weaponSelect.size() / 8 - 4) + 1;
 		weaponOffset = (int) ((double) (f * (float) i) + 0.5D);
 		if (weaponOffset < 0) {

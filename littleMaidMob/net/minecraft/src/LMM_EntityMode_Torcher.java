@@ -75,14 +75,14 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ���[�h�ɉ��������ʔ���A���x�D��
+		// ・ｽ・ｽ・ｽ[・ｽh・ｽﾉ会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽA・ｽ・ｽ・ｽx・ｽD・ｽ・ｽ
 		switch (pMode) {
 		case mmode_Torcher : 
 			for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
 				litemstack = owner.maidInventory.getStackInSlot(li);
 				if (litemstack == null) continue;
 				
-				// ����
+				// ・ｽ・ｽ・ｽ・ｽ
 				if (litemstack.itemID == Block.torchWood.blockID || LMM_TriggerSelect.checkWeapon(owner.getMaidMaster(), "Torch", litemstack)) {
 					return li;
 				}
@@ -135,7 +135,7 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 		if (lis == null) return false;
 		
 		int li = lis.stackSize;
-		// TODO:�����蔻����ǂ����邩
+		// TODO:・ｽ・ｽ・ｽ・ｽ・ｽ阡ｻ・ｽ・ｽ・ｽ・ｽﾇゑｿｽ・ｽ・ｽ・ｽ驍ｩ
 		if (lis.tryPlaceItemIntoWorld(owner.maidAvatar, owner.worldObj, px, py - 1, pz, 1, 0.5F, 1.0F, 0.5F)) {
 			owner.setSwing(10, LMM_EnumSound.installation);
 			
@@ -153,7 +153,7 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 
 	public boolean canPlaceItemBlockOnSide(World par1World, int par2, int par3, int par4, int par5,
 			EntityPlayer par6EntityPlayer, ItemStack par7ItemStack, ItemBlock pItemBlock) {
-		// TODO:�}���`�΍��p�AItemBlock����ۃp�N���o�[�W�����A�b�v���͊m�F���邱��
+		// TODO:・ｽ}・ｽ・ｽ・ｽ`・ｽﾎ搾ｿｽ・ｽp・ｽAItemBlock・ｽ・ｽ・ｽ・ｽﾛパ・ｽN・ｽ・ｽ・ｽo・ｽ[・ｽW・ｽ・ｽ・ｽ・ｽ・ｽA・ｽb・ｽv・ｽ・ｽ・ｽﾍ確・ｽF・ｽ・ｽ・ｽ驍ｱ・ｽ・ｽ
 		int var8 = par1World.getBlockId(par2, par3, par4);
 		
 		if (var8 == Block.snow.blockID) {
@@ -190,14 +190,14 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 
 	@Override
 	public void updateAITick(int pMode) {
-		// �g�[�`�̐ݒu
+		// ・ｽg・ｽ[・ｽ`・ｽﾌ設置
 		if (pMode == mmode_Torcher && owner.getNextEquipItem()) {
 			ItemStack lis = owner.getCurrentEquippedItem();
 			int lic = lis.stackSize;
 			Item lii = lis.getItem();
 			World lworld = owner.worldObj;
 			
-			// ��͂�����
+			// ・ｽ・ｽﾍゑｿｽ・ｽ・ｽ・ｽ・ｽ
 			int lxx = MathHelper.floor_double(owner.posX);
 			int lyy = MathHelper.floor_double(owner.posY);
 			int lzz = MathHelper.floor_double(owner.posZ);

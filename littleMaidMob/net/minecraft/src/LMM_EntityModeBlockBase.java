@@ -14,12 +14,12 @@ public abstract class LMM_EntityModeBlockBase extends LMM_EntityModeBase {
 
 	@Override
 	public void updateBlock() {
-		// ��ƂȂ�Tile���Z�b�g
+		// ・ｽ譓・ｽﾆなゑｿｽTile・ｽ・ｽ・ｽZ・ｽb・ｽg
 		owner.setTilePos(0);
 	}
 
 	/**
-	 * ���łɎg�p����Tile������ꍇ��shouldBlock�֔�Ԃ悤�ɂ���B
+	 * ・ｽ・ｽ・ｽﾅに使・ｽp・ｽ・ｽ・ｽ・ｽTile・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ鼾・ｿｽ・ｽshouldBlock・ｽﾖ費ｿｽﾔよう・ｽﾉゑｿｽ・ｽ・ｽB
 	 */
 	@Override
 	public boolean isSearchBlock() {
@@ -48,17 +48,17 @@ public abstract class LMM_EntityModeBlockBase extends LMM_EntityModeBase {
 
 
 	/**
-	 * ���̃��C�h���g�p���Ă��邩���`�F�b�N�B
+	 * ・ｽ・ｽ・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ・ｽﾄゑｿｽ・ｽ驍ｩ・ｽ・ｽ・ｽ`・ｽF・ｽb・ｽN・ｽB
 	 * @return
 	 */
 	protected boolean checkWorldMaid(TileEntity pTile) {
-		// ���E�̃��C�h����
+		// ・ｽ・ｽ・ｽE・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽ・ｽ
 		for (Object lo : owner.worldObj.loadedEntityList) {
 			if (lo == owner) continue;
 			if (lo instanceof LMM_EntityLittleMaid) {
 				LMM_EntityLittleMaid lem = (LMM_EntityLittleMaid)lo;
 				if (lem.isUsingTile(pTile)) {
-					// �N�����g�p��
+					// ・ｽN・ｽ・ｽ・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ
 					return true;
 				}
 			}

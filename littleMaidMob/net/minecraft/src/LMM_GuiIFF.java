@@ -12,9 +12,9 @@ import net.minecraft.world.World;
 public class LMM_GuiIFF extends MMM_GuiMobSelect {
 
 	public static final String IFFString[] = {
-		"ENEMY", // ”½Œ‚�AŽë
-		"UNKNOWN", // ”½Œ‚
-		"FRIENDLY" // �UŒ‚‚µ‚È‚¢
+		"ENEMY", // 窶敖ｽﾅ停夲ｿｽAﾅｽﾃｫ
+		"UNKNOWN", // 窶敖ｽﾅ停・
+		"FRIENDLY" // ・ｽUﾅ停壺堋ｵ窶堙遺堋｢
 	};
 
 	protected LMM_EntityLittleMaid target;
@@ -25,7 +25,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 		screenTitle = "LittleMaid IFF";
 		target = pEntity;
 		
-		// IFF‚ðƒT�[ƒo�[‚©‚çŽæ“¾
+		// IFF窶堙ｰﾆ探・ｽ[ﾆ弛・ｽ[窶堋ｩ窶堙ｧﾅｽﾃｦ窶慊ｾ
 		if (!MMM_Client.isIntegratedServerRunning()) {
 			int li = 0;
 			for (String ls : LMM_IFF.DefaultIFF.keySet()) {
@@ -43,22 +43,22 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 	@Override
 	protected boolean checkEntity(String pName, Entity pEntity, int pIndex) {
 		boolean lf = false;
-		// Entity‚Ì’l‚ð�Ý’è
+		// Entity窶堙娯冤窶堙ｰ・ｽﾃ昶凖ｨ
 		int liff = LMM_IFF.checkEntityStatic(pName, pEntity, pIndex, entityMap);
 		if (pEntity instanceof EntityLivingBase) {
 			if (pEntity instanceof LMM_EntityLittleMaid) {
 				if (pIndex == 0 || pIndex == 1) {
-					// –ì�¶Ží�AŽ©•ªŒ_–ñŽÒ
+					// 窶禿ｬ・ｽﾂｶﾅｽﾃｭ・ｽAﾅｽﾂｩ窶｢ﾂｪﾅ胆窶禿ｱﾅｽﾃ・
 					lf = true;
 				} else {
-					// ‘¼�l‚ÌŒ_–ñŽÒ
+					// 窶伉ｼ・ｽl窶堙固胆窶禿ｱﾅｽﾃ・
 				}
 			} else if (pEntity instanceof EntityOwnable) {
 				if (pIndex == 0 || pIndex == 1) {
-					// –ì�¶Ží�AŽ©•ª‚Ì
+					// 窶禿ｬ・ｽﾂｶﾅｽﾃｭ・ｽAﾅｽﾂｩ窶｢ﾂｪ窶堙・
 					lf = true;
 				} else {
-					// ‘¼�l‚Ì‰Æ’{
+					// 窶伉ｼ・ｽl窶堙娯ｰﾃ・几
 				}
 			}
 		}
@@ -110,7 +110,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 			}
 			
 			if (!mc.isIntegratedServerRunning()) {
-				// ƒT�[ƒo�[‚Ö•Ï�X’l‚ð‘—‚é�B
+				// ﾆ探・ｽ[ﾆ弛・ｽ[窶堙問｢ﾃ擾ｿｽX窶冤窶堙ｰ窶倪披堙ｩ・ｽB
 				int li = 0;
 				for (String ls : LMM_IFF.DefaultIFF.keySet()) {
 					if (ls.contains(pName)) {
@@ -134,7 +134,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 	@Override
 	public void drawSlot(int pSlotindex, int pX, int pY, int pDrawheight,
 			Tessellator pTessellator, String pName, Entity pEntity) {
-		// –¼‘O‚Æ“G–¡•ûŽ¯•Ê‚Ì•`‰æ
+		// 窶督ｼ窶楼窶堙・廨窶督｡窶｢ﾃｻﾅｽﾂｯ窶｢ﾃ岩堙娯｢`窶ｰﾃｦ
 		int tt = LMM_IFF.getIFF(null, pName);
 		int c = 0xffffff;
 		switch (tt) {

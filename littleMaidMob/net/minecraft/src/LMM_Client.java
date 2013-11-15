@@ -16,9 +16,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
 /**
- * ƒNƒ‰ƒCƒAƒ“ƒg�ê—p�ˆ—��B
- * ƒ}ƒ‹ƒ`—p‚É•ª—£�B
- * •ª—£‚µ‚Æ‚©‚È‚¢‚ÆNoSuchMethod‚Å—Ž‚¿‚é�B
+ * ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖・ｽﾃｪ窶廃・ｽﾋ・費ｿｽ・ｽB
+ * ﾆ筑ﾆ停ｹﾆ蛋窶廃窶堙俄｢ﾂｪ窶板｣・ｽB
+ * 窶｢ﾂｪ窶板｣窶堋ｵ窶堙・堋ｩ窶堙遺堋｢窶堙・oSuchMethod窶堙・版ｽ窶堋ｿ窶堙ｩ・ｽB
  */
 public class LMM_Client {
 
@@ -49,8 +49,8 @@ public class LMM_Client {
 // Avatarr
 	
 	public static void onItemPickup(LMM_EntityLittleMaidAvatar pAvatar, Entity entity, int i) {
-		// ƒAƒCƒeƒ€‰ñŽû‚ÌƒGƒtƒFƒNƒg
-		// TODO:‚±‚Á‚¿‚ðŽg‚¤‚©�H
+		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶ｰﾃｱﾅｽﾃｻ窶堙姑竪ﾆ稚ﾆ巽ﾆ誰ﾆ暖
+		// TODO:窶堋ｱ窶堙≫堋ｿ窶堙ｰﾅｽg窶堋､窶堋ｩ・ｽH
 //        mc.effectRenderer.addEffect(new EntityPickupFX(mc.theWorld, entity, avatar, -0.5F));
 		MMM_Helper.mc.effectRenderer.addEffect(new EntityPickupFX(MMM_Helper.mc.theWorld, entity, pAvatar.avatar, 0.1F));
 	}
@@ -68,7 +68,7 @@ public class LMM_Client {
 // Network
 
 	public static void clientCustomPayload(NetClientHandler var1, Packet250CustomPayload var2) {
-		// ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Ì“ÁŽêƒpƒPƒbƒgŽó�M“®�ì
+		// ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堙娯愿・ｽﾃｪﾆ恥ﾆ単ﾆ鍛ﾆ暖ﾅｽﾃｳ・ｽM窶慊ｮ・ｽﾃｬ
 		byte lmode = var2.data[0];
 		int leid = 0;
 		LMM_EntityLittleMaid lemaid = null;
@@ -81,7 +81,7 @@ public class LMM_Client {
 		
 		switch (lmode) {
 		case LMN_Client_SwingArm : 
-			// ˜r�U‚è
+			// ﾋ徨・ｽU窶堙ｨ
 			byte larm = var2.data[5];
 			LMM_EnumSound lsound = LMM_EnumSound.getEnumSound(MMM_Helper.getInt(var2.data, 6));
 			lemaid.setSwinging(larm, lsound);
@@ -89,7 +89,7 @@ public class LMM_Client {
 			break;
 			
 		case LMN_Client_SetIFFValue:
-			// IFF‚Ì�Ý’è’l‚ðŽó�M
+			// IFF窶堙鯉ｿｽﾃ昶凖ｨ窶冤窶堙ｰﾅｽﾃｳ・ｽM
 			int lval = var2.data[1];
 			int lindex = MMM_Helper.getInt(var2.data, 2);
 			String lname = (String)LMM_IFF.DefaultIFF.keySet().toArray()[lindex];
@@ -98,7 +98,7 @@ public class LMM_Client {
 			break;
 			
 		case LMN_Client_PlaySound : 
-			// ‰¹�º�Ä�¶
+			// 窶ｰﾂｹ・ｽﾂｺ・ｽﾃ・ｿｽﾂｶ
 			LMM_EnumSound lsound9 = LMM_EnumSound.getEnumSound(MMM_Helper.getInt(var2.data, 5));
 			lemaid.playLittleMaidSound(lsound9, true);
 			mod_LMM_littleMaidMob.Debug(String.format("playSound:%s", lsound9.name()));

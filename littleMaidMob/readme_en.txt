@@ -64,12 +64,12 @@ How to use
  The texture files must follow the naming rules below.
  The file name is ended as"_xx.png" in hexadecimal number (00-FF).
  _0.png - _f.png/_00.png - _0f.png:each colored maid
- _10.png :Wild maidiequal to _3c.pngj
- _11.png-_12.png :Armoriequal to default_40.png and default_50.pngj
+ _10.png :Wild maidï¼ˆequal to _3c.pngï¼‰
+ _11.png-_12.png :Armorï¼ˆequal to default_40.png and default_50.pngï¼‰
  _20.png :Maid inventory
  _30.png-_3f.png :Wild and colored maid
- _40.png-_49.png :Armoriinsidej
- _50.png-_59.png :Armorioutsidej
+ _40.png-_49.png :Armorï¼ˆinsideï¼‰
+ _50.png-_59.png :Armorï¼ˆoutsideï¼‰
 
  *Please refer the readme-texture for further information of armor textures. 
 
@@ -164,9 +164,9 @@ Elements of little maid mob
  Hold book and right click maid, then maid-IFF configurationGUI is open.
  Used book consumed.
  In this GUI, each time you click the subject, maids reaction properties will change
- ENEMY FEnemy. Attack them and counter attacks
- UNKNOWN FUnknown mobs. Counter attack when maids are attacked.
- FRIENDLYFFriend. Never attack/counter attack.
+ ENEMY ï¼šEnemy. Attack them and counter attacks
+ UNKNOWN ï¼šUnknown mobs. Counter attack when maids are attacked.
+ FRIENDLYï¼šFriend. Never attack/counter attack.
 
  -Snow makes me child.
  When "freedom" maids released to the snowfield, they starts snowballing.

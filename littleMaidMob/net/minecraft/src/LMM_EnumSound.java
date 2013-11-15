@@ -64,7 +64,7 @@ public enum LMM_EnumSound {
 	}
 
 	/**
-	 * w’è‚³‚ê‚½ƒCƒ“ƒfƒbƒNƒX‚ÌEnumSound‚ğ•Ô‚·B
+	 * æŒ‡å®šã•ã‚ŒãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®EnumSoundã‚’è¿”ã™ã€‚
 	 */
 	public static LMM_EnumSound getEnumSound(int pindex) {
 		for (LMM_EnumSound le : LMM_EnumSound.values()) {

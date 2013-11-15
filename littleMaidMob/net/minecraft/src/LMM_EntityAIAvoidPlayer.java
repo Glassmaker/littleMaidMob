@@ -44,21 +44,21 @@ public class LMM_EntityAIAvoidPlayer extends EntityAIBase implements
 
 		theMaster = theMaid.mstatMasterEntity;
 
-		// �Ώۂ͌����邩�H�Ă����ꂢ��Ȃ��ˁH
+		// ・ｽﾎ象は鯉ｿｽ・ｽ・ｽ・ｽ驍ｩ・ｽH・ｽﾄゑｿｽ・ｽ・ｽ・ｽ黷｢・ｽ・ｽﾈゑｿｽ・ｽﾋ？
 		if (!theMaid.getEntitySenses().canSee(theMaster)) {
 			return false;
 		}
 
-		// �ړ��������
+		// ・ｽﾚ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 		Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(
 				theMaid, minDist, 7, Vec3.createVectorHelper(theMaster.posX,
 						theMaster.posY, theMaster.posZ));
 
-		// �ړ��悪����
+		// ・ｽﾚ難ｿｽ・ｽ謔ｪ・ｽ・ｽ・ｽ・ｽ
 		if (vec3d == null) {
 			return false;
 		}
-		// �ړ���̋������߂�
+		// ・ｽﾚ難ｿｽ・ｽ・ｽﾌ具ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾟゑｿｽ
 		if (theMaster.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) < theMaid.mstatMasterDistanceSq) {
 			return false;
 		}
@@ -88,11 +88,11 @@ public class LMM_EntityAIAvoidPlayer extends EntityAIBase implements
 	}
 
 	public void setActive() {
-		// ����J�n
+		// ・ｽ・ｽ・ｽ・ｽJ・ｽn
 		isActive = true;
 	}
 
-	// ���s�\�t���O
+	// ・ｽ・ｽ・ｽs・ｽﾂ能・ｽt・ｽ・ｽ・ｽO
 	@Override
 	public void setEnable(boolean pFlag) {
 		isEnable = pFlag;

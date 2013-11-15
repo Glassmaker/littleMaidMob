@@ -27,15 +27,15 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 	@Override
 	public boolean shouldExecute() {
 		if (!isEnable || !theMaid.isContractEX() || theMaid.isMaidWaitEx()) {
-			// �_��݂̂̂�����
+			// ・ｽ_・ｽ・ｽﾂ体のみゑｿｽ・ｽ・ｽ・ｽ・ｽ
 			return false;
 		}
 		if (theMaid.getLeashed()) {
-			// �����Ă���Ȃ璵�΂Ȃ�
+			// ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽﾈら跳・ｽﾎなゑｿｽ
 			return false;
 		}
 		if (theMaid.isFreedom()) {
-			// ���R�s���̎q�͊�_�փW�����v
+			// ・ｽ・ｽ・ｽR・ｽs・ｽ・ｽ・ｽﾌ子・ｽﾍ奇ｿｽ_・ｽﾖジ・ｽ・ｽ・ｽ・ｽ・ｽv
 			if (theMaid.homeWorld != theMaid.dimension) {
 				mod_LMM_littleMaidMob.Debug(String.format("ID:%d, %d -> %d, Change HomeWorld. reset HomePosition.",
 						theMaid.entityId,theMaid.homeWorld, theMaid.worldObj.provider.dimensionId));
@@ -64,7 +64,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 					return false;
 				}
 			} else {
-				// �^�[�Q�e�B���O���͋������L�т�
+				// ・ｽ^・ｽ[・ｽQ・ｽe・ｽB・ｽ・ｽ・ｽO・ｽ・ｽ・ｽﾍ具ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽL・ｽﾑゑｿｽ
 				if (theMaid.mstatMasterDistanceSq < (theMaid.isBloodsuck() ? 1024D : 256D)) {
 					return false;
 				}
@@ -90,7 +90,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 							&& theWorld.isBlockNormalCube(i + l, k - 1, j + i1)
 							&& !theWorld.isBlockNormalCube(i + l, k, j + i1)
 							&& !theWorld.isBlockNormalCube(i + l, k + 1, j + i1)) {
-						// ��̑O�ɒ��΂Ȃ�
+						// ・ｽ・ｽﾌ前・ｽﾉ抵ｿｽ・ｽﾎなゑｿｽ
 						double dd = theOwner.getDistanceSq(
 								(double) (i + l) + 0.5D + MathHelper.sin(theOwner.rotationYaw * 0.01745329252F) * 2.0D,
 								(double) k,
@@ -109,7 +109,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 				}
 			}
 		} else {
-			// �z�[���|�W�V�����G���A�O�œ]��
+			// ・ｽz・ｽ[・ｽ・ｽ・ｽ|・ｽW・ｽV・ｽ・ｽ・ｽ・ｽ・ｽG・ｽ・ｽ・ｽA・ｽO・ｽﾅ転・ｽ・ｽ
 			int lx = theMaid.getHomePosition().posX;
 			int ly = theMaid.getHomePosition().posY;
 			int lz = theMaid.getHomePosition().posZ;
@@ -117,7 +117,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 //			int ly = theMaid.getHomePosition().posY;
 //			int lz = theMaid.getHomePosition().posZ;
 			if (!(isCanJump(lx, ly, lz))) {
-				// �z�[���|�W�V��������
+				// ・ｽz・ｽ[・ｽ・ｽ・ｽ|・ｽW・ｽV・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 				mod_LMM_littleMaidMob.Debug(String.format(
 						"ID:%d(%s) home lost.",
 						theMaid.entityId, theMaid.worldObj.isRemote ? "C" : "W"));
@@ -125,7 +125,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 				int b;
 				// int c;
 				boolean f = false;
-				// �����W�Œn�ʂ����o
+				// ・ｽ・ｽ・ｽ・ｽ・ｽW・ｽﾅ地・ｽﾊゑｿｽ・ｽ・ｽ・ｽo
 				for (a = 1; a < 6 && !f; a++) {
 					if (isCanJump(lx, ly + a, lz)) {
 						f = true;
@@ -141,7 +141,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 					}
 				}
 
-				// CW���Ɍ����̈���L����
+				// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ
 				loop_search: for (a = 2; a < 18 && !f; a += 2) {
 					lx--;
 					lz--;
@@ -198,7 +198,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 	}
 
 	/**
-	 * �]�ڐ�̃`�F�b�N
+	 * ・ｽ]・ｽﾚ撰ｿｽﾌチ・ｽF・ｽb・ｽN
 	 */
 	protected boolean isCanJump(int px, int py, int pz) {
 		double lw = (double) theMaid.width / 2D;

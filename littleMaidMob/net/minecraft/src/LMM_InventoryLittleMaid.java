@@ -26,15 +26,15 @@ import net.minecraft.world.Explosion;
 public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	/**
-	 * �Å‘åƒCƒ“ƒxƒ“ƒgƒŠ�”
+	 * ・ｽﾃ・佚･ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎・ｽ窶・
 	 */
 	public static final int maxInventorySize = 18;
 	/**
-	 * ƒI�[ƒi�[
+	 * ﾆ棚・ｽ[ﾆ段・ｽ[
 	 */
 	public LMM_EntityLittleMaid entityLittleMaid;
 	/**
-	 * ƒXƒ�ƒbƒg•Ï�Xƒ`ƒFƒbƒN—p
+	 * ﾆ湛ﾆ抵ｿｽﾆ鍛ﾆ暖窶｢ﾃ擾ｿｽXﾆ蛋ﾆ巽ﾆ鍛ﾆ誰窶廃
 	 */
 	public ItemStack prevItems[];
 	
@@ -81,7 +81,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	@Override
 	public int getSizeInventory() {
-		// ˆê‰ž
+		// ﾋ・ｪ窶ｰﾅｾ
 		return mainInventory.length + armorInventory.length;
 	}
 
@@ -107,13 +107,13 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	@Override
 	public int getTotalArmorValue() {
-		// �g‚É’…‚¯‚Ä‚¢‚éƒA�[ƒ}�[‚Ì–hŒä—Í‚Ì�‡ŽZ
-		// “ª•”ˆÈŠO
+		// ・ｽg窶堙俄吮ｦ窶堋ｯ窶堙・堋｢窶堙ｩﾆ但・ｽ[ﾆ筑・ｽ[窶堙娯塗ﾅ津､窶氾坂堙鯉ｿｽ窶｡ﾅｽZ
+		// 窶慊ｪ窶｢窶斃・闇O
 		ItemStack lis = armorInventory[3];
 		armorInventory[3] = null;
 		// int li = super.getTotalArmorValue() * 20 / 17;
 		int li = super.getTotalArmorValue();
-		// Š••ª‚Ì•â�³
+		// ﾅ窶｢窶｢ﾂｪ窶堙娯｢ﾃ｢・ｽﾂｳ
 		for (int lj = 0; lj < armorInventory.length; lj++) {
 			if (armorInventory[lj] != null
 					&& armorInventory[lj].getItem() instanceof ItemArmor) {
@@ -126,8 +126,8 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	@Override
 	public void damageArmor(float pDamage) {
-		// ‘•”õƒA�[ƒ}�[‚É‘Î‚·‚éƒ_ƒ��[ƒW
-		// “ª•”‚Í�œŠO
+		// 窶倪｢窶敕ｵﾆ但・ｽ[ﾆ筑・ｽ[窶堙俄佚寂堋ｷ窶堙ｩﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡
+		// 窶慊ｪ窶｢窶昶堙搾ｿｽﾅ毒O
 		ItemStack lis = armorInventory[3];
 		armorInventory[3] = null;
 		super.damageArmor(pDamage);
@@ -144,7 +144,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 		ItemStack itemstack = getStackInSlot(index);
 		if (itemstack != null) {
 			if (itemstack.getItem() instanceof ItemAxe) {
-				// ƒAƒbƒNƒX‚Ì�UŒ‚—Í‚ð•â�³
+				// ﾆ但ﾆ鍛ﾆ誰ﾆ湛窶堙鯉ｿｽUﾅ停壺氾坂堙ｰ窶｢ﾃ｢・ｽﾂｳ
 				return itemstack.getDamageVsEntity(entity) * 3 / 2 + 1;
 
 			} else {
@@ -156,10 +156,10 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 */
 	public void dropAllItems(boolean detonator) {
-		// ƒCƒ“ƒxƒ“ƒgƒŠ‚ðƒuƒ`ƒ}ƒPƒ��I
+		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙ｰﾆ置ﾆ蛋ﾆ筑ﾆ単ﾆ抵ｿｽ・ｽI
 		Explosion lexp = null;
 		if (detonator) {
-			// Mob‚É‚æ‚é”j‰ó‚Ì�¥”ñ
+			// Mob窶堙俄堙ｦ窶堙ｩ窶挧窶ｰﾃｳ窶堙鯉ｿｽﾂ･窶敕ｱ
 			lexp = new Explosion(entityLittleMaid.worldObj, entityLittleMaid,
 					entityLittleMaid.posX, entityLittleMaid.posY, entityLittleMaid.posZ, 3F);
 			lexp.isFlaming = false;
@@ -173,7 +173,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 				if (detonator && isItemExplord(i)) {
 					int j = it.getItem().itemID;
 					for (int l = 0; l < it.stackSize; l++) {
-						// ”š–ò‚Ô‚¿‚Ü‚¯
+						// 窶敘｡窶禿ｲ窶堙披堋ｿ窶堙懌堋ｯ
 						((BlockTNT) Block.blocksList[j]).onBlockDestroyedByExplosion(
 								entityLittleMaid.worldObj,
 								MathHelper.floor_double(entityLittleMaid.posX)
@@ -224,7 +224,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	/**
-	 * “ª•”‚Ì’Ç‰ÁƒAƒCƒeƒ€‚ð•Ô‚·�B
+	 * 窶慊ｪ窶｢窶昶堙娯凖・ｰﾃ・但ﾆ辰ﾆ弾ﾆ停ぎ窶堙ｰ窶｢ﾃ披堋ｷ・ｽB
 	 */
 	public ItemStack getHeadMount() {
 		return mainInventory[mainInventory.length - 1];
@@ -237,7 +237,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected int getInventorySlotContainItem(int itemid) {
-		// Žw’è‚³‚ê‚½ƒAƒCƒeƒ€ID‚Ì•¨‚ðŽ�‚Á‚Ä‚¢‚ê‚Î•Ô‚·
+		// ﾅｽw窶凖ｨ窶堋ｳ窶堙ｪ窶堋ｽﾆ但ﾆ辰ﾆ弾ﾆ停ぎID窶堙娯｢ﾂｨ窶堙ｰﾅｽ・ｽ窶堙≫堙・堋｢窶堙ｪ窶堙寂｢ﾃ披堋ｷ
 		for (int j = 0; j < mainInventory.length; j++) {
 			if (mainInventory[j] != null && mainInventory[j].itemID == itemid) {
 				return j;
@@ -248,7 +248,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected int getInventorySlotContainItem(Class itemClass) {
-		// Žw’è‚³‚ê‚½ƒAƒCƒeƒ€ƒNƒ‰ƒX‚Ì•¨‚ðŽ�‚Á‚Ä‚¢‚ê‚Î•Ô‚·
+		// ﾅｽw窶凖ｨ窶堋ｳ窶堙ｪ窶堋ｽﾆ但ﾆ辰ﾆ弾ﾆ停ぎﾆ誰ﾆ停ｰﾆ湛窶堙娯｢ﾂｨ窶堙ｰﾅｽ・ｽ窶堙≫堙・堋｢窶堙ｪ窶堙寂｢ﾃ披堋ｷ
 		for (int j = 0; j < mainInventory.length; j++) {
 			// if (mainInventory[j] != null &&
 			// mainInventory[j].getItem().getClass().isAssignableFrom(itemClass))
@@ -263,7 +263,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected int getInventorySlotContainItemAndDamage(int itemid, int damege) {
-		// ‚Æƒ_ƒ��[ƒW’l
+		// 窶堙・胆ﾆ抵ｿｽ・ｽ[ﾆ淡窶冤
 		for (int i = 0; i < mainInventory.length; i++) {
 			if (mainInventory[i] != null && mainInventory[i].itemID == itemid
 					&& mainInventory[i].getItemDamage() == damege) {
@@ -275,20 +275,20 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected ItemStack getInventorySlotContainItemStack(int itemid) {
-		// ‚¢‚ç‚ñ‚©‚à�H
+		// 窶堋｢窶堙ｧ窶堙ｱ窶堋ｩ窶堙・ｽH
 		int j = getInventorySlotContainItem(itemid);
 		return j > -1 ? mainInventory[j] : null;
 	}
 
 	protected ItemStack getInventorySlotContainItemStackAndDamege(int itemid,
 			int damege) {
-		// ‚¢‚ç‚ñ‚©‚à�H
+		// 窶堋｢窶堙ｧ窶堙ｱ窶堋ｩ窶堙・ｽH
 		int j = getInventorySlotContainItemAndDamage(itemid, damege);
 		return j > -1 ? mainInventory[j] : null;
 	}
 
 	public int getInventorySlotContainItemFood() {
-		// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì�Å�‰‚Ì�H—¿‚ð•Ô‚·
+		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙鯉ｿｽﾃ・ｿｽ窶ｰ窶堙鯉ｿｽH窶板ｿ窶堙ｰ窶｢ﾃ披堋ｷ
 		for (int j = 0; j < mainInventory.length; j++) {
 			ItemStack mi = mainInventory[j];
 			if (mi != null && mi.getItem() instanceof ItemFood) {
@@ -301,15 +301,15 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public int getSmeltingItem() {
-		// ’²—�‰Â”\ƒAƒCƒeƒ€‚ð•Ô‚·
+		// 窶卍ｲ窶費ｿｽ窶ｰﾃや拿ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙ｰ窶｢ﾃ披堋ｷ
 		for (int i = 0; i < mainInventory.length; i++) {
 			if (isItemSmelting(i) && i != currentItem) {
 				ItemStack mi = mainInventory[i];
 				if (mi.getMaxDamage() > 0 && mi.getItemDamage() == 0) {
-					// �C•œƒŒƒVƒs‘Î�ô
+					// ・ｽC窶｢ﾅ独椎槌歎ﾆ痴窶佚趣ｿｽﾃｴ
 					continue;
 				}
-				// ƒŒƒVƒs‘Î‰ž•i
+				// ﾆ椎槌歎ﾆ痴窶佚寂ｰﾅｾ窶｢i
 				return i;
 			}
 		}
@@ -317,9 +317,9 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public int getInventorySlotContainItemPotion(boolean flag, int potionID, boolean isUndead) {
-		// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì�Å�‰‚Ìƒ|�[ƒVƒ‡ƒ“‚ð•Ô‚·
-		// flag = true: �UŒ‚�EƒfƒoƒtŒn�A false: ‰ñ•œ�E•â�•Œn
-		// potionID: —v‹�ƒ|�[ƒVƒ‡ƒ“‚ÌID
+		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙鯉ｿｽﾃ・ｿｽ窶ｰ窶堙姑竹・ｽ[ﾆ歎ﾆ停｡ﾆ停懌堙ｰ窶｢ﾃ披堋ｷ
+		// flag = true: ・ｽUﾅ停夲ｿｽEﾆ断ﾆ弛ﾆ稚ﾅ地・ｽA false: 窶ｰﾃｱ窶｢ﾅ難ｿｽE窶｢ﾃ｢・ｽ窶｢ﾅ地
+		// potionID: 窶牌窶ｹ・ｽﾆ竹・ｽ[ﾆ歎ﾆ停｡ﾆ停懌堙栗D
 		for (int j = 0; j < mainInventory.length; j++) {
 			if (mainInventory[j] != null
 					&& mainInventory[j].getItem() instanceof ItemPotion) {
@@ -361,7 +361,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public boolean isItemBurned(int index) {
-		// ”R‚¦‚éƒAƒCƒeƒ€‚©?
+		// 窶抒窶堋ｦ窶堙ｩﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｩ?
 		return index > -1 && isItemBurned(getStackInSlot(index));
 	}
 
@@ -371,7 +371,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public boolean isItemSmelting(int index) {
-		// ”R‚¦‚éƒAƒCƒeƒ€‚©?
+		// 窶抒窶堋ｦ窶堙ｩﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｩ?
 		return isItemSmelting(getStackInSlot(index));
 	}
 
@@ -380,7 +380,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public boolean isItemExplord(int index) {
-		// ”š”­•¨�H
+		// 窶敘｡窶敖ｭ窶｢ﾂｨ・ｽH
 		return (index >= 0) && isItemExplord(getStackInSlot(index));
 	}
 
@@ -392,9 +392,9 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 				li instanceof ItemBlock && Block.blocksList[li.itemID].blockMaterial == Material.tnt);
 	}
 
-	// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì“]‘—ŠÖ˜A
+	// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙娯彎窶倪版ﾃ麺廣
 	public boolean isChanged(int pIndex) {
-		// •Ï‰»‚ª‚ ‚Á‚½‚©‚Ì”»’è
+		// 窶｢ﾃ鞘ｰﾂｻ窶堋ｪ窶堋窶堙≫堋ｽ窶堋ｩ窶堙娯敖ｻ窶凖ｨ
 		ItemStack lis = getStackInSlot(pIndex);
 		return !ItemStack.areItemStacksEqual(lis, prevItems[pIndex]);
 		// return (lis == null || prevItems[pIndex] == null) ?
@@ -408,13 +408,13 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public void resetChanged(int pIndex) {
-		// �ˆ—��Ï‚Ý‚Ìƒ`ƒFƒbƒN
+		// ・ｽﾋ・費ｿｽ・ｽﾃ鞘堙昶堙姑蛋ﾆ巽ﾆ鍛ﾆ誰
 		ItemStack lis = getStackInSlot(pIndex);
 		prevItems[pIndex] = (lis == null ? null : lis.copy());
 	}
 
 	public void clearChanged() {
-		// ‹­�§ƒŠƒ��[ƒh—p�Aƒ_ƒ~�[‚ð“o˜^‚µ‚Ä‹­�§“I‚ÉˆêŽü‚³‚¹‚é
+		// 窶ｹﾂｭ・ｽﾂｧﾆ椎ﾆ抵ｿｽ・ｽ[ﾆ檀窶廃・ｽAﾆ胆ﾆ蓄・ｽ[窶堙ｰ窶徙ﾋ弯窶堋ｵ窶堙・ｹﾂｭ・ｽﾂｧ窶廬窶堙架・ｪﾅｽﾃｼ窶堋ｳ窶堋ｹ窶堙ｩ
 		ItemStack lis = new ItemStack(Item.sugar);
 		for (int li = 0; li < prevItems.length; li++) {
 			prevItems[li] = lis;

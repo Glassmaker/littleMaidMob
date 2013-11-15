@@ -63,7 +63,7 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 
 	@Override
 	public void onGuiClosed() {
-		// �Ý’è’l‚ÌƒfƒR�[ƒh
+		// ・ｽﾃ昶凖ｨ窶冤窶堙姑断ﾆ坦・ｽ[ﾆ檀
 		setItemList();
 
 		super.onGuiClosed();
@@ -107,7 +107,7 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 				ItemStack itemstack4 = slot.getStack();
 				if (itemstack1 != null && itemstack4 != null
 						&& itemstack1.itemID == itemstack4.itemID) {
-					// ‘I‘ðƒAƒCƒeƒ€‚ª‹ó‚Å‚Í‚È‚¢Žž
+					// 窶露窶佚ｰﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｪ窶ｹﾃｳ窶堙・堙坂堙遺堋｢ﾅｽﾅｾ
 					if (j != 0) {
 						inventoryplayer.setItemStack(null);
 					}
@@ -125,7 +125,7 @@ public class LMM_GuiTriggerSelect extends GuiContainer {
 //								(slot.slotNumber - inventorySlots.inventorySlots.size()) + 9 + 36);
 			}
 		} else {
-			// SlotˆÈŠO‚Ì‚Æ‚±‚ë‚ÍŽÌ‚Ä‚é
+			// Slotﾋ・闇O窶堙娯堙・堋ｱ窶堙ｫ窶堙最ｽﾃ娯堙・堙ｩ
 			InventoryPlayer inventoryplayer1 = mc.thePlayer.inventory;
 			inventoryplayer1.setItemStack(null);
 		}

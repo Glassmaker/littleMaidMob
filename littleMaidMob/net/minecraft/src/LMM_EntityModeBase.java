@@ -16,10 +16,10 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /**
- * LMM�p�Ǝ�AI�����Ɏg�p�B
- * ���̌p���N���X��AI�����Ƃ��ēn�����Ƃ��ł���B
- * �܂��AAI�����I�𒆂͓���̊֐��������đI�𒆂̃N���X�݂̂����������B
- * �C���X�^���X�����鎖�ɂ�胍�[�J���ϐ���ێ��B
+ * LMM・ｽp・ｽﾆ趣ｿｽAI・ｽ・ｽ・ｽ・ｽ・ｽﾉ使・ｽp・ｽB
+ * ・ｽ・ｽ・ｽﾌ継・ｽ・ｽ・ｽN・ｽ・ｽ・ｽX・ｽ・ｽAI・ｽ・ｽ・ｽ・ｽ・ｽﾆゑｿｽ・ｽﾄ渡・ｽ・ｽ・ｽ・ｽ・ｽﾆゑｿｽ・ｽﾅゑｿｽ・ｽ・ｽB
+ * ・ｽﾜゑｿｽ・ｽAAI・ｽ・ｽ・ｽ・ｽ・ｽI・ｽ・ﾍ難ｿｽ・ｽ・ｽﾌ関撰ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄ選・ｽ・ﾌク・ｽ・ｽ・ｽX・ｽﾌみゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+ * ・ｽC・ｽ・ｽ・ｽX・ｽ^・ｽ・ｽ・ｽX・ｽ・ｽ・ｽ・ｽ・ｽ骼厄ｿｽﾉゑｿｽ閭搾ｿｽ[・ｽJ・ｽ・ｽ・ｽﾏ撰ｿｽ・ｽ・ｽﾛ趣ｿｽ・ｽB
  */
 public abstract class LMM_EntityModeBase {
 
@@ -27,7 +27,7 @@ public abstract class LMM_EntityModeBase {
 
 
 	/**
-	 * ����
+	 * ・ｽ・ｽ・ｽ・ｽ
 	 */
 	public LMM_EntityModeBase(LMM_EntityLittleMaid pEntity) {
 		owner = pEntity;
@@ -35,143 +35,143 @@ public abstract class LMM_EntityModeBase {
 
 	public int fpriority;
 	/**
-	 * �D�揇�ʁB
-	 * �ԍ����Ⴂ�ق�����ɏ��������B
-	 * ���񌅂�00�̂��̂̓V�X�e���\��B
+	 * ・ｽD・ｽ謠・ｿｽﾊ。
+	 * ・ｽﾔ搾ｿｽ・ｽ・ｽ・ｽ痰｢・ｽﾙゑｿｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * ・ｽ・ｽ・ｽ・・ｽ00・ｽﾌゑｿｽ・ｽﾌはシ・ｽX・ｽe・ｽ・ｽ・ｽ\・ｽ・ｽB
 	 */
 	public abstract int priority();
 
 	/**
-	 * �N�����̏���B
+	 * ・ｽN・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽB
 	 */
 	public void init() {
 	}
 
 	/**
-	 * Entity�����̎��s��
+	 * Entity・ｽ・ｽ・ｽ・ｽ・ｽﾌ趣ｿｽ・ｽs・ｽ・ｽ
 	 */
 	public void initEntity() {
 	}
 
 	/**
-	 * ���[�h�̒ǉ��B
+	 * ・ｽ・ｽ・ｽ[・ｽh・ｽﾌ追会ｿｽ・ｽB
 	 */
 	public abstract void addEntityMode(EntityAITasks pDefaultMove, EntityAITasks pDefaultTargeting);
 
 	/**
-	 * �Ǝ��f�[�^�ۑ��p�B
+	 * ・ｽﾆ趣ｿｽ・ｽf・ｽ[・ｽ^・ｽﾛ托ｿｽ・ｽp・ｽB
 	 */
 	public void writeEntityToNBT(NBTTagCompound par1nbtTagCompound) {
 	}
 	/**
-	 * �Ǝ��f�[�^�Ǎ��p�B
+	 * ・ｽﾆ趣ｿｽ・ｽf・ｽ[・ｽ^・ｽﾇ搾ｿｽ・ｽp・ｽB
 	 */
 	public void readEntityFromNBT(NBTTagCompound par1nbtTagCompound) {
 	}
 
 	/**
-	 * renderSpecial�̒ǉ������p�B
+	 * renderSpecial・ｽﾌ追会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽB
 	 */
 	public void showSpecial(LMM_RenderLittleMaid prenderlittlemaid, double px, double py, double pz) {
 	}
 
 	/**
-	 * �T�[�o�[���݂̖̂��������B
-	 * AI�����̌�̕�ɌĂ΂��B
+	 * ・ｽT・ｽ[・ｽo・ｽ[・ｽ・ｽ・ｽﾌみの厄ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * AI・ｽ・ｽ・ｽ・ｽ・ｽﾌ鯉ｿｽﾌ包ｿｽﾉ呼ばゑｿｽ・ｽB
 	 */
 	public void updateAITick(int pMode) {
 	}
 
 	/**
-	 * ���������B
-	 * ���̏����̑O�ɌĂ΂��
+	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽﾌ前・ｽﾉ呼ばゑｿｽ・ｽ
 	 */
 	public void onUpdate(int pMode) {
 	}
 
 	/**
-	 * ���̂ւ�̏����͎኱���Ԃ������Ă��ǂ��B
-	 * ���̃A�C�e�����g�p���������B
-	 * �⊮�����ɐ�񂶂Ď��s�����A���̑��蔻����S�����������B
+	 * ・ｽ・ｽ・ｽﾌへゑｿｽﾌ擾ｿｽ・ｽ・ｽ・ｽﾍ若干・ｽ・ｽ・ｽﾔゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽﾇゑｿｽ・ｽB
+	 * ・ｽ・ｽ・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * ・ｽ竓ｮ・ｽ・ｽ・ｽ・ｽ・ｽﾉ撰ｿｽｶて趣ｿｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽﾌ托ｿｽ・ｽ阡ｻ・ｽ・ｽ・ｽ・ｽS・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 */
 	public boolean preInteract(EntityPlayer pentityplayer, ItemStack pitemstack) {
 		return false;
 	}
 	/**
-	 * ���̂ւ�̏����͎኱���Ԃ������Ă��ǂ��B
-	 * ���̃A�C�e�����g�p���������B
+	 * ・ｽ・ｽ・ｽﾌへゑｿｽﾌ擾ｿｽ・ｽ・ｽ・ｽﾍ若干・ｽ・ｽ・ｽﾔゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽﾇゑｿｽ・ｽB
+	 * ・ｽ・ｽ・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 */
 	public boolean interact(EntityPlayer pentityplayer, ItemStack pitemstack) {
 		return false;
 	}
 
 	/**
-	 * �����Ń��[�h�`�F���W�������B
+	 * ・ｽ・ｽ・ｽ・ｽ・ｽﾅ・ｿｽ・ｽ[・ｽh・ｽ`・ｽF・ｽ・ｽ・ｽW・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 */
 	public boolean changeMode(EntityPlayer pentityplayer) {
 		return false;
 	}
 
 	/**
-	 * ���[�h�`�F���W���̐ݒ菈���̖{�́B
-	 * �������ɏ����������Ȃ��ƃ��[�h���ɂ��������Ȃ邩���H
+	 * ・ｽ・ｽ・ｽ[・ｽh・ｽ`・ｽF・ｽ・ｽ・ｽW・ｽ・ｽ・ｽﾌ設定処・ｽ・ｽ・ｽﾌ本・ｽﾌ。
+	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ・ｽﾆ・ｿｽ・ｽ[・ｽh・ｽ・ｽ・ｽﾉゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈるか・ｽ・ｽ・ｽH
 	 */
 	public boolean setMode(int pMode) {
 		return false;
 	}
 
 	/**
-	 * �g�p�A�C�e���̑I���B
-	 * �߂�l�̓X���b�g�ԍ�
+	 * ・ｽg・ｽp・ｽA・ｽC・ｽe・ｽ・ｽ・ｽﾌ選・ｽ・ｽ・ｽB
+	 * ・ｽﾟゑｿｽl・ｽﾍス・ｽ・ｽ・ｽb・ｽg・ｽﾔ搾ｿｽ
 	 */
 	public int getNextEquipItem(int pMode) {
-		// ���I��
+		// ・ｽ・ｽ・ｽI・ｽ・ｽ
 		return -1;
 	}
 	
 	/**
-	 * �A�C�e�����ۂ̔��莮�B
-	 * �E���ɍs���A�C�e���̔���B
+	 * ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽﾂ否の費ｿｽ・ｽ闔ｮ・ｽB
+	 * ・ｽE・ｽ・ｽ・ｽﾉ行・ｽ・ｽ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽﾌ費ｿｽ・ｽ・ｽB
 	 */
 	public boolean checkItemStack(ItemStack pItemStack) {
-		// ���ΏۃA�C�e���̐ݒ�Ȃ�
+		// ・ｽ・ｽ・ｽﾎ象ア・ｽC・ｽe・ｽ・ｽ・ｽﾌ設抵ｿｽﾈゑｿｽ
 		return false;
 	}
 
 	/**
-	 * �U�����菈���B
-	 * ����ȍU������͂����Ŏ����B
+	 * ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽ闖茨ｿｽ・ｽ・ｽB
+	 * ・ｽ・ｽ・ｽ・ｽﾈ攻・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾍゑｿｽ・ｽ・ｽ・ｽﾅ趣ｿｽ・ｽ・ｽ・ｽB
 	 */
 	public boolean attackEntityAsMob(int pMode, Entity pEntity) {
-		// ����U���̐ݒ�Ȃ�
+		// ・ｽ・ｽ・ｽ・ｽU・ｽ・ｽ・ｽﾌ設抵ｿｽﾈゑｿｽ
 		return false;
 	}
 
 	/**
-	 * �u���b�N�̃`�F�b�N��������邩�ǂ����B
-	 * ���莮�̂ǂ�����g����������őI���B
+	 * ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾌチ・ｽF・ｽb・ｽN・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ驍ｩ・ｽﾇゑｿｽ・ｽ・ｽ・ｽB
+	 * ・ｽ・ｽ・ｽ闔ｮ・ｽﾌどゑｿｽ・ｽ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾅ選・ｽ・ｽ・ｽB
 	 */
 	public boolean isSearchBlock() {
 		return false;
 	}
 
 	/**
-	 * isSearchBlock=false�̂Ƃ��ɔ��肳���B
+	 * isSearchBlock=false・ｽﾌとゑｿｽ・ｽﾉ費ｿｽ・ｽ閧ｳ・ｽ・ｽ・ｽB
 	 */
 	public boolean shouldBlock(int pMode) {
 		return false;
 	}
 
 	/**
-	 * �T�����߂��u���b�N�ł��邩�B
-	 * true��Ԃ��ƌ����I���B
+	 * ・ｽT・ｽ・ｽ・ｽ・ｽ・ｽﾟゑｿｽ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾅゑｿｽ・ｽ驍ｩ・ｽB
+	 * true・ｽ・ｽﾔゑｿｽ・ｽﾆ鯉ｿｽ・ｽ・ｽ・ｽI・ｽ・ｽ・ｽB
 	 */
 	public boolean checkBlock(int pMode, int px, int py, int pz) {
 		return false;
 	}
 
 	/**
-	 * �����͈͂ɍ��G�Ώۂ��Ȃ������B
+	 * ・ｽ・ｽ・ｽ・ｽ・ｽﾍ囲に搾ｿｽ・ｽG・ｽﾎ象ゑｿｽ・ｽﾈゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 */
 	public boolean overlooksBlock(int pMode) {
 		return false;
@@ -182,14 +182,14 @@ public abstract class LMM_EntityModeBase {
 //	}
 
 	/**
-	 * ���E�����𒴂������̏���
+	 * ・ｽ・ｽ・ｽE・ｽ・ｽ・ｽ・ｽ・ｽｴゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ
 	 */
 	public void farrangeBlock() {
 		owner.getNavigator().clearPathEntity();
 	}
 
 	/**
-	 * �L��˒������𒴂������̏���
+	 * ・ｽL・ｽ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽｴゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ
 	 */
 	public boolean outrangeBlock(int pMode, int pX, int pY, int pZ) {
 		return owner.getNavigator().tryMoveToXYZ(pX, pY, pZ, 1.0F);
@@ -199,8 +199,8 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * �˒������ɓ��������s�����B
-	 * �߂�l��true�̎��͏I�������ɓ���p��
+	 * ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * ・ｽﾟゑｿｽl・ｽ・ｽtrue・ｽﾌ趣ｿｽ・ｽﾍ終・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ難ｿｽ・ｽ・ｽp・ｽ・ｽ
 	 */
 	public boolean executeBlock(int pMode, int px, int py, int pz) {
 		return false;
@@ -210,82 +210,82 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * AI���s���ɌĂ΂��B
+	 * AI・ｽ・ｽ・ｽs・ｽ・ｽ・ｽﾉ呼ばゑｿｽ・ｽB
 	 */
 	public void startBlock(int pMode) {
 	}
 
 	/**
-	 * AI�I�����ɌĂ΂��B
+	 * AI・ｽI・ｽ・ｽ・ｽ・ｽ・ｽﾉ呼ばゑｿｽ・ｽB
 	 */
 	public void resetBlock(int pMode) {
 	}
 
 	/**
-	 * �p��������s�����ɌĂ΂��B
+	 * ・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽﾉ呼ばゑｿｽ・ｽB
 	 */
 	public void updateBlock() {
 	}
 
 
 	/**
-	 * �Ǝ����G�����̎g�p�L��
+	 * ・ｽﾆ趣ｿｽ・ｽ・ｽ・ｽG・ｽ・ｽ・ｽ・ｽ・ｽﾌ使・ｽp・ｽL・ｽ・ｽ
 	 */
 	public boolean isSearchEntity() {
 		return false;
 	}
 
 	/**
-	 * �Ǝ����G����
+	 * ・ｽﾆ趣ｿｽ・ｽ・ｽ・ｽG・ｽ・ｽ・ｽ・ｽ
 	 */
 	public boolean checkEntity(int pMode, Entity pEntity) {
 		return false;
 	}
 
 	/**
-	 * ���������p
+	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp
 	 */
 	public int colorMultiplier(float pLight, float pPartialTicks) {
 		return 0;
 	}
 	
 	/**
-	 * ��_�����̏����P�B
-	 * 0�ȏ��Ԃ��Ə�����������B
-	 * 1:false�Ō��̏������I������B
-	 * 2:true�Ō��̏������I������B
+	 * ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽP・ｽB
+	 * 0・ｽﾈ擾ｿｽ・ｽﾔゑｿｽ・ｽﾆ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * 1:false・ｽﾅ鯉ｿｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽI・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * 2:true・ｽﾅ鯉ｿｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽI・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 */
 	public float attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		return 0;
 	}
 	/**
-	 * ��_�����̏����Q�B
-	 * true��Ԃ��Ə�����������B
+	 * ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽQ・ｽB
+	 * true・ｽ・ｽﾔゑｿｽ・ｽﾆ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 */
 	public boolean damageEntity(int pMode, DamageSource par1DamageSource, float par2) {
 		return false;
 	}
 
 	/**
-	 * �������g���Ă���Tile�Ȃ�True��Ԃ��B
+	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽTile・ｽﾈゑｿｽTrue・ｽ・ｽﾔゑｿｽ・ｽB
 	 */
 	public boolean isUsingTile(TileEntity pTile) {
 		return false;
 	}
 
 	/**
-	 * �����Ă�Tile��Ԃ��B
+	 * ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽTile・ｽ・ｽﾔゑｿｽ・ｽB
 	 */
 	public List<TileEntity> getTiles() {
 		return null;
 	}
 
 	/**
-	 * do1:�����蔻��̃`�F�b�N
-	 * do2:�펞�u���N����A���ߔ���������蔻��������B
+	 * do1:・ｽ・ｽ・ｽ・ｽ・ｽ阡ｻ・ｽ・ｽﾌチ・ｽF・ｽb・ｽN
+	 * do2:・ｽ寬橸ｿｽu・ｽ・ｽ・ｽN・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽﾟ費ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ阡ｻ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 */
 	protected boolean canBlockBeSeen(int pX, int pY, int pZ, boolean toTop, boolean do1, boolean do2) {
-		// �u���b�N�̉�����
+		// ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾌ可趣ｿｽ・ｽ・ｽ・ｽ・ｽ
 		World worldObj = owner.worldObj;
 		Block lblock = Block.blocksList[worldObj.getBlockId(pX, pY, pZ)];
 		if (lblock == null) {
@@ -299,7 +299,7 @@ public abstract class LMM_EntityModeBase {
 		MovingObjectPosition movingobjectposition = worldObj.rayTraceBlocks_do_do(vec3do, vec3dt, do1, do2);
 		
 		if (movingobjectposition != null && movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
-			// �ڐG�u���b�N���w�肵�����̂Ȃ��
+			// ・ｽﾚ触・ｽu・ｽ・ｽ・ｽb・ｽN・ｽ・ｽ・ｽw・ｽ閧ｵ・ｽ・ｽ・ｽ・ｽ・ｽﾌなゑｿｽ・ｽ
 			if (movingobjectposition.blockX == pX && 
 					movingobjectposition.blockY == pY &&
 					movingobjectposition.blockZ == pZ) {
@@ -310,7 +310,7 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * ��Ƃ̋������B
+	 * ・ｽ・ｽﾆの具ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 	 * @param pIndex
 	 * 0:minRange;
 	 * 1:maxRange;
@@ -321,7 +321,7 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * �U����Ƀ^�[�Q�b�g���Đݒ肳���邩�̎w��B
+	 * ・ｽU・ｽ・ｽ・ｽ・ｽﾉタ・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽﾄ設定さ・ｽ・ｽ・ｽ驍ｩ・ｽﾌ指・ｽ・ｽB
 	 * @param pTarget
 	 * @return
 	 */

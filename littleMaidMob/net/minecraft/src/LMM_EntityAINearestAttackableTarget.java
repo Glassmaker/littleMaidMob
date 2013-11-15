@@ -49,10 +49,10 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 			double lfollowRange = this.getTargetDistance();
 			List llist = this.taskOwner.worldObj.getEntitiesWithinAABB(targetClass, taskOwner.boundingBox.expand(lfollowRange, 8.0D, lfollowRange));
 			if (theMaid.mstatMasterEntity != null && !theMaid.isBloodsuck()) {
-				// �\�[�^�[���咆�S��
+				// ・ｽ\・ｽ[・ｽ^・ｽ[・ｽ・ｽ・ｽ蜥・ｿｽS・ｽ・ｽ
 				theNearestAttackableTargetSorter.setEntity(theMaid.mstatMasterEntity);
 			} else {
-				// �������S�Ƀ\�[�g
+				// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽS・ｽﾉソ・ｽ[・ｽg
 				theNearestAttackableTargetSorter.setEntity(theMaid);
 			}
 			Collections.sort(llist, theNearestAttackableTargetSorter);
@@ -83,8 +83,8 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 
 //	@Override
 	protected boolean isSuitableTargetLM(Entity pTarget, boolean par2) {
-		// LMM�p�ɃJ�X�^��
-		// �񐶕����Ώۂ̂��ߕʃN���X
+		// LMM・ｽp・ｽﾉカ・ｽX・ｽ^・ｽ・ｽ
+		// ・ｽｶ包ｿｽ・ｽ・ｽ・ｽﾎ象のゑｿｽ・ｽﾟ別ク・ｽ・ｽ・ｽX
 		if (pTarget == null) {
 			return false;
 		}
@@ -111,18 +111,18 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 			}
 		}
 /*		
-		// ��_�����苗������Ă���ꍇ���U�����Ȃ�
+		// ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽ闍暦ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ鼾・ｿｽ・ｽ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ
 		if (!taskOwner.func_110176_b(MathHelper.floor_double(pTarget.posX), MathHelper.floor_double(pTarget.posY), MathHelper.floor_double(pTarget.posZ))) {
 //		if (!taskOwner.isWithinHomeDistance(MathHelper.floor_double(par1EntityLiving.posX), MathHelper.floor_double(par1EntityLiving.posY), MathHelper.floor_double(par1EntityLiving.posZ))) {
 			return false;
 		}
 */		
-		// �^�[�Q�b�g�������Ȃ�
+		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ
 		if (shouldCheckSight && !taskOwner.getEntitySenses().canSee(pTarget)) {
 			return false;
 		}
 		
-		// �U�����~����H
+		// ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽ~・ｽ・ｽ・ｽ・ｽH
 		if (this.fretarget) {
 			if (--this.fretryCounter <= 0) {
 				this.fcanAttack = 0;
@@ -140,7 +140,7 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 		return true;
 	}
 
-	// �ŏI�ʒu���U���̊ԍ����łȂ���Ύ��s
+	// ・ｽﾅ終・ｽﾊ置・ｽ・ｽ・ｽU・ｽ・ｽ・ｽﾌ間搾ｿｽ・ｽ・ｽ・ｽﾅなゑｿｽ・ｽ・ｽﾎ趣ｿｽ・ｽs
 	protected boolean func_75295_a(Entity par1EntityLiving) {
 		this.fretryCounter = 10 + this.taskOwner.getRNG().nextInt(5);
 		PathEntity var2 = taskOwner.getNavigator().getPathToXYZ(par1EntityLiving.posX, par1EntityLiving.posY, par1EntityLiving.posZ);

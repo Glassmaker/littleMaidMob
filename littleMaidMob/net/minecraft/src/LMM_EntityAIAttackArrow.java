@@ -76,42 +76,42 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 		double ldist = fMaid.getDistanceSqToEntity(fTarget);
 		boolean lsee = fMaid.getEntitySenses().canSee(fTarget);
 		
-		// ���E�̊O�ɏo�����莞�ԂŖO����
+		// ・ｽ・ｽ・ｽE・ｽﾌ外・ｽﾉ出・ｽ・ｽ・ｽ・ｽ・ｽ闔橸ｿｽﾔで飽・ｽ・ｽ・ｽ・ｽ
 		if (lsee) {
 			fForget = 0;
 		} else {
 			fForget++;
 		}
 		
-		// �U���Ώۂ�����
+		// ・ｽU・ｽ・ｽ・ｽﾎ象ゑｿｽ・ｽ・ｽ・ｽ・ｽ
 		fMaid.getLookHelper().setLookPositionWithEntity(fTarget, 30F, 30F);
 		
 		if (ldist < lrange) {
-			// �L��˒���
+			// ・ｽL・ｽ・ｽﾋ抵ｿｽ・ｽ・ｽ
 			double atx = fTarget.posX - fMaid.posX;
 			double aty = fTarget.posY - fMaid.posY;
 			double atz = fTarget.posZ - fMaid.posZ;
 			if (fTarget.isEntityAlive()) {
 				ItemStack litemstack = fMaid.getCurrentEquippedItem();
-				// �G�Ƃ̃x�N�g��
+				// ・ｽG・ｽﾆのベ・ｽN・ｽg・ｽ・ｽ
 				double atl = atx * atx + aty * aty + atz * atz;
 				double il = -1D;
 				double milsq = 10D;
 				Entity masterEntity = fMaid.getMaidMasterEntity();
 				if (masterEntity != null && !fMaid.isPlaying()) {
-					// ��Ƃ̃x�N�g��
+					// ・ｽ・ｽﾆのベ・ｽN・ｽg・ｽ・ｽ
 					double amx = masterEntity.posX - fMaid.posX;
 					double amy = masterEntity.posY - fMaid.posY;//-2D
 					double amz = masterEntity.posZ - fMaid.posZ;
 					
-					// ���̒l���O�`�P�Ȃ�^�[�Q�b�g�Ƃ̊ԂɎ傪����
+					// ・ｽ・ｽ・ｽﾌ値・ｽ・ｽ・ｽO・ｽ`・ｽP・ｽﾈゑｿｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽﾆの間に主が・ｽ・ｽ・ｽ・ｽ
 					il = (amx * atx + amy * aty + amz * atz) / atl;
 					
-					// �ː�x�N�g���Ǝ�Ƃ̐����x�N�g��
+					// ・ｽﾋ撰ｿｽx・ｽN・ｽg・ｽ・ｽ・ｽﾆ趣ｿｽﾆの撰ｿｽ・ｽ・ｽ・ｽx・ｽN・ｽg・ｽ・ｽ
 					double mix = (fMaid.posX + il * atx) - masterEntity.posX;
 					double miy = (fMaid.posY + il * aty) - masterEntity.posY;// + 2D;
 					double miz = (fMaid.posZ + il * atz) - masterEntity.posZ;
-					// �ː���Ƃ̋���
+					// ・ｽﾋ撰ｿｽ・ｽ・ｽﾆの具ｿｽ・ｽ・ｽ
 					milsq = mix * mix + miy * miy + miz * miz;
 //					mod_LMM_littleMaidMob.Debug("il:%f, milsq:%f", il, milsq);
 				}
@@ -121,14 +121,14 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 					int itemcount = litemstack.stackSize;
 					fMaid.mstatAimeBow = true;
 					fAvatar.getValueVectorFire(atx, aty, atz, atl);
-					// �_�C���A���w�����Ȃ疡��ւ̌�˂��C�����y��
+					// ・ｽ_・ｽC・ｽ・ｽ・ｽA・ｽ・ｽ・ｽw・ｽ・ｽ・ｽ・ｽ・ｽﾈら味・ｽ・ｽﾖの鯉ｿｽﾋゑｿｽ・ｽC・ｽ・ｽ・ｽ・ｽ・ｽy・ｽ・ｽ
 					boolean lcanattack = true;
 					boolean ldotarget = false;
 					double tpr = Math.sqrt(atl);
 					Entity lentity = MMM_Helper.getRayTraceEntity(fMaid.maidAvatar, tpr + 1.0F, 1.0F, 1.0F);
 					int helmid = !fMaid.isMaskedMaid() ? 0 : fInventory.armorInventory[3].getItem().itemID;
 					if (helmid == Item.helmetDiamond.itemID || helmid == Item.helmetGold.itemID) {
-						// �ː�̊m�F
+						// ・ｽﾋ撰ｿｽﾌ確・ｽF
 						if (lentity != null && fMaid.getIFF(lentity)) {
 							lcanattack = false;
 //							mod_LMM_littleMaidMob.Debug("ID:%d-friendly fire to ID:%d.", fMaid.entityId, lentity.entityId);
@@ -139,20 +139,20 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 					}
 					lcanattack &= (milsq > 3D || il < 0D);
 					lcanattack &= ldotarget;
-					// ���ړ�
+					// ・ｽ・ｽ・ｽﾚ難ｿｽ
 					if (!lcanattack) {
-						// �ˌ��ʒu���m�ۂ���
+						// ・ｽﾋ鯉ｿｽ・ｽﾊ置・ｽ・ｽ・ｽm・ｽﾛゑｿｽ・ｽ・ｽ
 						double tpx = fMaid.posX;
 						double tpy = fMaid.posY;
 						double tpz = fMaid.posZ;
 //						double tpr = Math.sqrt(atl) * 0.5D;
 						tpr = tpr * 0.5D;
 						if (fMaid.isBloodsuck()) {
-							// �����
+							// ・ｽ・ｽ・ｽ・ｽ・ｽ
 							tpx += (atz / tpr);
 							tpz -= (atx / tpr);
 						} else {
-							// �E���
+							// ・ｽE・ｽ・ｽ・ｽ
 							tpx -= (atz / tpr);
 							tpz += (atx / tpr);
 						}
@@ -166,20 +166,20 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 					lcanattack &= lsee;
 //            		mod_littleMaidMob.Debug(String.format("id:%d at:%d", entityId, attackTime));
 					if (((fMaid.weaponFullAuto && !lcanattack) || (lcanattack && fMaid.getSwingStatusDominant().canAttack())) && fAvatar.isItemTrigger) {
-						// �V���[�g
-						// �t���I�[�g����͎ˌ���~
+						// ・ｽV・ｽ・ｽ・ｽ[・ｽg
+						// ・ｽt・ｽ・ｽ・ｽI・ｽ[・ｽg・ｽ・ｽ・ｽ・ｽﾍ射鯉ｿｽ・ｽ・ｽ~
 						mod_LMM_littleMaidMob.Debug("id:%d shoot.", fMaid.entityId);
 						fAvatar.stopUsingItem();
 						fMaid.setSwing(30, LMM_EnumSound.shoot);
 					} else {
-						// �`���[�W
+						// ・ｽ`・ｽ・ｽ・ｽ[・ｽW
 						if (litemstack.getMaxItemUseDuration() > 500) {
 //                			mod_littleMaidMob.Debug(String.format("non reload.%b", isMaskedMaid));
-							// �����[�h�����̒ʏ핺��
+							// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh・ｽ・ｽ・ｽ・ｽ・ｽﾌ通常兵・ｽ・ｽ
 							if (!fAvatar.isUsingItemLittleMaid()) {
-								// �\��
+								// ・ｽ\・ｽ・ｽ
 								if (!fMaid.weaponFullAuto || lcanattack) {
-									// �t���I�[�g�����̏ꍇ�͎ː�m�F
+									// ・ｽt・ｽ・ｽ・ｽI・ｽ[・ｽg・ｽ・ｽ・ｽ・ｽ・ｽﾌ場合・ｽﾍ射撰ｿｽm・ｽF
 									int at = ((helmid == Item.helmetIron.itemID) || (helmid == Item.helmetDiamond.itemID)) ? 26 : 16;
 									if (swingState.attackTime < at) {
 										fMaid.setSwing(at, LMM_EnumSound.sighting);
@@ -192,11 +192,11 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 							}
 						} 
 						else if (litemstack.getMaxItemUseDuration() == 0) {
-							// �ʏ퓊������
+							// ・ｽﾊ常投・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 							if (swingState.canAttack() && !fAvatar.isUsingItem()) {
 								if (lcanattack) {
 									litemstack = litemstack.useItemRightClick(worldObj, fAvatar);
-									// �Ӑ}�I�ɃV���[�g�X�p���ŉ�����悤�ɂ��Ă���
+									// ・ｽﾓ図・ｽI・ｽﾉシ・ｽ・ｽ・ｽ[・ｽg・ｽX・ｽp・ｽ・ｽ・ｽﾅ会ｿｽ・ｽ・ｽ・ｽﾂゑｿｽ謔､・ｽﾉゑｿｽ・ｽﾄゑｿｽ・ｽ・ｽ
 									fMaid.mstatAimeBow = false;
 									fMaid.setSwing(10, (litemstack.stackSize == itemcount) ? LMM_EnumSound.shoot_burst : LMM_EnumSound.Null);
 									mod_LMM_littleMaidMob.Debug(String.format("id:%d throw weapon.(%d:%f:%f)", fMaid.entityId, swingState.attackTime, fMaid.rotationYaw, fMaid.rotationYawHead));
@@ -205,18 +205,18 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 								}
 							}
 						} else {
-							// �����[�h�L��̓��ꕺ��
+							// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh・ｽL・ｽ・ｽﾌ難ｿｽ・ｽ齦ｺ・ｽ・ｽ
 							if (!fAvatar.isUsingItemLittleMaid()) {
 								litemstack = litemstack.useItemRightClick(worldObj, fAvatar);
 								mod_LMM_littleMaidMob.Debug(String.format("%d reload.", fMaid.entityId));
 							}
-							// �����[�h�I���܂ŋ����I�ɍ\����
+							// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh・ｽI・ｽ・ｽ・ｽﾜで具ｿｽ・ｽ・ｽ・ｽI・ｽﾉ構・ｽ・ｽ・ｽ・ｽ
 							swingState.attackTime = 5;
 						}
 					}
 //            		maidAvatarEntity.setValueRotation();
 					fAvatar.setValueVector();
-					// �A�C�e�����S���Ȃ���
+					// ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽS・ｽ・ｽ・ｽﾈゑｿｽ・ｽ・ｽ
 					if (litemstack.stackSize <= 0) {
 						fMaid.destroyCurrentEquippedItem();
 						fMaid.getNextEquipItem();
@@ -224,7 +224,7 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 						fInventory.setInventoryCurrentSlotContents(litemstack);
 					}
 					
-					// ��������Entity���`�F�b�N����maidAvatarEntity�����Ȃ������m�F
+					// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽEntity・ｽ・ｽ・ｽ`・ｽF・ｽb・ｽN・ｽ・ｽ・ｽ・ｽmaidAvatarEntity・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽm・ｽF
 					List<Entity> newentitys = worldObj.loadedEntityList.subList(lastentityid, worldObj.loadedEntityList.size());
 					boolean shootingflag = false;
 					if (newentitys != null && newentitys.size() > 0) {
@@ -235,11 +235,11 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 								continue;
 							}
 							try {
-								// ���đ̂̎��u��������
+								// ・ｽ・ｽ・ｽﾄ体の趣ｿｽ・ｽu・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 								Field fd[] = te.getClass().getDeclaredFields();
 //                				mod_littleMaidMob.Debug(String.format("%s, %d", e.getClass().getName(), fd.length));
 								for (Field ff : fd) {
-									// �ϐ���������Avatar�Ɠ������������ƒu��������
+									// ・ｽﾏ撰ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽAvatar・ｽﾆ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾆ置・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 									ff.setAccessible(true);
 									Object eo = ff.get(te);
 									if (eo.equals(fAvatar)) {
@@ -252,7 +252,7 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 							}
 						}
 					}
-					// ��ɖ������Ă����ꍇ�̏���
+					// ・ｽ・ｽﾉ厄ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ鼾・ｿｽﾌ擾ｿｽ・ｽ・ｽ
 					if (shootingflag) {
 						for (Object obj : worldObj.loadedEntityList) {
 							if (obj instanceof EntityCreature && !(obj instanceof LMM_EntityLittleMaid)) {
@@ -266,7 +266,7 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 				}
 			}
 		} else {
-			// �L��˒��O
+			// ・ｽL・ｽ・ｽﾋ抵ｿｽ・ｽO
 			if (fMaid.getNavigator().noPath()) {
 				fMaid.getNavigator().tryMoveToEntityLiving(fTarget, 1.0);
 			}

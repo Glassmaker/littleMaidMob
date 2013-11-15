@@ -53,9 +53,9 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 		ModLoader.addLocalization("littleMaidMob.mode.Strike", "Strike");
 		ModLoader.addLocalization("littleMaidMob.mode.Wait", "Wait");
 		ModLoader.addLocalization("littleMaidMob.mode.Wild", "Wild");
-		ModLoader.addLocalization("littleMaidMob.mode.Wild", "ja_JP", "�쐶��");
+		ModLoader.addLocalization("littleMaidMob.mode.Wild", "ja_JP", "・ｽ・ｶ・ｽ・ｽ");
 		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "Escorter");
-		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "ja_JP", "�]��");
+		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "ja_JP", "・ｽ]・ｽ・ｽ");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Escorter", "Freedom");
 		ModLoader.addLocalization("littleMaidMob.mode.D-Escorter", "D-Escorter");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Escorter", "Tracer");
@@ -100,7 +100,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean changeMode(EntityPlayer pentityplayer) {
-		// �����I�Ɋ��蓖�Ă�
+		// ・ｽ・ｽ・ｽ・ｽ・ｽI・ｽﾉ奇ｿｽ・ｽ闢厄ｿｽﾄゑｿｽ
 		owner.setMaidMode("Escorter");
 		return true;
 	}
@@ -137,7 +137,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	public boolean isSearchBlock() {
 		if (owner.getMaidModeInt() == mmode_Escorter && owner.isFreedom() &&
 				owner.maidInventory.getFirstEmptyStack() == -1) {
-			// �Ώۂ��܂������Ă��Ȃ��Ƃ��͌������s���B
+			// ・ｽﾎ象ゑｿｽ・ｽﾜゑｿｽ・ｽ・ｽ・ｽﾂゑｿｽ・ｽﾄゑｿｽ・ｽﾈゑｿｽ・ｽﾆゑｿｽ・ｽﾍ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽB
 			fDistance = 100F;
 			return myInventory == null;
 		}
@@ -158,15 +158,15 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		if (((IInventory)ltile).getSizeInventory() < 18) {
-			// �C���x���g���̃T�C�Y���P�W�ȉ��Ȃ�ΏۂƂ��Ȃ��B
+			// ・ｽC・ｽ・ｽ・ｽx・ｽ・ｽ・ｽg・ｽ・ｽ・ｽﾌサ・ｽC・ｽY・ｽ・ｽ・ｽP・ｽW・ｽﾈ会ｿｽ・ｽﾈゑｿｽﾎ象とゑｿｽ・ｽﾈゑｿｽ・ｽB
 			return false;
 		}
 		
-		// ���E�̃��C�h����
+		// ・ｽ・ｽ・ｽE・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽ・ｽ
 		if (checkWorldMaid(ltile)) return false;
-		// �g�p�ς݃`�F�b�N
+		// ・ｽg・ｽp・ｽﾏみチ・ｽF・ｽb・ｽN
 		if (fusedTiles.contains(ltile)) {
-			// ��ɒʂ�߂����ꏊ��b�I
+			// ・ｽ・ｽﾉ通ゑｿｽﾟゑｿｽ・ｽ・ｽ・ｽ齒奇ｿｽ・ｽb・ｽI
 			return false;
 		}
 		
@@ -180,17 +180,17 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean overlooksBlock(int pMode) {
-		// �`�F�X�g�J�[�g�̌���
+		// ・ｽ`・ｽF・ｽX・ｽg・ｽJ・ｽ[・ｽg・ｽﾌ鯉ｿｽ・ｽ・ｽ
 		List<Entity> list = owner.worldObj.getEntitiesWithinAABB(IInventory.class, owner.boundingBox.expand(8D, 2D, 8D));
 		double cartl = 256D;
 		for (Entity lentity : list) {
 			if (!fusedTiles.contains(lentity)) {
 				if (((IInventory)lentity).getSizeInventory() < 18) {
-					// �C���x���g�������T�C�Y�ȉ��̓X�L�b�v
+					// ・ｽC・ｽ・ｽ・ｽx・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽT・ｽC・ｽY・ｽﾈ会ｿｽ・ｽﾍス・ｽL・ｽb・ｽv
 					continue;
 				}
 				double lr = lentity.getDistanceSqToEntity(owner);
-				// ������ʒu�ɂ���ł��߂����ׂĂ��Ȃ��J�[�g�`�F�X�g
+				// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ置・ｽﾉゑｿｽ・ｽ・ｽﾅゑｿｽ・ｽﾟゑｿｽ・ｽ・ｽ・ｽﾗてゑｿｽ・ｽﾈゑｿｽ・ｽJ・ｽ[・ｽg・ｽ`・ｽF・ｽX・ｽg
 				
 				if (fDistance > lr && owner.getEntitySenses().canSee(lentity)) {
 					myInventory = (IInventory)lentity;
@@ -235,34 +235,34 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	public boolean executeBlock(int pMode, int px, int py, int pz) {
 //		isMaidChaseWait = true;
 		if (myInventory instanceof TileEntityChest) {
-			// �u���b�N�n�̃`�F�X�g
+			// ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽn・ｽﾌチ・ｽF・ｽX・ｽg
 			TileEntityChest lchest = (TileEntityChest)myInventory;
 			if (!lchest.isInvalid()) {
-				// �g�p���O�ɉ�����
+				// ・ｽg・ｽp・ｽ・ｽ・ｽO・ｽﾉ可趣ｿｽ・ｽ・ｽ・ｽ・ｽ
 				if (MMM_Helper.canBlockBeSeen(owner, lchest.xCoord, lchest.yCoord, lchest.zCoord, false, true, false)) {
 					if (myChest == null) {
 						getChest();
 						if (myChest != null) {
 							myChest.openChest();
 						} else {
-							// �J���Ȃ��`�F�X�g
+							// ・ｽJ・ｽ・ｽ・ｽﾈゑｿｽ・ｽ`・ｽF・ｽX・ｽg
 							myInventory = null;
 						}
 					}
-					// �`�F�X�g�Ɏ�[
+					// ・ｽ`・ｽF・ｽX・ｽg・ｽﾉ趣ｿｽ[
 					owner.setWorking(true);
 					putChest();
 					return true;
 				} else {
-					// ��������
+					// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 					clearMy();
 				}
 			} else {
-				// Tile�̏���
+				// Tile・ｽﾌ擾ｿｽ・ｽ・ｽ
 				clearMy();
 			}
 		} else {
-			// �z��O�̃C���x���g��
+			// ・ｽz・ｽ・ｽO・ｽﾌイ・ｽ・ｽ・ｽx・ｽ・ｽ・ｽg・ｽ・ｽ
 			if (myInventory != null) {
 				fusedTiles.add(myInventory);
 			}
@@ -273,15 +273,15 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean outrangeBlock(int pMode, int pX, int pY, int pZ) {
-		// �`�F�X�g�܂ł̃p�X�����
+		// ・ｽ`・ｽF・ｽX・ｽg・ｽﾜでのパ・ｽX・ｽ・ｽ・ｽ・ｽ・ｽ
 		boolean lf = false;
 		if (!owner.isMaidWaitEx()) {
 			double distance;
 			if (myInventory instanceof TileEntity) {
 				distance = owner.getDistanceTilePos();
 				if (distance == lastdistance) {
-					// TODO:���󖳈Ӗ�
-					// �ړ����ł܂�Ȃ��悤�ɗ�������
+					// TODO:・ｽ・ｽ・ｽｳ意厄ｿｽ
+					// ・ｽﾚ難ｿｽ・ｽ・ｽ・ｽﾅまゑｿｽﾈゑｿｽ・ｽ謔､・ｽﾉ暦ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 					mod_LMM_littleMaidMob.Debug("Assert.");
 					//XXX: experimental
 					//owner.updateWanderPath();
@@ -294,7 +294,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 				distance = 0;
 			}
 			lastdistance = distance;
-			// �����W�O�̃`�F�X�g�͕���
+			// ・ｽ・ｽ・ｽ・ｽ・ｽW・ｽO・ｽﾌチ・ｽF・ｽX・ｽg・ｽﾍ閉ゑｿｽ・ｽ・ｽ
 			if (myChest != null) {
 				myChest.closeChest();
 				myChest = null;
@@ -311,11 +311,11 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 
 	protected boolean getChest() {
-		// �`�F�X�g���l��
+		// ・ｽ`・ｽF・ｽX・ｽg・ｽ・ｽ・ｽl・ｽ・ｽ
 		if (myInventory == null) {
 			return false;
 		}
-		// �����ς݂ɃX�^�b�N
+		// ・ｽ・ｽ・ｽ・ｽ・ｽﾏみにス・ｽ^・ｽb・ｽN
 		fusedTiles.add(myInventory);
 		if (myInventory instanceof TileEntityChest) {
 			TileEntityChest lchest = (TileEntityChest)myInventory;
@@ -339,9 +339,9 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	}
 
 	protected void putChest() {
-		// �`�F�X�g�ɋߐ�
+		// ・ｽ`・ｽF・ｽX・ｽg・ｽﾉ近撰ｿｽ
 		if (owner.getSwingStatusDominant().canAttack() && myChest != null) {
-			// �����A���v�A����Ă���w�����ȊO�̃A�C�e����˂�����
+			// ・ｽ・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽv・ｽA・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽw・ｽ・ｽ・ｽ・ｽ・ｽﾈ外・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽﾋゑｿｽ・ｽ・ｽ・ｽ・ｽ
 			ItemStack is;
 			mod_LMM_littleMaidMob.Debug(String.format("getChest:%d", maidSearchCount));
 			while ((is = owner.maidInventory.getStackInSlot(maidSearchCount)) == null && maidSearchCount < owner.maidInventory.mainInventory.length) {
@@ -392,12 +392,12 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 			}
 //			mod_littleMaidMob.Debug(String.format("getchest3:%d", maidSearchCount));
 			if (++maidSearchCount >= owner.maidInventory.mainInventory.length) {
-				// �����ς݂̑Ώۂ��X�^�b�N
+				// ・ｽ・ｽ・ｽ・ｽ・ｽﾏみの対象ゑｿｽ・ｽX・ｽ^・ｽb・ｽN
 //				serchedChest.add(myChest);
 				clearMy();
 				lastdistance = 0D;
 				mod_LMM_littleMaidMob.Debug("endChest.");
-				// �󂫂��ł�����{���I��
+				// ・ｽｫゑｿｽ・ｽﾅゑｿｽ・ｽ・ｽ・ｽ・ｽ{・ｽ・ｽ・ｽI・ｽ・ｽ
 				if (owner.maidInventory.getFirstEmptyStack() > -1) {
 					mod_LMM_littleMaidMob.Debug("Search clear.");
 					fusedTiles.clear();
@@ -409,7 +409,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	@Override
 	public boolean attackEntityAsMob(int pMode, Entity pEntity) {
 		if (pEntity == myInventory) {
-			// �`�F�X�g�t�J�[�g�Ƃ�
+			// ・ｽ`・ｽF・ｽX・ｽg・ｽt・ｽJ・ｽ[・ｽg・ｽﾆゑｿｽ
 			Entity lentity = (Entity)myInventory;
 			if (!lentity.isDead) {
 				if (owner.getDistanceSqToEntity(lentity) < 5D)	{
@@ -422,14 +422,14 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 					if (myChest != null) {
 						owner.getLookHelper().setLookPositionWithEntity(lentity, 30F, 40F);
 					}
-					// �`�F�X�g�Ɏ�[
+					// ・ｽ`・ｽF・ｽX・ｽg・ｽﾉ趣ｿｽ[
 					putChest();
 				} else {
-					// �`�F�X�g�܂ł̃p�X�����
+					// ・ｽ`・ｽF・ｽX・ｽg・ｽﾜでのパ・ｽX・ｽ・ｽ・ｽ・ｽ・ｽ
 					if (!owner.isMaidWaitEx()) {
 						double distance = owner.getDistanceSqToEntity(lentity);
 						if (distance == lastdistance) {
-							// TODO: ���󖳈Ӗ�
+							// TODO: ・ｽ・ｽ・ｽｳ意厄ｿｽ
 							mod_LMM_littleMaidMob.Debug("Assert.");
 							//XXX: exprimental 
 							//owner.updateWanderPath();
@@ -446,12 +446,12 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 					}
 				}
 			} else {
-				// Entity�̎��S
+				// Entity・ｽﾌ趣ｿｽ・ｽS
 				clearMy();
 			}
 			return true;
 		} else {
-			// �^�[�Q�b�g���ς���Ă�H
+			// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽﾏゑｿｽ・ｽ・ｽﾄゑｿｽH
 			clearMy();
 		}
 		return true;
@@ -467,19 +467,19 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean preInteract(EntityPlayer pentityplayer, ItemStack pitemstack) {
-		// ���Ⴊ�ݎ��͏�������
+		// ・ｽ・ｽ・ｽ痰ｪ・ｽﾝ趣ｿｽ・ｽﾍ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 		if (pentityplayer.isSneaking()) {
 			return false;
 		}
 		if (owner.isContract()) {
-			// �_����
+			// ・ｽ_・ｽ・ｽ・ｽ・ｽ
 			if (owner.isEntityAlive() && owner.isMaidContractOwner(pentityplayer)) {
 				if (pitemstack != null) {
-					// �ǉ����̏���
+					// ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ
 					owner.setPathToEntity(null);
 					if (owner.isRemainsContract()) {
 						if (pitemstack.getItem() instanceof ItemAppleGold) {
-							// �S�[���f���A�b�|�[
+							// ・ｽS・ｽ[・ｽ・ｽ・ｽf・ｽ・ｽ・ｽA・ｽb・ｽ|・ｽ[
 							if(!owner.worldObj.isRemote) {
 								//XXX: experimenting
 								//((ItemAppleGold)pitemstack.getItem()).onFoodEaten(pitemstack, owner.worldObj, owner.maidAvatar);
@@ -489,7 +489,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 							return true;
 						}
 						else if (pitemstack.getItem() instanceof ItemBucketMilk && !owner.getActivePotionEffects().isEmpty()) {
-							// ����ɑ��k��
+							// ・ｽ・ｽ・ｽ・ｽﾉ托ｿｽ・ｽk・ｽ・ｽ
 							if(!owner.worldObj.isRemote) {
 								owner.clearActivePotions();
 							}

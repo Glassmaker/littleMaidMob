@@ -15,7 +15,7 @@ public class LMM_ContainerInventory extends ContainerPlayer {
 
 	public LMM_ContainerInventory(IInventory iinventory, LMM_EntityLittleMaid pEntity) {
 		// >
-		// Forge�΍�AContainerPlayer�p���łȂ���Ηv��Ȃ��ASlotArmor�p
+		// Forge・ｽﾎ搾ｿｽAContainerPlayer・ｽp・ｽ・ｽ・ｽﾅなゑｿｽ・ｽ・ｽﾎ要・ｽ・ｽﾈゑｿｽ・ｽASlotArmor・ｽp
 		super(pEntity.maidInventory, !pEntity.worldObj.isRemote, pEntity.maidAvatar);
 		inventorySlots.clear();
 		inventoryItemStacks.clear();
@@ -54,7 +54,7 @@ public class LMM_ContainerInventory extends ContainerPlayer {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
-		// �J���邩�ǂ����̔���
+		// ・ｽJ・ｽ・ｽ・ｽ驍ｩ・ｽﾇゑｿｽ・ｽ・ｽ・ｽﾌ費ｿｽ・ｽ・ｽ
 		LMM_EntityLittleMaid entitylittlemaid = littlemaidInventory.entityLittleMaid; 
 		if(entitylittlemaid.isDead) {
 //		if(entitylittlemaid.isDead || entitylittlemaid.isOpenInventory()) {

@@ -2,21 +2,21 @@ package net.minecraft.src;
 
 public class LMM_Statics {
 
-	/** AbsoptionŒø‰Ê‚ğƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Ö“]‘—‚·‚é‚Ì‚Ég‚¤ */
+	/** AbsoptionåŠ¹æœã‚’ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã¸è»¢é€ã™ã‚‹ã®ã«ä½¿ã† */
 	protected static final int dataWatch_Absoption		= 18;
 	
-	/** ƒƒCƒhƒJƒ‰[(byte) */
+	/** ãƒ¡ã‚¤ãƒ‰ã‚«ãƒ©ãƒ¼(byte) */
 	protected static final int dataWatch_Color			= 19;
 	/**
 	 * MSB|0x0000 0000|LSB<br>
-	 *       |    |–{‘Ì‚ÌƒeƒNƒXƒ`ƒƒƒCƒ“ƒfƒbƒNƒX<br>
-	 *       |ƒA[ƒ}[‚ÌƒeƒNƒXƒ`ƒƒƒCƒ“ƒfƒbƒNƒX<br>
+	 *       |    |æœ¬ä½“ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹<br>
+	 *       |ã‚¢ãƒ¼ãƒãƒ¼ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹<br>
 	 */
 	protected static final int dataWatch_Texture		= 20;
-	/** ƒ‚ƒfƒ‹ƒp[ƒc‚Ì•\¦ƒtƒ‰ƒO(Integer) */
+	/** ãƒ¢ãƒ‡ãƒ«ãƒ‘ãƒ¼ãƒ„ã®è¡¨ç¤ºãƒ•ãƒ©ã‚°(Integer) */
 	protected static final int dataWatch_Parts			= 21;
 	/**
-	 * Šeíƒtƒ‰ƒO‚ğˆê“Z‚ß‚É‚µ‚½‚à‚ÌB
+	 * å„ç¨®ãƒ•ãƒ©ã‚°ã‚’ä¸€çºã‚ã«ã—ãŸã‚‚ã®ã€‚
 	 */
 	protected static final int dataWatch_Flags			= 22;
 	protected static final int dataWatch_Flags_looksWithInterest		= 0x00000001;
@@ -32,22 +32,22 @@ public class LMM_Statics {
 	protected static final int dataWatch_Flags_LooksSugar				= 0x00000400;
 	protected static final int dataWatch_Flags_Bloodsuck				= 0x00000800;
 	protected static final int dataWatch_Flags_OverDrive				= 0x00001000;
-	/** •R‚Ì‚¿å‚ÌEntityIDB */
+	/** ç´ã®æŒã¡ä¸»ã®EntityIDã€‚ */
 	protected static final int dataWatch_Gotcha			= 23;
 	
-	/** ƒƒCƒhƒ‚[ƒh(Short) */
+	/** ãƒ¡ã‚¤ãƒ‰ãƒ¢ãƒ¼ãƒ‰(Short) */
 	protected static final int dataWatch_Mode			= 24;
-	/** —˜‚«˜r(Byte) */
+	/** åˆ©ãè…•(Byte) */
 	protected static final int dataWatch_DominamtArm	= 25;
-	/** ƒAƒCƒeƒ€‚Ìg—p”»’èA˜r–ˆ(Integer) */
+	/** ã‚¢ã‚¤ãƒ†ãƒ ã®ä½¿ç”¨åˆ¤å®šã€è…•æ¯(Integer) */
 	protected static final int dataWatch_ItemUse		= 26;
-	/** •ÛŒoŒ±’lAÀ‚Ì‚Æ‚±‚ëƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Å‚Í•K—v‚È‚¢‚Ì‚Å—v‚ç‚È‚¢(Integer) */
+	/** ä¿æŒçµŒé¨“å€¤ã€å®Ÿã®ã¨ã“ã‚ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã§ã¯å¿…è¦ãªã„ã®ã§è¦ã‚‰ãªã„(Integer) */
 	protected static final int dataWatch_ExpValue		= 27;
 	
 	
 	
 	/**
-	 * ©—Rİ’è’lB
+	 * è‡ªç”±è¨­å®šå€¤ã€‚
 	 */
 	protected static final int dataWatch_Free			= 31;
 	
@@ -56,27 +56,27 @@ public class LMM_Statics {
 // NetWork
 
 	/*
-	 * “®ì—p’è”A8bit–Ú‚ğ—§‚Ä‚é‚ÆEntity—v‹
+	 * å‹•ä½œç”¨å®šæ•°ã€8bitç›®ã‚’ç«‹ã¦ã‚‹ã¨Entityè¦æ±‚
 	 */
 	
 	/*
-	 * LMMPacet‚ÌƒtƒH[ƒ}ƒbƒg
+	 * LMMPacetã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	 * (Byte)
-	 * 0	: ¯•Ê(1byte)
-	 * 1 - 4: EntityID(4Byte)ê‡‚ÉŠñ‚Á‚Ä‚ÍÈ—ª 
+	 * 0	: è­˜åˆ¥(1byte)
+	 * 1 - 4: EntityID(4Byte)å ´åˆã«å¯„ã£ã¦ã¯çœç•¥ 
 	 * 5 - 	: Data
 	 * 
 	 */
 	/**
-	 * ƒT[ƒo[‘¤‚Ö‘ÎÛ‚ÌƒCƒ“ƒxƒ“ƒgƒŠ‚ğ‘—M‚·‚é‚æ‚¤‚Éw¦‚·‚éB
-	 * ƒXƒ|[ƒ““_‚Å‚ÍƒCƒ“ƒxƒ“ƒgƒŠî•ñ‚ª–³‚¢‚½‚ßB
+	 * ã‚µãƒ¼ãƒãƒ¼å´ã¸å¯¾è±¡ã®ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã‚’é€ä¿¡ã™ã‚‹ã‚ˆã†ã«æŒ‡ç¤ºã™ã‚‹ã€‚
+	 * ã‚¹ãƒãƒ¼ãƒ³æ™‚ç‚¹ã§ã¯ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªæƒ…å ±ãŒç„¡ã„ãŸã‚ã€‚
 	 * [0]		: 0x00;
 	 * [1..4]	: EntityID(int);
 	 */
 	public static final byte LMN_Server_UpdateSlots		= (byte)0x80;
 	/**
-	 * ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Ö˜rU‚è‚ğw¦‚·‚éB
-	 * U‚Á‚½‚ÌÄ¶‰¹º‚àw’è‚·‚éB
+	 * ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã¸è…•æŒ¯ã‚Šã‚’æŒ‡ç¤ºã™ã‚‹ã€‚
+	 * æŒ¯ã£ãŸæ™‚ã®å†ç”ŸéŸ³å£°ã‚‚æŒ‡å®šã™ã‚‹ã€‚
 	 * [0]		: 0x81;
 	 * [1..4]	: EntityID(int);
 	 * [5]		: ArmIndex(byte);
@@ -84,14 +84,14 @@ public class LMM_Statics {
 	 */
 	public static final byte LMN_Client_SwingArm		= (byte)0x81;
 	/**
-	 * ƒT[ƒo[‘¤‚Öõ—¿‚Ìg—p‚ğ’Ê’m‚·‚éB
-	 * GUISelect—pB
+	 * ã‚µãƒ¼ãƒãƒ¼å´ã¸æŸ“æ–™ã®ä½¿ç”¨ã‚’é€šçŸ¥ã™ã‚‹ã€‚
+	 * GUISelectç”¨ã€‚
 	 * [0]		: 0x02;
 	 * [1]		: color(byte);
 	 */
 	public static final byte LMN_Server_DecDyePowder	= (byte)0x02;
 	/**
-	 * ƒT[ƒo[‚ÖIFF‚Ìİ’è’l‚ª•ÏX‚³‚ê‚½‚±‚Æ‚ğ’Ê’m‚·‚éB
+	 * ã‚µãƒ¼ãƒãƒ¼ã¸IFFã®è¨­å®šå€¤ãŒå¤‰æ›´ã•ã‚ŒãŸã“ã¨ã‚’é€šçŸ¥ã™ã‚‹ã€‚
 	 * [0]		: 0x04;
 	 * [1]		: IFFValue(byte);
 	 * [2..5]	: Index(int);
@@ -99,28 +99,28 @@ public class LMM_Statics {
 	 */
 	public static final byte LMN_Server_SetIFFValue		= (byte)0x04;
 	/**
-	 * ƒNƒ‰ƒCƒAƒ“ƒg‚ÖIFF‚Ìİ’è’l‚ğ’Ê’m‚·‚éB
+	 * ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¸IFFã®è¨­å®šå€¤ã‚’é€šçŸ¥ã™ã‚‹ã€‚
 	 * [0]		: 0x04;
 	 * [1]		: IFFValue(byte);
 	 * [2..5]	: Index(int);
 	 */
 	public static final byte LMN_Client_SetIFFValue		= (byte)0x04;
 	/**
-	 * ƒT[ƒo[‚ÖŒ»İ‚ÌIFF‚Ìİ’è’l‚ğ—v‹‚·‚éB
-	 * —v‹‚ÍˆêˆÓ‚È¯•Ê”Ô†‚ğ•t—^‚·‚é‚±‚ÆB
+	 * ã‚µãƒ¼ãƒãƒ¼ã¸ç¾åœ¨ã®IFFã®è¨­å®šå€¤ã‚’è¦æ±‚ã™ã‚‹ã€‚
+	 * è¦æ±‚æ™‚ã¯ä¸€æ„ãªè­˜åˆ¥ç•ªå·ã‚’ä»˜ä¸ã™ã‚‹ã“ã¨ã€‚
 	 * [0]		: 0x05;
 	 * [1..4]	: Index(int);
 	 * [5..]	: TargetName(str);
 	 */
 	public static final byte LMN_Server_GetIFFValue		= (byte)0x05;
 	/**
-	 * ƒT[ƒo[‚ÖIFF‚Ìİ’è’l‚ğ•Û‘¶‚·‚é‚æ‚¤‚Éw¦‚·‚éB
+	 * ã‚µãƒ¼ãƒãƒ¼ã¸IFFã®è¨­å®šå€¤ã‚’ä¿å­˜ã™ã‚‹ã‚ˆã†ã«æŒ‡ç¤ºã™ã‚‹ã€‚
 	 * [0]		: 0x06;
 	 */
 	public static final byte LMN_Server_SaveIFF			= (byte)0x06;
 	/**
-	 * ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Ö‰¹º‚ğ”­¶‚³‚¹‚é‚æ‚¤‚Éw¦‚·‚éB
-	 * ‰¹º‚Ì©‘Ì‚ÍƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Ì“o˜^‰¹º‚ğg—p‚·‚é‚½‚ß•W€‚ÌÄ¶è‡‚¾‚Æ‰¹‚ª‚Å‚È‚¢‚½‚ßB
+	 * ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã¸éŸ³å£°ã‚’ç™ºç”Ÿã•ã›ã‚‹ã‚ˆã†ã«æŒ‡ç¤ºã™ã‚‹ã€‚
+	 * éŸ³å£°ã®è‡ªä½“ã¯ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã®ç™»éŒ²éŸ³å£°ã‚’ä½¿ç”¨ã™ã‚‹ãŸã‚æ¨™æº–ã®å†ç”Ÿæ‰‹é †ã ã¨éŸ³ãŒã§ãªã„ãŸã‚ã€‚
 	 * [0]		: 0x07;
 	 * [1..4]	: EntityID(int);
 	 * [5..8]	: SoundIndex(int);

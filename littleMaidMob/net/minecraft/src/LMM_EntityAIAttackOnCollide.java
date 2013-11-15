@@ -113,18 +113,18 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 		theMaid.getLookHelper().setLookPositionWithEntity(entityTarget, 30F, 30F);
 		
 //		if ((isReroute || theMaid.getEntitySenses().canSee(entityTarget)) && --rerouteTimer <= 0) {
-//			// �����[�g
+//			// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽg
 //			rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 //			theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 //		}
 		if (--rerouteTimer <= 0) {
 			if (isReroute) {
-				// �����[�g
+				// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽg
 				rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 				theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 			}
 			if (theMaid.getEntitySenses().canSee(entityTarget)) {
-				// �����[�g
+				// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽg
 				rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 				theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 			} else {
@@ -155,7 +155,7 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 		if (!theMaid.getSwingStatusDominant().canAttack()) {
 			return;
 		} else {
-			// ���ʂ���110�x���U���͈�
+			// ・ｽ・ｽ・ｽﾊゑｿｽ・ｽ・ｽ110・ｽx・ｽ・ｽ・ｽU・ｽ・ｽ・ｽﾍ茨ｿｽ
 			double tdx = entityTarget.posX - theMaid.posX;
 			double tdz = entityTarget.posZ - theMaid.posZ;
 			double vdx = -Math.sin(theMaid.renderYawOffset * 3.1415926535897932384626433832795F / 180F);
@@ -166,10 +166,10 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 				return;
 			}
 			
-			// �U��
+			// ・ｽU・ｽ・ｽ
 			theMaid.attackEntityAsMob(entityTarget);
 			if (theMaid.getActiveModeClass().isChangeTartget(entityTarget)) {
-				// �Ώۂ��Đݒ肳����
+				// ・ｽﾎ象ゑｿｽ・ｽﾄ設定さ・ｽ・ｽ・ｽ・ｽ
 				theMaid.setAttackTarget(null);
 				theMaid.setTarget(null);
 				theMaid.getNavigator().clearPathEntity();

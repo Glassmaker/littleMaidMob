@@ -1,186 +1,186 @@
-Little Maid Mob 1.6.2 Rev1�ȍ~�p�T�E���h�ݒ�̎d�l
+Little Maid Mob 1.6.2 Rev1以降用サウンド設定の仕様
 
 
-littleMaidMob�ł�cfg�t�@�C���̋L�q��ύX���鎖�ŁA
-�e����Ɋ֘A�t����ꂽ������C�ӂ̉����ōĐ����鎖���\�ł��B
-�܂��A�e�퉹���̓e�N�X�`���p�b�N�A���C�h�F���ɐݒ肷�鎖���\�ł��B
-���̃e�L�X�g�ł�cfg�t�@�C���Őݒ肳��鉹���ݒ�̋L�q���@�ɂ��Đ������܂��B
+littleMaidMobではcfgファイルの記述を変更する事で、
+各動作に関連付けられた音声を任意の音声で再生する事が可能です。
+また、各種音声はテクスチャパック、メイド色毎に設定する事が可能です。
+このテキストではcfgファイルで設定される音声設定の記述方法について説明します。
 
-1.6.2���烊�\�[�X�̔z�u�ꏊ���ύX�ɂȂ��Ă��邽�ߒ��ӂ��ĉ������B
+1.6.2からリソースの配置場所が変更になっているため注意して下さい。
 
 
-�g�p�\�����`��
-	�N���C�A���g1.6.2���݁A�g�p�\�ȃt�H�[�}�b�g�͈ȉ��̒ʂ�ł��B
+使用可能音声形式
+	クライアント1.6.2現在、使用可能なフォーマットは以下の通りです。
 		.ogg	Ogg.Vorbis
 
-		���m�F�ς݂̃t�H�[�}�b�g�E�R�[�f�b�N���L�ڂ��Ă��܂��B
+		※確認済みのフォーマット・コーデックを記載しています。
 
 
-������`�ϐ�
-	cfg�t�@�C���̑O���ɗL��u#�v�Ŏn�܂镶����́A�e�ϐ��̋@�\�ɂ��ċL�q����Ă��܂��B
-	�use_�v�Ŏn�܂�ϐ��ɂ͊e�퓮��Ɋ֘A�t����ꂽ�����ݒ���L�q���鎖���o���܂��B
+音声定義変数
+	cfgファイルの前半に有る「#」で始まる文字列は、各変数の機能について記述されています。
+	「se_」で始まる変数には各種動作に関連付けられた音声設定を記述する事が出来ます。
 
 	
 
-�����ݒ蕶����
-	�use_�v�ɋL�q�ł��鉹���̐ݒ���@�͈ȉ��̒ʂ�ł��B
+音声設定文字列
+	「se_」に記述できる音声の設定方法は以下の通りです。
 
-	�E��1
+	・例1
 		se_living_daytime=mob.ghast.moan
-			���̋L�q�̏ꍇ�A%AppData%/.mincraft/assets/sound/mob/ghast�Ɋ܂܂��A
-			moan1.ogg�`moan7.ogg�������_���ōĐ�����܂��B
+			この記述の場合、%AppData%/.mincraft/assets/sound/mob/ghastに含まれる、
+			moan1.ogg～moan7.oggがランダムで再生されます。
 
-	�E��2
+	・例2
 		se_living_daytime=littleMaidMob.live_d
-			���̋L�q�̏ꍇ�A%AppData%/.mincraft/assets/sound/littleMaidMob�Ɋ܂܂��A
-			live_d?.ogg�������_���ōĐ�����܂��B
-			�i?��1�`9�̐����j
+			この記述の場合、%AppData%/.mincraft/assets/sound/littleMaidMobに含まれる、
+			live_d?.oggがランダムで再生されます。
+			（?は1～9の数字）
 
-	�E��3
+	・例3
 		se_living_daytime=mob.ghast.moan
 		se_living_night=^
-			���̋L�q�̏ꍇ�Ase_living_daytime�ɂ��Ă͗�1�Ɠ��l�ɂȂ�܂����A
-			se_living_night�̓��e��se_living_daytime�Ɠ��l�ɂȂ�܂��B
-			�u^�v���L�q���邱�Ƃɂ������I�ɗD�揇�ʂ̍����ݒ�l�Ɠ������e�ɐݒ�ł��܂��B
+			この記述の場合、se_living_daytimeについては例1と同様になりますが、
+			se_living_nightの内容もse_living_daytimeと同様になります。
+			「^」を記述することにより内部的に優先順位の高い設定値と同じ内容に設定できます。
 
 
 
-�e�N�X�`���w�莌
-	��L�̉����ݒ蕶������u,�v�ŋ�؂�A�e�N�X�`���w�莌���������w����L�q���鎖�ɂ��A
-	�e�N�X�`���p�b�N�A���C�h�F�ɉ������������`���鎖���\�ł��B
+テクスチャ指定詞
+	上記の音声設定文字列を「,」で区切り、テクスチャ指定詞を加えた指定を記述する事により、
+	テクスチャパック、メイド色に応じた音声を定義する事が可能です。
 
-	�E�L�q���@
-		�e�N�X�`���p�b�N��;���C�h�F;����	�F��؂蕶���́u;�v�ł��B
+	・記述方法
+		テクスチャパック名;メイド色;音声	：区切り文字は「;」です。
 	
 
-	�E�e�N�X�`���p�b�N��
-		���[�h����Ă���e�N�X�`���p�b�N�̖��̂ƂȂ�܂��B
-		���m�ɂ̓e�N�X�`���̊܂܂�Ă���t�H���_���̂̋�؂蕶����
-		�u.�v�ɕϊ��������̂ɂȂ�܂��B
-		�l���ȗ������ꍇ�ɂ͑S�Ẵe�N�X�`���p�b�N�ɓK�p����܂��B
-			�f�B���N�g��			�e�N�X�`���p�b�N��
+	・テクスチャパック名
+		ロードされているテクスチャパックの名称となります。
+		正確にはテクスチャの含まれているフォルダ名称の区切り文字を
+		「.」に変換したものになります。
+		値を省略した場合には全てのテクスチャパックに適用されます。
+			ディレクトリ			テクスチャパック名
 			/mob/littleMaid/ALTERNATIVE/	:ALTERNATIVE
 			/mob/littleMaid/okota/Hituji/	:okota.Hituji
 
-	�E���C�h�F
-		0�`15�̂P�O�i���ɂȂ�܂��B
-		�e�F�ɂ��Ă͑Ή�����e�N�X�`�����Q�Ƃ��Ă��������B
-		�u-1�v��ݒ薔�͏ȗ������ꍇ�̓e�N�X�`���p�b�N���̑S�Ă̐F�ɓK�p����܂��B
+	・メイド色
+		0～15の１０進数になります。
+		各色については対応するテクスチャを参照してください。
+		「-1」を設定又は省略した場合はテクスチャパック内の全ての色に適用されます。
 
 
-	�E����
-		�����ݒ蕶����Ő����������Ɠ����L�q�ł��B
+	・音声
+		音声設定文字列で説明した物と同じ記述です。
 
 
-	�E��
+	・例
 		se_living_daytime=mob.ghast.moan,okota.Hituji;-1;littleMaid.live_d,;3;littleMaid.livealt_d
-			�f�t�H���g�̉���	�Fmob.ghast.moan
-			okota.Hituji�p�b�N	�FlittleMaid.live_d
-			�S�Ẵp�b�N�̃J���[�R	�FlittleMaid.livealt_d
+			デフォルトの音声	：mob.ghast.moan
+			okota.Hitujiパック	：littleMaid.live_d
+			全てのパックのカラー３	：littleMaid.livealt_d
 
-	�E�D�揇��
-		�e�N�X�`���p�b�N�{�F�w�� �� �e�N�X�`���p�b�N�{�S�F�w�� �� �F�w�� �� �f�t�H���g
-		��L�̏��ԂŒl���Q�Ƃ��܂��A���G�Ȑݒ������ꍇ�͒��ӂ��Ă��������B
-
-
-�T�E���h�p�b�N
-	b1.8.1-4����T�E���h�p�b�N�ɑΉ����Ă��܂��B
-	�܂��A1.6.2���烊�\�[�X�̔z�u�ꏊ���ύX�ɂȂ��Ă��邽�ߒ��ӂ��ĉ������B
-	�u%AppData%/.mincraft/assets/sound/littleMaidMob/�v�Ɋ܂܂��
-	�ݒ�t�@�C����ǂݍ���ŉ�����ݒ肷�邱�Ƃ��ł��܂��B
-
-	�ݒ�t�@�C���̋L�q���@�͒ʏ��cfg�t�@�C���̂��̂Ɠ��l�ł����A
-	������[�����ǉ�����Ă��܂��B
+	・優先順位
+		テクスチャパック＋色指定 ＞ テクスチャパック＋全色指定 ＞ 色指定 ＞ デフォルト
+		上記の順番で値を参照します、複雑な設定をする場合は注意してください。
 
 
-	�E�L�q���@
-		���C�h�F;����				�F��؂蕶���́u;�v�ł��B
-		����					�F���C�h�F�w��͏ȗ��ł��B
+サウンドパック
+	b1.8.1-4からサウンドパックに対応しています。
+	また、1.6.2からリソースの配置場所が変更になっているため注意して下さい。
+	「%AppData%/.mincraft/assets/sound/littleMaidMob/」に含まれる
+	設定ファイルを読み込んで音声を設定することができます。
 
-	�E�e�N�X�`���p�b�N��
-		�ݒ�t�@�C�������ݒ肳���e�N�X�`���p�b�N�̖��̂ƂȂ�܂��B
-			�e�N�X�`���p�b�N��		�T�E���h�p�b�N��
+	設定ファイルの記述方法は通常のcfgファイルのものと同様ですが、
+	幾つかルールが追加されています。
+
+
+	・記述方法
+		メイド色;音声				：区切り文字は「;」です。
+		音声					：メイド色指定は省略可です。
+
+	・テクスチャパック名
+		設定ファイル名が設定されるテクスチャパックの名称となります。
+			テクスチャパック名		サウンドパック名
 			ALTERNATIVE			:ALTERNATIVE.cfg
 			okota.Hituji			:okota.Hituji.cfg
 
-	�E����ݒ�t�@�C��
-		�t�@�C�����̂��ulittleMaidMob.cfg�v�̂��̂�����ꍇ�A
-		�R���̓��e���ʏ��cfg�t�@�C���̉����ݒ�̑���ɓǂݍ��܂�܂��B
+	・特殊設定ファイル
+		ファイル名称が「littleMaidMob.cfg」のものがある場合、
+		コレの内容が通常のcfgファイルの音声設定の代わりに読み込まれます。
 
-	�E�D�揇��
-		littleMaidMob.cfg������ꍇ�Amod_littleMaidMob.cfg�̉����ݒ�̑���ɓK�p����܂��B
-		���̌�A�T�E���h�p�b�N�̐ݒ肪�ǂݍ��܂�A���ꂼ��̐ݒ�l���㏑�����܂��B
+	・優先順位
+		littleMaidMob.cfgがある場合、mod_littleMaidMob.cfgの音声設定の代わりに適用されます。
+		この後、サウンドパックの設定が読み込まれ、それぞれの設定値を上書きします。
 
-	��L�ȊO��cfg�t�@�C���̂��̂Ɠ��l�ł��B
-
-
-
-����
-	�E�T�E���h�p�b�N�pcfg
-		se_hurt			�F�_���[�W�{�C�X�ł��B
-		se_hurt_snow		�F��ʂɓ����������̃{�C�X�ł��B
-		se_hurt_fire		�F���ɂ��_���[�W���󂯂����̃{�C�X�ł��B
-		se_hurt_guard		�F�U�����K�[�h�o�������̃{�C�X�ł��B
-		se_hurt_fall		�F�����_���[�W���󂯂����̃{�C�X�ł��B
-		se_hurt_nodamege	�F�U�����󂯂Ă��_���[�W�������������̃{�C�X�ł��B
-		se_death		�F���S�{�C�X�ł��B
-		se_attack		�F�U���{�C�X�ł��B
-		se_attack_bloodsuck	�F���ɋQ���Ă��鎞�̍U���{�C�X�ł��B
-		se_shoot		�F����K�v�Ƃ�����̂̎ˌ��{�C�X�ł��B
-		se_shoot_burst		�F����K�v�Ƃ��Ȃ����̂̎ˌ��{�C�X�ł��B
-		se_sighting		�F�ˌ�������\�������̃{�C�X�ł��B
-		se_laughter		�FBloodsucker�n�̎q���G��|�������̃{�C�X�ł��B
-		se_eatSugar		�F������ێ悷��Ƃ��̃{�C�X�ł��B
-		se_eatSugar_MaxPower	�F�̗͂��ő�ɂȂ�܂ō�����H�ׂ��Ƃ��̃{�C�X�ł��B
-		se_getCake		�F�_�񎞂̃{�C�X�ł��B
-		se_Recontract		�F�Č_�񎞂̃{�C�X�ł��B
-		se_addFuel		�F�}�ɔR����ǉ��������̃{�C�X�ł��B
-		se_cookingStart		�F�}�ɍޗ��𓊓��������̃{�C�X�ł��B
-		se_cookingOver		�F�}���犮���i�����o�������̃{�C�X�ł��B
-		se_healing		�F����񕜂������̃{�C�X�ł��B
-		se_healing_potion	�F�|�[�V�����g�p���̃{�C�X�ł��B
-		se_installation		�F������ݒu�������̃{�C�X�ł��B
-		se_collect_snow		�F����W�߂�Ƃ��̃{�C�X�ł��B
-
-		se_findTarget_N		�F�G���̂𔭌��������̒ʏ�{�C�X�ł��B
-		se_findTarget_B		�FBloodsucker�n�̎q���G�𔭌��������̃{�C�X�ł��B
-		se_findTarget_I		�F�A�C�e���𔭌��������̃{�C�X�ł��B
-		se_findTarget_D		�F�Â���𔭌��������̃{�C�X�ł��B
-		se_TNT_D		�FTNT-D�������̃{�C�X�ł��B
-
-		se_living_daytime	�F�ʏ�̚e���ł��B
-		se_living_morning	�F���v�������Ă��鎞�̒��̚e���ł��B
-		se_living_night		�F���v�������Ă��鎞�̖�̚e���ł��B
-		se_living_whine		�F����Ă��鎞�̚e���ł��B
-		se_living_rain		�F�J���~���Ă��鎞�̚e�����ł��B���Ԃɂ��ω������D�揇�ʂ������ł��B
-		se_living_snow		�F�Ⴊ�~���Ă��鎞�̚e�����ł��B���Ԃɂ��ω������D�揇�ʂ������ł��B
-		se_living_cold		�F�����o�C�I�[���ɂ��鎞�̚e�����ł��B
-		se_living_hot		�F�M���o�C�I�[���ɂ��鎞�̚e�����ł��B
-		se_goodmorning		�F���v�������Ă��鎞�̂��͂悤�̈��A�ł��B
-		se_goodnight		�F���v�������Ă��鎞�̂��x�݂̈��A�ł��B
-
-		LivingVoiceRate		�F���i�̚e���̔�������ݒ肵�܂��B�i���݂͖��g�p�j
+	上記以外はcfgファイルのものと同様です。
 
 
 
+説明
+	・サウンドパック用cfg
+		se_hurt			：ダメージボイスです。
+		se_hurt_snow		：雪玉に当たった時のボイスです。
+		se_hurt_fire		：炎によるダメージを受けた時のボイスです。
+		se_hurt_guard		：攻撃をガード出来た時のボイスです。
+		se_hurt_fall		：落下ダメージを受けた時のボイスです。
+		se_hurt_nodamege	：攻撃を受けてもダメージが無かった時のボイスです。
+		se_death		：死亡ボイスです。
+		se_attack		：攻撃ボイスです。
+		se_attack_bloodsuck	：血に飢えている時の攻撃ボイスです。
+		se_shoot		：溜を必要とするものの射撃ボイスです。
+		se_shoot_burst		：溜を必要としないものの射撃ボイスです。
+		se_sighting		：射撃武器を構えた時のボイスです。
+		se_laughter		：Bloodsucker系の子が敵を倒した時のボイスです。
+		se_eatSugar		：砂糖を摂取するときのボイスです。
+		se_eatSugar_MaxPower	：体力が最大になるまで砂糖を食べたときのボイスです。
+		se_getCake		：契約時のボイスです。
+		se_Recontract		：再契約時のボイスです。
+		se_addFuel		：竈に燃料を追加した時のボイスです。
+		se_cookingStart		：竈に材料を投入した時のボイスです。
+		se_cookingOver		：竈から完成品を取り出した時のボイスです。
+		se_healing		：主を回復した時のボイスです。
+		se_healing_potion	：ポーション使用時のボイスです。
+		se_installation		：松明を設置した時のボイスです。
+		se_collect_snow		：雪を集めるときのボイスです。
 
-	�Emod_littleMaidMob.cfg
-		LivingVoiceRate		�F���i�̚e���̔�������ݒ肵�܂��B1.0=100%�A0.5=50%�A0.0=0%
+		se_findTarget_N		：敵性体を発見した時の通常ボイスです。
+		se_findTarget_B		：Bloodsucker系の子が敵を発見した時のボイスです。
+		se_findTarget_I		：アイテムを発見した時のボイスです。
+		se_findTarget_D		：暗がりを発見した時のボイスです。
+		se_TNT_D		：TNT-D発動時のボイスです。
+
+		se_living_daytime	：通常の啼声です。
+		se_living_morning	：時計を持っている時の朝の啼声です。
+		se_living_night		：時計を持っている時の夜の啼声です。
+		se_living_whine		：弱っている時の啼声です。
+		se_living_rain		：雨が降っている時の啼き声です。時間による変化よりも優先順位が高いです。
+		se_living_snow		：雪が降っている時の啼き声です。時間による変化よりも優先順位が高いです。
+		se_living_cold		：寒いバイオームにいる時の啼き声です。
+		se_living_hot		：熱いバイオームにいる時の啼き声です。
+		se_goodmorning		：時計を持っている時のおはようの挨拶です。
+		se_goodnight		：時計を持っている時のお休みの挨拶です。
+
+		LivingVoiceRate		：普段の啼声の発生率を設定します。（現在は未使用）
 
 
 
-����
-	�E����d�l�͕ύX����鋰�ꂪ����܂��B
+
+	・mod_littleMaidMob.cfg
+		LivingVoiceRate		：普段の啼声の発生率を設定します。1.0=100%、0.5=50%、0.0=0%
 
 
 
-����
-	20130829.1	�N���C�A���g�ύX�ɂ�郊�\�[�X�ʒu�̋L�q��ύX�B
+注意
+	・今後仕様は変更される恐れがあります。
 
 
-	20120621.1	�ǉ����̉����������L�q
-	20111125.1	�ǉ����̉����������L�q
-	20111104.1	�ǉ����̉����������L�q
-	20111006.1	�T�E���h�p�b�N�̐�����ǉ�
-	20110905.1	�ݒ�p�����[�^�[�̐�����ǉ�
-	20110817.1	�����̃e�N�X�`���p�b�N�ւ̑Ή�
+
+履歴
+	20130829.1	クライアント変更によるリソース位置の記述を変更。
+
+
+	20120621.1	追加分の音声説明を記述
+	20111125.1	追加分の音声説明を記述
+	20111104.1	追加分の音声説明を記述
+	20111006.1	サウンドパックの説明を追加
+	20110905.1	設定パラメーターの説明を追加
+	20110817.1	音声のテクスチャパックへの対応

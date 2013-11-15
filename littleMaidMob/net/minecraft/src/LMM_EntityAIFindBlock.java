@@ -36,7 +36,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 			return fmodeBase.shouldBlock(theMaid.maidMode);
 		}
 		
-		// �^�[�Q�b�g���T�[�`
+		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽT・ｽ[・ｽ`
 		int lx = MathHelper.floor_double(theMaid.posX);
 		int ly = MathHelper.floor_double(theMaid.posY);
 		int lz = MathHelper.floor_double(theMaid.posZ);
@@ -49,7 +49,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 		MMM_EntityDummy.clearDummyEntity(theMaid);
 		boolean flagdammy = false;
 		
-		// CW���Ɍ����̈���L���� 
+		// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ 
 		for (int d = 0; d < 4; d++) {
 			for (int a = 0; a < 18; a += 2) {
 				int del = a / 2;
@@ -132,19 +132,19 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 	@Override
 	public boolean continueExecuting() {
 		fmodeBase.updateBlock();
-		// �ړ����͌p��
+		// ・ｽﾚ難ｿｽ・ｽ・ｽ・ｽﾍ継・ｽ・ｽ
 		if (!theMaid.getNavigator().noPath()) return true;
 		
 		double ld = theMaid.getDistanceTilePos();
 		if (ld > 100.0D) {
-			// ���G�͈͊O
+			// ・ｽ・ｽ・ｽG・ｽﾍ囲外
 			theMaid.getActiveModeClass().farrangeBlock();
 			return false;
 		} else if (ld > 5.0D) {
-			// �˒������O
+			// ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽO
 			return theMaid.getActiveModeClass().outrangeBlock(theMaid.maidMode);
 		} else {
-			// �˒�����
+			// ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ
 			return theMaid.getActiveModeClass().executeBlock(theMaid.maidMode);
 		}
 	}
@@ -161,7 +161,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 
 	@Override
 	public void updateTask() {
-		// �^�[�Q�b�g�������Ă���
+		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽ・ｽ・ｽﾂゑｿｽ・ｽﾄゑｿｽ・ｽ・ｽ
 		theMaid.looksTilePos();
 	}
 

@@ -100,7 +100,7 @@ public class LMM_EntityAICollectItem extends EntityAIBase {
 	}
 
 	public boolean canEntityItemBeSeen(Entity entity) {
-		// �A�C�e���̉�����
+		// ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽﾌ可趣ｿｽ・ｽ・ｽ・ｽ・ｽ
 		return theMaid.worldObj.clip(Vec3.createVectorHelper(theMaid.posX, theMaid.posY + (double)theMaid.getEyeHeight(), theMaid.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + ((entity.boundingBox.minY - entity.boundingBox.minY) / 2), entity.posZ)) == null;
 	}
 

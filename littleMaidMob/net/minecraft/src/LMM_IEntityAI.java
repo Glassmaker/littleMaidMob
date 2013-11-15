@@ -2,11 +2,11 @@ package net.minecraft.src;
 
 public interface LMM_IEntityAI {
 	
-	//Às‰Â”\”»’è
+	//å®Ÿè¡Œå¯èƒ½åˆ¤å®š
 	public void setEnable(boolean pFlag);
 	public boolean getEnable();
 	/**
-	 * ƒ‚[ƒhƒ`ƒFƒ“ƒWÀs‚Éİ’è‚³‚ê‚é“®ìó‘ÔB
+	 * ãƒ¢ãƒ¼ãƒ‰ãƒã‚§ãƒ³ã‚¸å®Ÿè¡Œæ™‚ã«è¨­å®šã•ã‚Œã‚‹å‹•ä½œçŠ¶æ…‹ã€‚
 	 */
 //	public void setDefaultEnable();
 

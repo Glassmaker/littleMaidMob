@@ -22,11 +22,11 @@ import net.minecraft.world.WorldServer;
 public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	public LMM_EntityLittleMaid avatar;
-	/** ‚¢‚ç‚ñ�H **/
+	/** 窶堋｢窶堙ｧ窶堙ｱ・ｽH **/
 	public boolean isItemTrigger;
-	/** ‚¢‚ç‚ñ�H **/
+	/** 窶堋｢窶堙ｧ窶堙ｱ・ｽH **/
 	public boolean isItemReload;
-	/** ‚¢‚ç‚ñ�H **/
+	/** 窶堋｢窶堙ｧ窶堙ｱ・ｽH **/
 	private boolean isItemPreReload;
 	private double appendX;
 	private double appendY;
@@ -36,7 +36,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	public LMM_EntityLittleMaidAvatar(World par1World, LMM_EntityLittleMaid par2EntityLittleMaid) {
 		super(par1World, "");
 		
-		// �‰Šú�Ý’è
+		// ・ｽ窶ｰﾅﾃｺ・ｽﾃ昶凖ｨ
 		avatar = par2EntityLittleMaid;
 		dataWatcher = avatar.getDataWatcher();
 		
@@ -46,8 +46,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	@Override
 	protected void applyEntityAttributes() {
-		// �‰Šú�Ý’èŽE‚µ
-		// �‰Šú�Ý’è’l‚Íƒ_ƒ~�[‚É�Ý’è‚³‚ê‚é�B
+		// ・ｽ窶ｰﾅﾃｺ・ｽﾃ昶凖ｨﾅｽE窶堋ｵ
+		// ・ｽ窶ｰﾅﾃｺ・ｽﾃ昶凖ｨ窶冤窶堙哉胆ﾆ蓄・ｽ[窶堙会ｿｽﾃ昶凖ｨ窶堋ｳ窶堙ｪ窶堙ｩ・ｽB
 		super.applyEntityAttributes();
 //		this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.13000000417232513D);
 
@@ -99,7 +99,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	@Override
 	public void onItemPickup(Entity entity, int i) {
-		// ƒAƒCƒeƒ€‰ñŽû‚ÌƒGƒtƒFƒNƒg
+		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶ｰﾃｱﾅｽﾃｻ窶堙姑竪ﾆ稚ﾆ巽ﾆ誰ﾆ暖
 		if (worldObj.isRemote) {
 			// Client
 			LMM_Client.onItemPickup(this, entity, i);
@@ -168,13 +168,13 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 /*
 	@Override
 	protected void alertWolves(EntityLivingBase par1EntityLiving, boolean par2) {
-		// ‚±‚±‚ð�Ý’è‚µ‚¿‚á‚¤‚Æ’Ê�í‚Å‚Í‚Ê‚é‚Û—Ž‚¿‚·‚é
+		// 窶堋ｱ窶堋ｱ窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｵ窶堋ｿ窶堙｡窶堋､窶堙・凖奇ｿｽﾃｭ窶堙・堙坂堙岩堙ｩ窶堙帚版ｽ窶堋ｿ窶堋ｷ窶堙ｩ
 	}
 */
 	@Override
 	public void destroyCurrentEquippedItem() {
-		// ƒAƒCƒeƒ€‚ª‰ó‚ê‚½‚Ì‚ÅŽŸ‚Ì‘•”õ‚ð‘I‘ð
-		// TODO:’A‚µ�AForge“™‚ÅƒvƒŒ�[ƒ„�[ƒCƒxƒ“ƒg‚ð�Ý’è‚µ‚Ä‚¢‚é‚à‚Ì‚¾‚Æ‚Ê‚é‚Û—Ž‚¿‚·‚é‚Ì‚Å�A‰½‚ç‚©‚Ì‘Î�ô‚ª•K—v�B
+		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｪ窶ｰﾃｳ窶堙ｪ窶堋ｽ窶堙娯堙・ｽﾅｸ窶堙娯倪｢窶敕ｵ窶堙ｰ窶露窶佚ｰ
+		// TODO:窶僊窶堋ｵ・ｽAForge窶懌┐窶堙・致ﾆ椎抵ｿｽ[ﾆ停橸ｿｽ[ﾆ辰ﾆ遅ﾆ停愴暖窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｵ窶堙・堋｢窶堙ｩ窶堙窶堙娯堋ｾ窶堙・堙岩堙ｩ窶堙帚版ｽ窶堋ｿ窶堋ｷ窶堙ｩ窶堙娯堙・ｿｽA窶ｰﾂｽ窶堙ｧ窶堋ｩ窶堙娯佚趣ｿｽﾃｴ窶堋ｪ窶｢K窶牌・ｽB
 //		super.destroyCurrentEquippedItem();
 		inventory.setInventorySlotContents(inventory.currentItem, (ItemStack)null);
 		avatar.getNextEquipItem();
@@ -189,7 +189,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 		return worldObj.isRemote ? null : this;
 	}
 
-	// ItemŽg—pŠÖ˜A
+	// Itemﾅｽg窶廃ﾅﾃ麺廣
 
 	public int getItemInUseDuration(int pIndex) {
 		return avatar.getSwingStatus(pIndex).getItemInUseDuration();
@@ -325,10 +325,10 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	@Override
 	public void sendChatToPlayer(ChatMessageComponent var1) {
-		// ƒ`ƒƒƒbƒgƒ�ƒbƒZ�[ƒW‚ÍŽg‚í‚È‚¢�B
+		// ﾆ蛋ﾆ槌槌鍛ﾆ暖ﾆ抵ｿｽﾆ鍛ﾆ短・ｽ[ﾆ淡窶堙最ｽg窶堙ｭ窶堙遺堋｢・ｽB
 	}
 
-	// •s—v�H
+	// 窶｢s窶牌・ｽH
 
 	@Override
 	protected void setHideCape(int par1, boolean par2) {}
@@ -355,7 +355,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	/**
-	 * ‘®�«’lƒŠƒXƒg‚ðŽæ“¾
+	 * 窶伉ｮ・ｽﾂｫ窶冤ﾆ椎ﾆ湛ﾆ暖窶堙ｰﾅｽﾃｦ窶慊ｾ
 	 */
 	public BaseAttributeMap func_110140_aT() {
 //		return super.func_110140_aT();
@@ -388,7 +388,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void getValue() {
-		// EntityLittleMaid‚©‚ç’l‚ðƒRƒs�[
+		// EntityLittleMaid窶堋ｩ窶堙ｧ窶冤窶堙ｰﾆ坦ﾆ痴・ｽ[
 		setPosition(avatar.posX, avatar.posY, avatar.posZ);
 		prevPosX = avatar.prevPosX;
 		prevPosY = avatar.prevPosY;
@@ -405,7 +405,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void getValueVector(double atx, double aty, double atz, double atl) {
-		// EntityLittleMaid‚©‚ç’l‚ðƒRƒs�[
+		// EntityLittleMaid窶堋ｩ窶堙ｧ窶冤窶堙ｰﾆ坦ﾆ痴・ｽ[
 		double l = MathHelper.sqrt_double(atl);
 		appendX = atx / l;
 		appendY = aty / l;
@@ -432,10 +432,10 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	/**
-	 * ŽËŒ‚ŠÇ�§—p�Arotation‚ð“ª‚É�‡‚í‚¹‚é
+	 * ﾅｽﾃ暁停塲ﾃ・ｿｽﾂｧ窶廃・ｽArotation窶堙ｰ窶慊ｪ窶堙会ｿｽ窶｡窶堙ｭ窶堋ｹ窶堙ｩ
 	 */
 	public void getValueVectorFire(double atx, double aty, double atz, double atl) {
-		// EntityLittleMaid‚©‚ç’l‚ðƒRƒs�[
+		// EntityLittleMaid窶堋ｩ窶堙ｧ窶冤窶堙ｰﾆ坦ﾆ痴・ｽ[
 		double l = MathHelper.sqrt_double(atl);
 		appendX = atx / l;
 		appendY = aty / l;
@@ -469,7 +469,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 
 	public void setValue() {
-		// EntityLittleMiad‚Ö’l‚ðƒRƒs�[
+		// EntityLittleMiad窶堙問冤窶堙ｰﾆ坦ﾆ痴・ｽ[
 		avatar.setPosition(posX, posY, posZ);
 		avatar.prevPosX = prevPosX;
 		avatar.prevPosY = prevPosY;
@@ -485,7 +485,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void setValueRotation() {
-		// EntityLittleMiad‚Ö’l‚ðƒRƒs�[
+		// EntityLittleMiad窶堙問冤窶堙ｰﾆ坦ﾆ痴・ｽ[
 		avatar.rotationPitch = rotationPitch;
 		avatar.rotationYaw = rotationYaw;
 		avatar.prevRotationPitch = prevRotationPitch;
@@ -500,7 +500,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void setValueVector() {
-		// EntityLittleMiad‚Ö’l‚ðƒRƒs�[
+		// EntityLittleMiad窶堙問冤窶堙ｰﾆ坦ﾆ痴・ｽ[
 		avatar.posX = posX - appendX;
 		avatar.posY = posY - appendY;
 		avatar.posZ = posZ - appendZ;

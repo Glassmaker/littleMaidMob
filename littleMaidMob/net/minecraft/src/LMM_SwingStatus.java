@@ -37,14 +37,14 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * TODO:�”’l‚Ì�X�V—p�AonEntityUpdate“à‚ÅŒÄ‚ÔŽ–:‚¢‚ç‚ñ‚©�H
+	 * TODO:・ｽ窶昶冤窶堙鯉ｿｽX・ｽV窶廃・ｽAonEntityUpdate窶愿窶堙・津・堙版ｽ窶・窶堋｢窶堙ｧ窶堙ｱ窶堋ｩ・ｽH
 	 */
 	public void onEntityUpdate(LMM_EntityLittleMaid pEntity) {
 		prevSwingProgress = swingProgress;
 	}
 
 	/**
-	 * �”’l‚Ì�X�V—p�AonUpdate“à‚ÅŒÄ‚ÔŽ–
+	 * ・ｽ窶昶冤窶堙鯉ｿｽX・ｽV窶廃・ｽAonUpdate窶愿窶堙・津・堙版ｽ窶・
 	 */
 	public void onUpdate(LMM_EntityLittleMaid pEntity) {
 		prevSwingProgress = swingProgress;
@@ -52,7 +52,7 @@ public class LMM_SwingStatus {
 			attackTime--;
 		}
 		
-		// ˜r�U‚è
+		// ﾋ徨・ｽU窶堙ｨ
 		int li = pEntity.getSwingSpeedModifier();
 		if (isSwingInProgress) {
 			swingProgressInt++;
@@ -73,7 +73,7 @@ public class LMM_SwingStatus {
 				clearItemInUse(lrentity);
 			} else {
 				if (itemInUseCount <= 25 && itemInUseCount % 4 == 0) {
-					// �H‚×‚©‚·‚Æ‚©
+					// ・ｽH窶堙冷堋ｩ窶堋ｷ窶堙・堋ｩ
 					updateItemUse(pEntity, 5);
 				}
 				if (--itemInUseCount <= 0 && lrentity != null) {
@@ -84,7 +84,7 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * ‘I‘ð’†‚ÌƒXƒ�ƒbƒg”Ô�†‚ð�Ý’è
+	 * 窶露窶佚ｰ窶吮窶堙姑湛ﾆ抵ｿｽﾆ鍛ﾆ暖窶敕費ｿｽ窶窶堙ｰ・ｽﾃ昶凖ｨ
 	 */
 	public void setSlotIndex(int pIndex) {
 		index = pIndex;
@@ -92,7 +92,7 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * ‘I‘ð’†‚ÌƒCƒ“ƒxƒ“ƒgƒŠ“àƒAƒCƒeƒ€ƒXƒ^ƒbƒN‚ð•Ô‚·
+	 * 窶露窶佚ｰ窶吮窶堙姑辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶愿ﾆ但ﾆ辰ﾆ弾ﾆ停ぎﾆ湛ﾆ耽ﾆ鍛ﾆ誰窶堙ｰ窶｢ﾃ披堋ｷ
 	 */
 	public ItemStack getItemStack(LMM_EntityLittleMaid pEntity) {
 		if (index > -1) {
@@ -108,7 +108,7 @@ public class LMM_SwingStatus {
 
 
 
-// ˜r�U‚èŠÖŒW
+// ﾋ徨・ｽU窶堙ｨﾅﾃ滅淡
 
 
 	public float getSwingProgress(float ltime) {
@@ -132,7 +132,7 @@ public class LMM_SwingStatus {
 
 
 	/**
-	 * •Ï�X‚ª‚ ‚é‚©‚Ç‚¤‚©‚ð•Ô‚µ�Aƒtƒ‰ƒO‚ðƒNƒŠƒA‚·‚é�B
+	 * 窶｢ﾃ擾ｿｽX窶堋ｪ窶堋窶堙ｩ窶堋ｩ窶堙・堋､窶堋ｩ窶堙ｰ窶｢ﾃ披堋ｵ・ｽAﾆ稚ﾆ停ｰﾆ丹窶堙ｰﾆ誰ﾆ椎ﾆ但窶堋ｷ窶堙ｩ・ｽB
 	 */
 	public boolean checkChanged() {
 		boolean lflag = index != lastIndex;
@@ -140,7 +140,7 @@ public class LMM_SwingStatus {
 		return lflag;
 	}
 
-// ƒAƒCƒeƒ€‚ÌŽg—p‚ÉŠÖ‚í‚éŠÖ�”ŒQ
+// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙固ｽg窶廃窶堙嫁ﾃ問堙ｭ窶堙ｩﾅﾃ厄ｿｽ窶敘嘆
 
 	public ItemStack getItemInUse() {
 		return itemInUse;
@@ -161,7 +161,7 @@ public class LMM_SwingStatus {
 	/**
 	 * 
 	 * @param pEntity
-	 * ƒT�[ƒo�[‚ÌŽž‚ÍEntity‚ð�Ý’è‚·‚é�B
+	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙固ｽﾅｾ窶堙孔ntity窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｷ窶堙ｩ・ｽB
 	 */
 	public void stopUsingItem(Entity pEntity) {
 		if (itemInUse != null && pEntity instanceof EntityPlayer) {
@@ -174,7 +174,7 @@ public class LMM_SwingStatus {
 	/**
 	 * 
 	 * @param pEntity
-	 * ƒT�[ƒo�[‚ÌŽž‚ÍEntity‚ð�Ý’è‚·‚é�B
+	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙固ｽﾅｾ窶堙孔ntity窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｷ窶堙ｩ・ｽB
 	 */
 	public void clearItemInUse(Entity pEntity) {
 		itemInUse = null;
@@ -194,7 +194,7 @@ public class LMM_SwingStatus {
 	 * @param par1ItemStack
 	 * @param par2
 	 * @param pEntity
-	 * ƒT�[ƒo�[‚ÌŽž‚ÍEntity‚ð�Ý’è‚·‚é�B
+	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙固ｽﾅｾ窶堙孔ntity窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｷ窶堙ｩ・ｽB
 	 */
 	public void setItemInUse(ItemStack par1ItemStack, int par2, Entity pEntity) {
 		if (par1ItemStack != itemInUse) {

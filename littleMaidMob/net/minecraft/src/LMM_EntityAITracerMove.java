@@ -45,8 +45,8 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 
 	@Override
 	public void startExecuting() {
-		// ���[�g����
-		// �^�[�Q�b�g���T�[�`
+		// ・ｽ・ｽ・ｽ[・ｽg・ｽ・ｽ・ｽ・ｽ
+		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽT・ｽ[・ｽ`
 		int ox = MathHelper.floor_double(theMaid.posX);
 		int oy = MathHelper.floor_double(theMaid.posY);
 		int oz = MathHelper.floor_double(theMaid.posZ);
@@ -60,7 +60,7 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 		MMM_EntityDummy.clearDummyEntity(theMaid);
 		boolean flagdammy = false;
 		
-		// CW���Ɍ����̈���L���� 
+		// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ 
 		for (int d = 0; d < 4; d++) {
 			for (int a = 2; a < 14; a += 2) {
 				int del = a / 2;
@@ -90,7 +90,7 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 					for (int c = 0; c < 3; c++) {
 						yy = oy + (c == 2 ? -1 : c);
 						if (checkBlock(xx, yy, zz)) {
-							// �ł��߂��|�C���g�̔���
+							// ・ｽﾅゑｿｽ・ｽﾟゑｿｽ・ｽ|・ｽC・ｽ・ｽ・ｽg・ｽﾌ費ｿｽ・ｽ・ｽ
 							double lr = theMaid.getDistanceSq(xx, yy, zz);
 							if (lr < lrange) {
 								if (doFindBlock(xx, yy, zz)) {
@@ -138,15 +138,15 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 	}
 
 	/**
-	 * �w����W�̃u���b�N�͒T���Ă�����̂��H
+	 * ・ｽw・ｽ・ｽ・ｽ・ｽW・ｽﾌブ・ｽ・ｽ・ｽb・ｽN・ｽﾍ探・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽﾌゑｿｽ・ｽH
 	 */
 	protected boolean checkBlock(int px, int py, int pz) {
 		return world.getBlockPowerInput(px, py, pz) > 0 && (world.getBlockMaterial(px, py + 1, pz) == Material.air);
 	}
 
 	/**
-	 * �������u���b�N�ɑ΂��铮��B
-	 * true��Ԃ��ƃ��[�v�I���B
+	 * ・ｽ・ｽ・ｽﾂゑｿｽ・ｽ・ｽ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾉ対ゑｿｽ・ｽ體ｮ・ｽ・ｽB
+	 * true・ｽ・ｽﾔゑｿｽ・ｽﾆ・ｿｽ・ｽ[・ｽv・ｽI・ｽ・ｽ・ｽB
 	 */
 	protected boolean doFindBlock(int px, int py, int pz) {
 		return theMaid.getNavigator().tryMoveToXYZ(px, py, pz, 1.0F);

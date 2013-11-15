@@ -23,7 +23,7 @@ public class LMM_Net {
 	
 	
 	/**
-	 * “n‚³‚ê‚½ƒf�[ƒ^‚Ì�æ“ª‚ÉŽ©•ª‚ÌEntityID‚ð•t—^‚µ‚Ä‘S‚Ä‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚Ö‘—�M
+	 * 窶從窶堋ｳ窶堙ｪ窶堋ｽﾆ断・ｽ[ﾆ耽窶堙鯉ｿｽﾃｦ窶慊ｪ窶堙嫁ｽﾂｩ窶｢ﾂｪ窶堙窪ntityID窶堙ｰ窶｢t窶膿窶堋ｵ窶堙・牢窶堙・堙姑誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堙問倪費ｿｽM
 	 */
 	public static void sendToAllEClient(LMM_EntityLittleMaid pEntity, byte[] pData) {
 		MMM_Helper.setInt(pData, 1, pEntity.entityId);
@@ -31,7 +31,7 @@ public class LMM_Net {
 	}
 
 	/**
-	 * “n‚³‚ê‚½ƒf�[ƒ^‚Ì�æ“ª‚ÉŽ©•ª‚ÌEntityID‚ð•t—^‚µ‚Ä“Á’è‚Ì‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚Ö‘—�M
+	 * 窶從窶堋ｳ窶堙ｪ窶堋ｽﾆ断・ｽ[ﾆ耽窶堙鯉ｿｽﾃｦ窶慊ｪ窶堙嫁ｽﾂｩ窶｢ﾂｪ窶堙窪ntityID窶堙ｰ窶｢t窶膿窶堋ｵ窶堙・愿≫凖ｨ窶堙娯堙姑誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堙問倪費ｿｽM
 	 */
 	public static void sendToEClient(NetServerHandler pHandler, LMM_EntityLittleMaid pEntity, byte[] pData) {
 		MMM_Helper.setInt(pData, 1, pEntity.entityId);
@@ -43,7 +43,7 @@ public class LMM_Net {
 	}
 
 	/**
-	 * “n‚³‚ê‚½ƒf�[ƒ^‚Ì�æ“ª‚ÉEntityID‚ð•t—^‚µ‚ÄƒT�[ƒo�[‚Ö‘—�M�B
+	 * 窶從窶堋ｳ窶堙ｪ窶堋ｽﾆ断・ｽ[ﾆ耽窶堙鯉ｿｽﾃｦ窶慊ｪ窶堙右ntityID窶堙ｰ窶｢t窶膿窶堋ｵ窶堙・探・ｽ[ﾆ弛・ｽ[窶堙問倪費ｿｽM・ｽB
 	 * 0:Mode, 1-4:EntityID, 5-:Data
 	 */
 	public static void sendToEServer(LMM_EntityLittleMaid pEntity, byte[] pData) {
@@ -58,14 +58,14 @@ public class LMM_Net {
 	}
 
 	/**
-	 * ƒT�[ƒo�[‚ÖIFF‚ÌƒZ�[ƒu‚ðƒŠƒNƒGƒXƒg
+	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙蜂FF窶堙姑短・ｽ[ﾆ置窶堙ｰﾆ椎ﾆ誰ﾆ竪ﾆ湛ﾆ暖
 	 */
 	public static void saveIFF() {
 		sendToServer(new byte[] {LMN_Server_SaveIFF});
 	}
 
 	/**
-	 * littleMaid‚ÌEntity‚ð•Ô‚·�B
+	 * littleMaid窶堙窪ntity窶堙ｰ窶｢ﾃ披堋ｷ・ｽB
 	 */
 	public static LMM_EntityLittleMaid getLittleMaid(byte[] pData, int pIndex, World pWorld) {
 		Entity lentity = MMM_Helper.getEntity(pData, pIndex, pWorld);
@@ -76,10 +76,10 @@ public class LMM_Net {
 		}
 	}
 
-	// Žó�MƒpƒPƒbƒg‚Ì�ˆ—�
+	// ﾅｽﾃｳ・ｽMﾆ恥ﾆ単ﾆ鍛ﾆ暖窶堙鯉ｿｽﾋ・費ｿｽ
 	
 	public static void serverCustomPayload(NetServerHandler pNetHandler, Packet250CustomPayload pPayload) {
-		// ƒT�[ƒo‘¤‚Ì“®�ì
+		// ﾆ探・ｽ[ﾆ弛窶伉､窶堙娯慊ｮ・ｽﾃｬ
 		byte lmode = pPayload.data[0];
 		int leid = 0;
 		LMM_EntityLittleMaid lemaid = null;
@@ -96,8 +96,8 @@ public class LMM_Net {
 		
 		switch (lmode) {
 		case LMN_Server_UpdateSlots : 
-			// �‰‰ñ�X�V‚Æ‚©
-			// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì�X�V
+			// ・ｽ窶ｰ窶ｰﾃｱ・ｽX・ｽV窶堙・堋ｩ
+			// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙鯉ｿｽX・ｽV
 			lemaid.maidInventory.clearChanged();
 			for (LMM_SwingStatus lswing : lemaid.mstatSwingStatus) {
 				lswing.lastIndex = -1;
@@ -105,8 +105,8 @@ public class LMM_Net {
 			break;
 			
 		case LMN_Server_DecDyePowder:
-			// ƒJƒ‰�[”Ô�†‚ðƒNƒ‰ƒCƒAƒ“ƒg‚©‚çŽó‚¯Žæ‚é
-			// ƒCƒ“ƒxƒ“ƒgƒŠ‚©‚ç�õ—¿‚ðŒ¸‚ç‚·�B
+			// ﾆ谷ﾆ停ｰ・ｽ[窶敕費ｿｽ窶窶堙ｰﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堋ｩ窶堙ｧﾅｽﾃｳ窶堋ｯﾅｽﾃｦ窶堙ｩ
+			// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堋ｩ窶堙ｧ・ｽﾃｵ窶板ｿ窶堙ｰﾅ陳ｸ窶堙ｧ窶堋ｷ・ｽB
 			int lcolor2 = pPayload.data[1];
 			if (!pNetHandler.playerEntity.capabilities.isCreativeMode) {
 				for (int li = 0; li < pNetHandler.playerEntity.inventory.mainInventory.length; li++) {
@@ -121,7 +121,7 @@ public class LMM_Net {
 			break;
 			
 		case LMN_Server_SetIFFValue:
-			// IFF‚Ì�Ý’è’l‚ðŽó�M
+			// IFF窶堙鯉ｿｽﾃ昶凖ｨ窶冤窶堙ｰﾅｽﾃｳ・ｽM
 			lval = pPayload.data[1];
 			lindex = MMM_Helper.getInt(pPayload.data, 2);
 			lname = MMM_Helper.getStr(pPayload.data, 6);
@@ -138,7 +138,7 @@ public class LMM_Net {
 			sendIFFValue(pNetHandler, lval, lindex);
 			break;
 		case LMN_Server_SaveIFF:
-			// IFFƒtƒ@ƒCƒ‹‚Ì•Û‘¶
+			// IFFﾆ稚ﾆ叩ﾆ辰ﾆ停ｹ窶堙娯｢ﾃ帚伉ｶ
 			LMM_IFF.saveIFF(pNetHandler.playerEntity.username);
 			if (!MMM_Helper.isClient) {
 				LMM_IFF.saveIFF("");
@@ -149,7 +149,7 @@ public class LMM_Net {
 	}
 
 	/**
-	 * ƒNƒ‰ƒCƒAƒ“ƒg‚ÖIFF‚Ì�Ý’è’l‚ð’Ê’m‚·‚é�B
+	 * ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堙蜂FF窶堙鯉ｿｽﾃ昶凖ｨ窶冤窶堙ｰ窶凖岩冦窶堋ｷ窶堙ｩ・ｽB
 	 * @param pNetHandler
 	 * @param pValue
 	 * @param pIndex

@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 
 
 /**
- * Entity�̃f�[�^�ǂݎ��p�̃N���X
- * �ʂ�Entity�ɃC���^�[�t�F�[�X�t���Ă�OK
+ * Entity・ｽﾌデ・ｽ[・ｽ^・ｽﾇみ趣ｿｽ・ｽp・ｽﾌク・ｽ・ｽ・ｽX
+ * ・ｽﾊゑｿｽEntity・ｽﾉイ・ｽ・ｽ・ｽ^・ｽ[・ｽt・ｽF・ｽ[・ｽX・ｽt・ｽ・ｽ・ｽﾄゑｿｽOK
  */
 public class LMM_EntityCaps extends MMM_EntityCaps {
 

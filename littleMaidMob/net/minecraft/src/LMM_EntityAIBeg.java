@@ -13,7 +13,7 @@ public class LMM_EntityAIBeg extends EntityAIBase {
 	protected World worldObj;
 	protected float effectiveRange;
 	protected double effectiveRangeSq;
-	protected int field_48347_e; // �����������Ă��鎞�ԁH
+	protected int field_48347_e; // ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ骼橸ｿｽﾔ？
 
 	public LMM_EntityAIBeg(LMM_EntityLittleMaid pentityLittlemaid, float par2) {
 		littleMaid = pentityLittlemaid;
@@ -75,7 +75,7 @@ public class LMM_EntityAIBeg extends EntityAIBase {
 
 	@Override
 	public void updateTask() {
-		// �ڂŎE��
+		// ・ｽﾚで殺・ｽ・ｽ
 		littleMaid.getLookHelper().setLookPositionWithEntity(targetPlayer, 10F,
 				littleMaid.getVerticalFaceSpeed());
 		if (littleMaid.getNavigator().noPath()) {

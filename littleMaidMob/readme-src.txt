@@ -1,28 +1,28 @@
-�\�[�X�t�@�C���̎g����
+ソースファイルの使い方
 
 
-���p����
-	�E�����A���X�y�N�g�����ɂ��Ă��悢�̂�H
-	�E�������A���p���p�͏����B
-	�E���ƁA�����Ȃ�Ӗ��ł���҂͐ӔC���Ƃ�܂��ʁB
-	�E�V�R���R�̓�ǉ����{����Ă��܂��A�����ɂ������Ȃ��E�C����҂݂̂��g�p��F����܂��B
+利用条件
+	・改造、リスペクトすきにしてもよいのよ？
+	・ただし、商用利用は除く。
+	・あと、いかなる意味でも作者は責任をとりませぬ。
+	・天然自然の難読化が施されています、何物にも負けない勇気ある者のみが使用を認可されます。
 
-������
+推奨環境
 	MCP + Eclipse JUNO
 
-�g�p���@
-	�E���ɓ����Ă�\�[�X��MCP�̓��Y�f�B���N�g���ɕ��荞�ށB
-	�E%MCP_DIR%/eclipse/Client/bin/ �Ɏ��s�t�@�C���Ɋ܂܂�Ă���摜�Ȃǂ̃��\�[�X����荞�ށB
-	�EEclipse���N���ADebug��Run�Ŏ��s���ē����Ώ��������B
+使用方法
+	・中に入ってるソースをMCPの当該ディレクトリに放り込む。
+	・%MCP_DIR%/eclipse/Client/bin/ に実行ファイルに含まれている画像などのリソースを放り込む。
+	・Eclipseを起動、DebugかRunで実行して動けば準備完了。
 
-�e�N�j�b�N
-	�E�����̃}���`���f���̃\�[�X�𑀍삷�鎞�� %MCP_DIR%/jars/mods/
-	�@�ȉ��ɔz�z�p�b�P�[�W��zip�̂܂ܔz�u����Γǂݍ��݂܂��B
-	�@���̎��\�[�X�R�[�h��MCP�̓��Y�f�B���N�g���̕��ɒǉ�����̂�Y��Ȃ��悤�ɁB
-	�@�łȂ��Ɨ����܂��B
-	�E�V�K�Ń}���`���f���t�@�C�����쐬����ꍇ�� %MCP_DIR%/eclipse/Client/bin/mob/littleMaid/
-	�@�ȉ��Ƀ}���`���f���p�̃t�H���_������ΑΉ�����}���`���f���N���X�������œǂݍ��ނ悤�ɂȂ�܂����B
-	�@�e�N�X�`�������p�ӂ���Ό�̓N���X����邾���ł��B
+テクニック
+	・既存のマルチモデルのソースを操作する時は %MCP_DIR%/jars/mods/
+	　以下に配布パッケージをzipのまま配置すれば読み込みます。
+	　この時ソースコードをMCPの当該ディレクトリの方に追加するのを忘れないように。
+	　でないと落ちます。
+	・新規でマルチモデルファイルを作成する場合は %MCP_DIR%/eclipse/Client/bin/mob/littleMaid/
+	　以下にマルチモデル用のフォルダがあれば対応するマルチモデルクラスを自動で読み込むようになりました。
+	　テクスチャさえ用意すれば後はクラスを作るだけです。
 
 
 

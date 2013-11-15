@@ -15,7 +15,7 @@ public class LMM_EntityAISwimming extends EntityAISwimming {
 
 	@Override
 	public boolean shouldExecute() {
-		// �������Ȃ�j���Ȃ�
+		// ・ｽ・ｽ・ｽ・ｽ・ｽﾂゑｿｽ・ｽﾈゑｿｽj・ｽ・ｽ・ｽﾈゑｿｽ
 		return (theEntity.getNavigator().noPath() ?
 				(!theEntity.onGround || theEntity.isInsideOfMaterial(Material.water)) : theEntity.isInWater())
 				|| theEntity.handleLavaMovement();

@@ -49,12 +49,12 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		modelMain.setCapsValue(MMM_IModelCaps.caps_entityIdFactor, lmaid.entityIdFactor);
 		modelMain.setCapsValue(MMM_IModelCaps.caps_ticksExisted, lmaid.ticksExisted);
 		modelMain.setCapsValue(MMM_IModelCaps.caps_dominantArm, lmaid.maidDominantArm);
-		// �������Ӗ���
+		// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾓ厄ｿｽ・ｽ・ｽ
 //		plittleMaid.textureModel0.isChild = plittleMaid.textureModel1.isChild = plittleMaid.textureModel2.isChild = plittleMaid.isChild();
 	}
 
 	protected void renderString(LMM_EntityLittleMaid plittleMaid, double px, double py, double pz, float f, float f1) {
-		// �Ђ�
+		// ・ｽﾐゑｿｽ
 		if(plittleMaid.mstatgotcha != null && plittleMaid.mstatgotcha instanceof EntityLivingBase) {
 			EntityLivingBase lel = (EntityLivingBase)plittleMaid.mstatgotcha;
 			py -= 0.5D;
@@ -105,12 +105,12 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 	}
 /*
 	public void doRenderLitlleMaid(LMM_EntityLittleMaid plittleMaid, double px, double py, double pz, float f, float f1) {
-		// �������d�����Ă�̂ł��ƂŊm�F
-		// �p���ɂ�鍂������
+		// ・ｽ・ｽ・ｽ・ｽ・ｽﾂゑｿｽ・ｽd・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽﾌでゑｿｽ・ｽﾆで確・ｽF
+		// ・ｽp・ｽ・ｽ・ｽﾉゑｿｽ骰ゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 		
-		// �����͖{���I�ɂ͗v��Ȃ��B
+		// ・ｽ・ｽ・ｽ・ｽ・ｽﾍ本・ｽ・ｽ・ｽI・ｽﾉは要・ｽ・ｽﾈゑｿｽ・ｽB
 		if (plittleMaid.worldObj instanceof WorldServer) {
-			// RSHUD-ACV�p
+			// RSHUD-ACV・ｽp
 			MMM_TextureBox ltbox0 = ((MMM_TextureBoxServer)plittleMaid.textureData.textureBox[0]).localBox;
 			MMM_TextureBox ltbox1 = ((MMM_TextureBoxServer)plittleMaid.textureData.textureBox[1]).localBox;
 			modelMain.model = ltbox0.models[0];
@@ -146,7 +146,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 //		doRenderLitlleMaid(lmm, par2, par4, par6, par8, par9);
 		renderModelMulti(lmm, par2, par4, par6, par8, par9, fcaps);
 		renderString(lmm, par2, par4, par6, par8, par9);
-		// ���[�v
+		// ・ｽ・ｽ・ｽ[・ｽv
 //		func_110827_b(lmm, par2, par4 - modelMain.model.getLeashOffset(lmm.maidCaps), par6, par8, par9);
 	}
 
@@ -158,7 +158,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		} else {
 			modelMain.setArmorRendering(false);
 		}
-		// �A�C�e���̃����_�����O�ʒu���l�����邽��render���ĂԕK�v������
+		// ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽﾌ・ｿｽ・ｽ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽO・ｽﾊ置・ｽ・ｽ・ｽl・ｽ・ｽ・ｽ・ｽ・ｽ驍ｽ・ｽ・ｽrender・ｽ・ｽ・ｽﾄぶ必・ｽv・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 		mainModel.render(par1EntityLiving, par2, par3, par4, par5, par6, par7);
 	}
 
@@ -167,7 +167,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		super.passSpecialRender(par1EntityLiving, par2, par4, par6);
 		
 		LMM_EntityLittleMaid llmm = (LMM_EntityLittleMaid)par1EntityLiving;
-		// �ǉ���
+		// ・ｽﾇ会ｿｽ・ｽ・ｽ
 		for (int li = 0; li < llmm.maidEntityModeList.size(); li++) {
 			llmm.maidEntityModeList.get(li).showSpecial(this, par2, par4, par6);
 		}

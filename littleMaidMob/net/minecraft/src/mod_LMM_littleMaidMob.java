@@ -85,7 +85,7 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 
 	public static void Debug(String pText, Object... pVals) {
-		// ƒfƒoƒbƒOƒ�ƒbƒZ�[ƒW
+		// ﾆ断ﾆ弛ﾆ鍛ﾆ丹ﾆ抵ｿｽﾆ鍛ﾆ短・ｽ[ﾆ淡
 		if (cfg_DebugMessage) {
 			System.out.println(String.format("littleMaidMob-" + pText, pVals));
 		}
@@ -98,7 +98,7 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 	@Override
 	public String getPriorities() {
-		// MMMLib‚ð—v‹�
+		// MMMLib窶堙ｰ窶牌窶ｹ・ｽ
 		return "required-after:mod_MMM_MMMLib";
 	}
 
@@ -109,7 +109,7 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 	@Override
 	public void load() {
-		// MMMLib‚ÌRevisionƒ`ƒFƒbƒN
+		// MMMLib窶堙軍evisionﾆ蛋ﾆ巽ﾆ鍛ﾆ誰
 		MMM_Helper.checkRevision("6");
 		MMM_Config.checkConfig(this.getClass());
 		
@@ -119,9 +119,9 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 		cfg_UniqueEntityId = MMM_Helper.registerEntity(LMM_EntityLittleMaid.class,
 				"LittleMaid", cfg_UniqueEntityId, this, 80, 3, true, 0xefffef, 0x9f5f5f);
 		ModLoader.addLocalization("entity.LittleMaid.name", "LittleMaid");
-		ModLoader.addLocalization("entity.LittleMaid.name", "ja_JP", "ƒŠƒgƒ‹ƒ�ƒCƒh");
+		ModLoader.addLocalization("entity.LittleMaid.name", "ja_JP", "ﾆ椎ﾆ暖ﾆ停ｹﾆ抵ｿｽﾆ辰ﾆ檀");
 		if (cfg_enableSpawnEgg) {
-			// �µŠ«—pƒŒƒVƒs‚ð’Ç‰Á
+			// ・ｽﾂｵﾅﾂｫ窶廃ﾆ椎槌歎ﾆ痴窶堙ｰ窶凖・ｰﾃ・
 			ModLoader.addRecipe(new ItemStack(Item.monsterPlacer, 1, cfg_UniqueEntityId), new Object[] {
 				"scs",
 				"sbs",
@@ -134,10 +134,10 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 		}
 		
 		if (MMM_Helper.isClient) {
-			// ƒAƒ`ŽÀŒ±—p
+			// ﾆ但ﾆ蛋ﾅｽﾃﾅ陳ｱ窶廃
 			if (cfg_AchievementID != 0) {
 				while (true) {
-					// ƒAƒ`�[ƒu‚ðŠl“¾‚µ‚½�ó‘Ô‚Å–¢“o˜^‚¾‚Æ�AUNKNOWN‚ÌƒAƒ`�[ƒu‚ª“o˜^‚³‚ê‚Ä‚¢‚é‚Ì‚Å�í�œ‚·‚é�B
+					// ﾆ但ﾆ蛋・ｽ[ﾆ置窶堙ｰﾅl窶慊ｾ窶堋ｵ窶堋ｽ・ｽﾃｳ窶佚披堙・督｢窶徙ﾋ弯窶堋ｾ窶堙・ｿｽAUNKNOWN窶堙姑但ﾆ蛋・ｽ[ﾆ置窶堋ｪ窶徙ﾋ弯窶堋ｳ窶堙ｪ窶堙・堋｢窶堙ｩ窶堙娯堙・ｿｽﾃｭ・ｽﾅ凪堋ｷ窶堙ｩ・ｽB
 					int laid = 5242880 + cfg_AchievementID;
 					StatBase lsb = StatList.getOneShotStat(laid);
 					boolean lflag = false;
@@ -154,8 +154,8 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 					ac_Contract = new Achievement(cfg_AchievementID, "littleMaid", 1, -4, Item.cake, AchievementList.bakeCake).registerAchievement();
 //	                ModLoader.AddAchievementDesc(ac_Contract, "(21)", "Capture the LittleMaid!");
 					ModLoader.addAchievementDesc(ac_Contract, "Enlightenment!", "Capture the LittleMaid!");
-					ModLoader.addLocalization("achievement.littleMaid", "ja_JP", "Œå‚è�B");
-					ModLoader.addLocalization("achievement.littleMaid.desc", "ja_JP", "ƒ�ƒCƒh‚³‚ñ‚ð“üŽè‚µ‚Ü‚µ‚½�B");
+					ModLoader.addLocalization("achievement.littleMaid", "ja_JP", "ﾅ津･窶堙ｨ・ｽB");
+					ModLoader.addLocalization("achievement.littleMaid.desc", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀窶堋ｳ窶堙ｱ窶堙ｰ窶愿ｼﾅｽﾃｨ窶堋ｵ窶堙懌堋ｵ窶堋ｽ・ｽB");
 					if (lflag) {
 						LMM_Client.setAchievement();
 					}
@@ -163,22 +163,22 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 				}
 			}
 			
-			// –¼�Ì•ÏŠ·ƒe�[ƒuƒ‹
+			// 窶督ｼ・ｽﾃ娯｢ﾃ焦ﾂｷﾆ弾・ｽ[ﾆ置ﾆ停ｹ
 			ModLoader.addLocalization("littleMaidMob.text.Health", "Health");
-			ModLoader.addLocalization("littleMaidMob.text.Health", "ja_JP", "ƒ�ƒCƒh‹­“x");
+			ModLoader.addLocalization("littleMaidMob.text.Health", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀窶ｹﾂｭ窶忸");
 			ModLoader.addLocalization("littleMaidMob.text.AP", "AP");
-			ModLoader.addLocalization("littleMaidMob.text.AP", "ja_JP", "ƒ�ƒCƒh‘•�b");
+			ModLoader.addLocalization("littleMaidMob.text.AP", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀窶倪｢・ｽb");
 			ModLoader.addLocalization("littleMaidMob.text.STATUS", "Status");
-			ModLoader.addLocalization("littleMaidMob.text.STATUS", "ja_JP", "ƒ�ƒCƒh�ó‘Ô");
+			ModLoader.addLocalization("littleMaidMob.text.STATUS", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀・ｽﾃｳ窶佚・);
 			
-			// ƒfƒtƒHƒ‹ƒgƒ‚ƒfƒ‹‚Ì�Ý’è
+			// ﾆ断ﾆ稚ﾆ辿ﾆ停ｹﾆ暖ﾆ停堡断ﾆ停ｹ窶堙鯉ｿｽﾃ昶凖ｨ
 			LMM_Client.init();
 		}
 		
-		// AIƒŠƒXƒg‚Ì’Ç‰Á
+		// AIﾆ椎ﾆ湛ﾆ暖窶堙娯凖・ｰﾃ・
 		LMM_EntityModeManager.init();
 		
-		// ƒAƒCƒeƒ€ƒXƒ�ƒbƒg�X�V—p‚ÌƒpƒPƒbƒg
+		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎﾆ湛ﾆ抵ｿｽﾆ鍛ﾆ暖・ｽX・ｽV窶廃窶堙姑恥ﾆ単ﾆ鍛ﾆ暖
 		ModLoader.registerPacketChannel(this, "LMM|Upd");
 		
 	}
@@ -190,14 +190,14 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 	@Override
 	public void modsLoaded() {
-		// ƒfƒtƒHƒ‹ƒgƒ‚ƒfƒ‹‚Ì�Ý’è
+		// ﾆ断ﾆ稚ﾆ辿ﾆ停ｹﾆ暖ﾆ停堡断ﾆ停ｹ窶堙鯉ｿｽﾃ昶凖ｨ
 		MMM_TextureManager.instance.setDefaultTexture(LMM_EntityLittleMaid.class, MMM_TextureManager.instance.getTextureBox("default_Orign"));
 		
 		if (cfg_UniqueEntityId == -1) return;
 		// Dominant
 		if(cfg_spawnWeight > 0) {
 			if (cfg_Dominant) {
-				// ‚ ‚ç‚ä‚é�ê�Š‚ÉƒXƒ|�[ƒ“‚·‚é
+				// 窶堋窶堙ｧ窶堙､窶堙ｩ・ｽﾃｪ・ｽﾅ窶堙家湛ﾆ竹・ｽ[ﾆ停懌堋ｷ窶堙ｩ
 				try {
 					Field afield[] = (BiomeGenBase.class).getDeclaredFields();
 					LinkedList<BiomeGenBase> linkedlist = new LinkedList<BiomeGenBase>();
@@ -215,37 +215,37 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 					Debug("Dominate Exception.");
 				}
 			} else {
-				// ’Ê�íƒXƒ|�[ƒ“�Ý’è
+				// 窶凖奇ｿｽﾃｭﾆ湛ﾆ竹・ｽ[ﾆ停懶ｿｽﾃ昶凖ｨ
 				ModLoader.addSpawn(LMM_EntityLittleMaid.class, cfg_spawnWeight, cfg_minGroupSize, cfg_maxGroupSize, EnumCreatureType.creature);
 			}
 		}
 		
-		// ƒ‚�[ƒhƒŠƒXƒg‚ð�\’z
+		// ﾆ停夲ｿｽ[ﾆ檀ﾆ椎ﾆ湛ﾆ暖窶堙ｰ・ｽ\窶凛
 		LMM_EntityModeManager.loadEntityMode();
 		LMM_EntityModeManager.showLoadedModes();
 		
 		if (MMM_Helper.isClient) {
-			// ‰¹�º‚Ì‰ð�Í
+			// 窶ｰﾂｹ・ｽﾂｺ窶堙娯ｰﾃｰ・ｽﾃ・
 			LMM_SoundManager.init();
-			// ƒTƒEƒ“ƒhƒpƒbƒN
+			// ﾆ探ﾆ脱ﾆ停愴檀ﾆ恥ﾆ鍛ﾆ誰
 			LMM_SoundManager.loadDefaultSoundPack();
 			LMM_SoundManager.loadSoundPack();
 		}
 		
-		// IFF‚Ìƒ��[ƒh
+		// IFF窶堙姑抵ｿｽ・ｽ[ﾆ檀
 		LMM_IFF.loadIFFs();
 		
 	}
 
 	@Override
 	public void serverCustomPayload(NetServerHandler var1, Packet250CustomPayload var2) {
-		// ƒT�[ƒo‘¤‚Ì“®�ì
+		// ﾆ探・ｽ[ﾆ弛窶伉､窶堙娯慊ｮ・ｽﾃｬ
 		LMM_Net.serverCustomPayload(var1, var2);
 	}
 
 	@Override
 	public void clientCustomPayload(NetClientHandler var1, Packet250CustomPayload var2) {
-		// ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚Ì“ÁŽêƒpƒPƒbƒgŽó�M“®�ì
+		// ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堙娯愿・ｽﾃｪﾆ恥ﾆ単ﾆ鍛ﾆ暖ﾅｽﾃｳ・ｽM窶慊ｮ・ｽﾃｬ
 		LMM_Client.clientCustomPayload(var1, var2);
 	}
 

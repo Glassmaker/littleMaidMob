@@ -77,11 +77,11 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ���[�h�ɉ��������ʔ���A���x�D��
+		// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ[繝ｻ・ｽh繝ｻ・ｽ・我ｼ夲ｽｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・願ｲｻ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽA繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽx繝ｻ・ｽD繝ｻ・ｽ繝ｻ・ｽ
 		switch (pMode) {
 		case mmode_Cooking :
 			for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
-				// ����
+				// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
 				if (owner.maidInventory.isItemBurned(li)) {
 					return li;
 				}
@@ -101,7 +101,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 	public boolean isSearchBlock() {
 		if (!super.isSearchBlock()) return false;
 		
-		// �R�ăA�C�e���������Ă���H
+		// 繝ｻ・ｽR繝ｻ・ｽ・・い繝ｻ・ｽC繝ｻ・ｽe繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｑ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽH
 		if (owner.getCurrentEquippedItem() != null && owner.maidInventory.getSmeltingItem() > -1) {
 			fDistance = Double.MAX_VALUE;
 			owner.clearTilePos();
@@ -125,9 +125,9 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		
-		// ���E�̃��C�h����
+		// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽE繝ｻ・ｽ・後・・ｿ・ｽ繝ｻ・ｽC繝ｻ・ｽh繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
 		if (checkWorldMaid(ltile)) return false;
-		// �g�p���Ă����}�Ȃ炻���ŏI��
+		// 繝ｻ・ｽg繝ｻ・ｽp繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｑ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ}繝ｻ・ｽ・医ｉ縺昴・・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｵゅ・・ｽ繝ｻ・ｽ
 		if (owner.isUsingTile(ltile)) return true;
 		
 		double ldis = owner.getDistanceTilePosSq(ltile);
@@ -151,7 +151,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 		int li;
 		
 		if (owner.getSwingStatusDominant().canAttack()) {
-			// �����i���
+			// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽi繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
 			litemstack = ltile.getStackInSlot(2);
 			if (litemstack != null) {
 				if (litemstack.stackSize > 0) {
@@ -169,14 +169,14 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				ltile.setInventorySlotContents(2, null);
 			}
 				
-			// �����\�i���}�ɂہ[��
+			// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・り・繝ｻ・ｽi繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ}繝ｻ・ｽ・峨⊃繝ｼ繝ｻ・ｽ繝ｻ・ｽ
 			if (!lflag && ltile.getStackInSlot(0) == null) {
 				litemstack = ltile.getStackInSlot(2);
 				li = owner.maidInventory.getSmeltingItem();
 				owner.setEquipItem(li);
 				if (li > -1) {
 					litemstack = owner.maidInventory.getStackInSlot(li);
-					// ���V�s�Ή��i
+					// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽV繝ｻ・ｽs繝ｻ・ｽ・惹ｼ夲ｽｿ・ｽ繝ｻ・ｽi
 					if (litemstack.stackSize >= ltile.getInventoryStackLimit()) {
 						ltile.setInventorySlotContents(0, litemstack.splitStack(ltile.getInventoryStackLimit()));
 					} else {
@@ -191,7 +191,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				}
 			}
 			
-			// �莝���̔R�����ہ[��
+			// 繝ｻ・ｽ髣疲劼・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ・檎㏍繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・帙・繝ｻ・ｽ繝ｻ・ｽ
 			if (!lflag && ltile.getStackInSlot(1) == null && ltile.getStackInSlot(0) != null) {
 				owner.getNextEquipItem();
 				litemstack = owner.getCurrentEquippedItem();
@@ -212,7 +212,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 					if (ltile.isBurning()) {
 						lflag = true;
 					} else {
-						// �R�₹��A�C�e���������ĂȂ��̂Œ����\�i�����
+						// 繝ｻ・ｽR繝ｻ・ｽ遶・ｽｹ繝ｻ・ｽ繝ｻ・ｽA繝ｻ・ｽC繝ｻ・ｽe繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・↑繧托ｽｿ・ｽ繝ｻ・ｽ・後〒謚ｵ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・り・繝ｻ・ｽi繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
 						ItemStack litemstack2 = ltile.getStackInSlotOnClosing(0);
 						if (owner.maidInventory.addItemStackToInventory(litemstack2)) {
 							owner.playSound("random.pop");
@@ -226,7 +226,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				}
 			} 
 			
-			// �R���I����Ă�̂ɔR����ɉ�������Ȃ����
+			// 繝ｻ・ｽR繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽI繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｑ・ｿ・ｽ・後↓辯・・・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・我ｼ夲ｽｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・医ｑ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
 			if (!lflag && !ltile.isBurning() && ltile.getStackInSlot(1) != null) {
 				ItemStack litemstack2 = ltile.getStackInSlotOnClosing(1);
 				if (owner.maidInventory.addItemStackToInventory(litemstack2)) {

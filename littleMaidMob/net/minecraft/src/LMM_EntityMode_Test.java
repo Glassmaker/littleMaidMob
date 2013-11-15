@@ -23,7 +23,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	
 	
 	/**
-	 * �e������p�B 
+	 * ・ｽe・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽB 
 	 */
 	public LMM_EntityMode_Test(LMM_EntityLittleMaid pEntity) {
 		super(pEntity);
@@ -48,7 +48,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	public void showSpecial(LMM_RenderLittleMaid prenderlittlemaid, double px, double py, double pz) {
 		if (!isEnable) return;
 		
-		// ���O�Ƃ��̕\���p
+		// ・ｽ・ｽ・ｽO・ｽﾆゑｿｽ・ｽﾌ表・ｽ・ｽ・ｽp
 		List<String> llist = new ArrayList<String>();
 		double ld;
 		
@@ -95,7 +95,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	}
 
 	
-	// �f�o�b�O�\���R�}���h�ǉ��p
+	// ・ｽf・ｽo・ｽb・ｽO・ｽ\・ｽ・ｽ・ｽR・ｽ}・ｽ・ｽ・ｽh・ｽﾇ会ｿｽ・ｽp
 	
 	@Override
 	public int compareTo(Object arg0) {
@@ -169,7 +169,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 
 	@Override
 	public List addTabCompletionOptions(ICommandSender var1, String[] var2) {
-		// ���ɕϊ����Ȃ�
+		// ・ｽ・ｽ・ｽﾉ変奇ｿｽ・ｽ・ｽ・ｽﾈゑｿｽ
 		return null;
 	}
 
