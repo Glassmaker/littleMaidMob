@@ -45,8 +45,8 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 
 	@Override
 	public void startExecuting() {
-		// ・ｽ・ｽ・ｽ[・ｽg・ｽ・ｽ・ｽ・ｽ
-		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽT・ｽ[・ｽ`
+		// ルート策定, Root development
+		// ターゲットをサーチ, Search on target
 		int ox = MathHelper.floor_double(theMaid.posX);
 		int oy = MathHelper.floor_double(theMaid.posY);
 		int oz = MathHelper.floor_double(theMaid.posZ);
@@ -60,7 +60,8 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 		MMM_EntityDummy.clearDummyEntity(theMaid);
 		boolean flagdammy = false;
 		
-		// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ 
+		// CW方向に検索領域を広げる 
+		// I expand the search area in the CW direction
 		for (int d = 0; d < 4; d++) {
 			for (int a = 2; a < 14; a += 2) {
 				int del = a / 2;
@@ -90,7 +91,8 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 					for (int c = 0; c < 3; c++) {
 						yy = oy + (c == 2 ? -1 : c);
 						if (checkBlock(xx, yy, zz)) {
-							// ・ｽﾅゑｿｽ・ｽﾟゑｿｽ・ｽ|・ｽC・ｽ・ｽ・ｽg・ｽﾌ費ｿｽ・ｽ・ｽ
+							// 最も近いポイントの判定
+							// Judgment of the nearest point
 							double lr = theMaid.getDistanceSq(xx, yy, zz);
 							if (lr < lrange) {
 								if (doFindBlock(xx, yy, zz)) {
@@ -138,15 +140,18 @@ public class LMM_EntityAITracerMove extends EntityAIBase implements LMM_IEntityA
 	}
 
 	/**
-	 * ・ｽw・ｽ・ｽ・ｽ・ｽW・ｽﾌブ・ｽ・ｽ・ｽb・ｽN・ｽﾍ探・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽﾌゑｿｽ・ｽH
+	 * 指定座標のブロックは探しているものか？
+	 * Block of the specified coordinate or what you're looking for?
 	 */
 	protected boolean checkBlock(int px, int py, int pz) {
 		return world.getBlockPowerInput(px, py, pz) > 0 && (world.getBlockMaterial(px, py + 1, pz) == Material.air);
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽﾂゑｿｽ・ｽ・ｽ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾉ対ゑｿｽ・ｽ體ｮ・ｽ・ｽB
-	 * true・ｽ・ｽﾔゑｿｽ・ｽﾆ・ｿｽ・ｽ[・ｽv・ｽI・ｽ・ｽ・ｽB
+	 * 見つけたブロックに対する動作。
+	 * trueを返すとループ終了。
+	 * The operation on the block you find.
+	 * loop exit returns true.
 	 */
 	protected boolean doFindBlock(int px, int py, int pz) {
 		return theMaid.getNavigator().tryMoveToXYZ(px, py, pz, 1.0F);

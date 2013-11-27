@@ -27,15 +27,18 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 	@Override
 	public boolean shouldExecute() {
 		if (!isEnable || !theMaid.isContractEX() || theMaid.isMaidWaitEx()) {
-			// ・ｽ_・ｽ・ｽﾂ体のみゑｿｽ・ｽ・ｽ・ｽ・ｽ
+			// 契約個体のみが跳ぶ
+			// Agreement only individual jumps
 			return false;
 		}
 		if (theMaid.getLeashed()) {
-			// ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽﾈら跳・ｽﾎなゑｿｽ
+			// 括られているなら跳ばない
+			// It is not skipped if you're enclosed
 			return false;
 		}
 		if (theMaid.isFreedom()) {
-			// ・ｽ・ｽ・ｽR・ｽs・ｽ・ｽ・ｽﾌ子・ｽﾍ奇ｿｽ_・ｽﾖジ・ｽ・ｽ・ｽ・ｽ・ｽv
+			// 自由行動の子は基点へジャンプ
+			// Child of free action jump to the base point
 			if (theMaid.homeWorld != theMaid.dimension) {
 				mod_LMM_littleMaidMob.Debug(String.format("ID:%d, %d -> %d, Change HomeWorld. reset HomePosition.",
 						theMaid.entityId,theMaid.homeWorld, theMaid.worldObj.provider.dimensionId));
@@ -64,7 +67,8 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 					return false;
 				}
 			} else {
-				// ・ｽ^・ｽ[・ｽQ・ｽe・ｽB・ｽ・ｽ・ｽO・ｽ・ｽ・ｽﾍ具ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽL・ｽﾑゑｿｽ
+				// ターゲティング中は距離が伸びる
+				// Length is increased targeting of
 				if (theMaid.mstatMasterDistanceSq < (theMaid.isBloodsuck() ? 1024D : 256D)) {
 					return false;
 				}
@@ -90,7 +94,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 							&& theWorld.isBlockNormalCube(i + l, k - 1, j + i1)
 							&& !theWorld.isBlockNormalCube(i + l, k, j + i1)
 							&& !theWorld.isBlockNormalCube(i + l, k + 1, j + i1)) {
-						// ・ｽ・ｽﾌ前・ｽﾉ抵ｿｽ・ｽﾎなゑｿｽ
+						// 主の前に跳ばない, It is not jumped in front of the main
 						double dd = theOwner.getDistanceSq(
 								(double) (i + l) + 0.5D + MathHelper.sin(theOwner.rotationYaw * 0.01745329252F) * 2.0D,
 								(double) k,
@@ -109,7 +113,8 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 				}
 			}
 		} else {
-			// ・ｽz・ｽ[・ｽ・ｽ・ｽ|・ｽW・ｽV・ｽ・ｽ・ｽ・ｽ・ｽG・ｽ・ｽ・ｽA・ｽO・ｽﾅ転・ｽ・ｽ
+			// ホームポジションエリア外で転移
+			// Transition at the home position outside the area
 			int lx = theMaid.getHomePosition().posX;
 			int ly = theMaid.getHomePosition().posY;
 			int lz = theMaid.getHomePosition().posZ;
@@ -117,7 +122,8 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 //			int ly = theMaid.getHomePosition().posY;
 //			int lz = theMaid.getHomePosition().posZ;
 			if (!(isCanJump(lx, ly, lz))) {
-				// ・ｽz・ｽ[・ｽ・ｽ・ｽ|・ｽW・ｽV・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+				// ホームポジション消失
+				// Home position disappearance
 				mod_LMM_littleMaidMob.Debug(String.format(
 						"ID:%d(%s) home lost.",
 						theMaid.entityId, theMaid.worldObj.isRemote ? "C" : "W"));
@@ -125,7 +131,7 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 				int b;
 				// int c;
 				boolean f = false;
-				// ・ｽ・ｽ・ｽ・ｽ・ｽW・ｽﾅ地・ｽﾊゑｿｽ・ｽ・ｽ・ｽo
+				// ｙ座標で地面を検出, Detects ground y coordinates
 				for (a = 1; a < 6 && !f; a++) {
 					if (isCanJump(lx, ly + a, lz)) {
 						f = true;
@@ -141,7 +147,8 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 					}
 				}
 
-				// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ
+				// CW方向に検索領域を広げる
+				// I expand the search area in the CW direction
 				loop_search: for (a = 2; a < 18 && !f; a += 2) {
 					lx--;
 					lz--;
@@ -198,7 +205,8 @@ public class LMM_EntityAIJumpToMaster extends EntityAIBase implements LMM_IEntit
 	}
 
 	/**
-	 * ・ｽ]・ｽﾚ撰ｿｽﾌチ・ｽF・ｽb・ｽN
+	 * 転移先のチェック
+	 * Check the transition destination
 	 */
 	protected boolean isCanJump(int px, int py, int pz) {
 		double lw = (double) theMaid.width / 2D;

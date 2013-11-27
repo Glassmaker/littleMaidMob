@@ -27,7 +27,8 @@ public class LMM_EntityAIHurtByTarget extends EntityAIHurtByTarget {
 	@Override
 	public boolean shouldExecute() {
 		if (theMaid.isContract() && !theMaid.isBlocking() && theMaid.mstatMasterEntity != null) {
-			// ・ｽt・ｽF・ｽ・ｽ・ｽT・ｽ[・ｽn・ｽﾍ趣ｿｽﾉ対ゑｿｽ・ｽ・ｽU・ｽ・ｽ・ｽﾉ費ｿｽ・ｽ・ｽ
+			// フェンサー系は主に対する攻撃に反応
+			// Fencer system reaction to the attack on the main
 			EntityLivingBase lentity = theMaid.mstatMasterEntity.getAITarget();
 			if (isSuitableTarget(lentity, false)) {
 				theMaid.setRevengeTarget(lentity);
@@ -49,7 +50,7 @@ public class LMM_EntityAIHurtByTarget extends EntityAIHurtByTarget {
 		String s2 = taskOwner.getAttackTarget() == null ? "Null" : taskOwner.getAttackTarget().getClass().toString();
 //		System.out.println(String.format("ID:%d, target:%s, attack:%s", taskOwner.entityId, s1, s2));
 		
-		// ・ｽ・ｽ・ｽ・ｽ黷ｽ・ｽd・ｽﾔゑｿｽ
+		// 殴られた仕返し, Revenge that was beaten
 		EntityLivingBase leliving = taskOwner.getAITarget();
 		if (leliving != null && leliving != taskOwner.getAttackTarget()) {
 			taskOwner.setAttackTarget(null);
@@ -60,7 +61,7 @@ public class LMM_EntityAIHurtByTarget extends EntityAIHurtByTarget {
 	
 	@Override
 	protected boolean isSuitableTarget(EntityLivingBase par1EntityLiving, boolean par2) {
-		// LMM・ｽp・ｽﾉカ・ｽX・ｽ^・ｽ・ｽ
+		// LMM用にカスタム, The custom in the LMM for
 		if (par1EntityLiving == null) {
 			return false;
 		}
@@ -85,18 +86,19 @@ public class LMM_EntityAIHurtByTarget extends EntityAIHurtByTarget {
 			}
 		}
 		
-		// ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽ闍暦ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ鼾・ｿｽ・ｽ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ
+		// 基点から一定距離離れている場合も攻撃しない
+		// Do not attack even if you are a certain distance from the origin
 		if (!taskOwner.func_110176_b(MathHelper.floor_double(par1EntityLiving.posX), MathHelper.floor_double(par1EntityLiving.posY), MathHelper.floor_double(par1EntityLiving.posZ))) {
 //		if (!taskOwner.isWithinHomeDistance(MathHelper.floor_double(par1EntityLiving.posX), MathHelper.floor_double(par1EntityLiving.posY), MathHelper.floor_double(par1EntityLiving.posZ))) {
 			return false;
 		}
 		
-		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ
+		// ターゲットが見えない, Can not see target
 		if (shouldCheckSight && !taskOwner.getEntitySenses().canSee(par1EntityLiving)) {
 			return false;
 		}
 		
-		// ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽ~・ｽ・ｽ・ｽ・ｽH
+		// 攻撃中止判定？, Attack abort decision?
 		if (this.field_75303_a) {
 			if (--this.field_75302_c <= 0) {
 				this.field_75301_b = 0;

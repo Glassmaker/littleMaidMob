@@ -65,6 +65,7 @@ public enum LMM_EnumSound {
 
 	/**
 	 * 指定されたインデックスのEnumSoundを返す。
+	 * I return the EnumSound at the specified index.
 	 */
 	public static LMM_EnumSound getEnumSound(int pindex) {
 		for (LMM_EnumSound le : LMM_EnumSound.values()) {

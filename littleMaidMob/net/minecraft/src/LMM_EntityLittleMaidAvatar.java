@@ -22,11 +22,11 @@ import net.minecraft.world.WorldServer;
 public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	public LMM_EntityLittleMaid avatar;
-	/** 窶堋｢窶堙ｧ窶堙ｱ・ｽH **/
+	/** いらん？Iran? **/
 	public boolean isItemTrigger;
-	/** 窶堋｢窶堙ｧ窶堙ｱ・ｽH **/
+	/** いらん？ Iran?**/
 	public boolean isItemReload;
-	/** 窶堋｢窶堙ｧ窶堙ｱ・ｽH **/
+	/** いらん？Iran? **/
 	private boolean isItemPreReload;
 	private double appendX;
 	private double appendY;
@@ -36,7 +36,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	public LMM_EntityLittleMaidAvatar(World par1World, LMM_EntityLittleMaid par2EntityLittleMaid) {
 		super(par1World, "");
 		
-		// ・ｽ窶ｰﾅﾃｺ・ｽﾃ昶凖ｨ
+		// 初期設定, Default
 		avatar = par2EntityLittleMaid;
 		dataWatcher = avatar.getDataWatcher();
 		
@@ -46,8 +46,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	@Override
 	protected void applyEntityAttributes() {
-		// ・ｽ窶ｰﾅﾃｺ・ｽﾃ昶凖ｨﾅｽE窶堋ｵ
-		// ・ｽ窶ｰﾅﾃｺ・ｽﾃ昶凖ｨ窶冤窶堙哉胆ﾆ蓄・ｽ[窶堙会ｿｽﾃ昶凖ｨ窶堋ｳ窶堙ｪ窶堙ｩ・ｽB
+		// 初期設定殺し, Default killing
+		// 初期設定値はダミーに設定される。, The default value is set to dummy.
 		super.applyEntityAttributes();
 //		this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.13000000417232513D);
 
@@ -99,7 +99,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	@Override
 	public void onItemPickup(Entity entity, int i) {
-		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶ｰﾃｱﾅｽﾃｻ窶堙姑竪ﾆ稚ﾆ巽ﾆ誰ﾆ暖
+		// アイテム回収のエフェクト, Effects of item recovery
 		if (worldObj.isRemote) {
 			// Client
 			LMM_Client.onItemPickup(this, entity, i);
@@ -168,13 +168,19 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 /*
 	@Override
 	protected void alertWolves(EntityLivingBase par1EntityLiving, boolean par2) {
-		// 窶堋ｱ窶堋ｱ窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｵ窶堋ｿ窶堙｡窶堋､窶堙・凖奇ｿｽﾃｭ窶堙・堙坂堙岩堙ｩ窶堙帚版ｽ窶堋ｿ窶堋ｷ窶堙ｩ
+		// ここを設定しちゃうと通常ではぬるぽ落ちする
+		 // To fall in the normal Nurupo it has been fully set up here
 	}
 */
 	@Override
 	public void destroyCurrentEquippedItem() {
-		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｪ窶ｰﾃｳ窶堙ｪ窶堋ｽ窶堙娯堙・ｽﾅｸ窶堙娯倪｢窶敕ｵ窶堙ｰ窶露窶佚ｰ
-		// TODO:窶僊窶堋ｵ・ｽAForge窶懌┐窶堙・致ﾆ椎抵ｿｽ[ﾆ停橸ｿｽ[ﾆ辰ﾆ遅ﾆ停愴暖窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｵ窶堙・堋｢窶堙ｩ窶堙窶堙娯堋ｾ窶堙・堙岩堙ｩ窶堙帚版ｽ窶堋ｿ窶堋ｷ窶堙ｩ窶堙娯堙・ｿｽA窶ｰﾂｽ窶堙ｧ窶堋ｩ窶堙娯佚趣ｿｽﾃｴ窶堋ｪ窶｢K窶牌・ｽB
+		// アイテムが壊れたので次の装備を選択
+		// Select the equipment the following items because the broken
+		// TODO:但し、Forge等でプレーヤーイベントを設定しているものだとぬるぽ落ちするので、何らかの対策が必要。
+		/*
+		 *  However, since the fall Nurupo that it is a thing that sets the player in the event Forge,
+		 *   etc., must be some measures.
+		 */
 //		super.destroyCurrentEquippedItem();
 		inventory.setInventorySlotContents(inventory.currentItem, (ItemStack)null);
 		avatar.getNextEquipItem();
@@ -189,7 +195,7 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 		return worldObj.isRemote ? null : this;
 	}
 
-	// Itemﾅｽg窶廃ﾅﾃ麺廣
+	// Item使用関連, Item use related
 
 	public int getItemInUseDuration(int pIndex) {
 		return avatar.getSwingStatus(pIndex).getItemInUseDuration();
@@ -325,10 +331,10 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 	@Override
 	public void sendChatToPlayer(ChatMessageComponent var1) {
-		// ﾆ蛋ﾆ槌槌鍛ﾆ暖ﾆ抵ｿｽﾆ鍛ﾆ短・ｽ[ﾆ淡窶堙最ｽg窶堙ｭ窶堙遺堋｢・ｽB
+		// チャットメッセージは使わない。, Do not use chat message.
 	}
 
-	// 窶｢s窶牌・ｽH
+	// 不要？, Unnecessary?
 
 	@Override
 	protected void setHideCape(int par1, boolean par2) {}
@@ -355,7 +361,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	/**
-	 * 窶伉ｮ・ｽﾂｫ窶冤ﾆ椎ﾆ湛ﾆ暖窶堙ｰﾅｽﾃｦ窶慊ｾ
+	 * 属性値リストを取得
+	 * Get the attribute value list
 	 */
 	public BaseAttributeMap func_110140_aT() {
 //		return super.func_110140_aT();
@@ -388,7 +395,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void getValue() {
-		// EntityLittleMaid窶堋ｩ窶堙ｧ窶冤窶堙ｰﾆ坦ﾆ痴・ｽ[
+		// EntityLittleMaidから値をコピー
+		// Copy the value from EntityLittleMaid
 		setPosition(avatar.posX, avatar.posY, avatar.posZ);
 		prevPosX = avatar.prevPosX;
 		prevPosY = avatar.prevPosY;
@@ -405,7 +413,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void getValueVector(double atx, double aty, double atz, double atl) {
-		// EntityLittleMaid窶堋ｩ窶堙ｧ窶冤窶堙ｰﾆ坦ﾆ痴・ｽ[
+		// EntityLittleMaidから値をコピー
+		// Copy the value from EntityLittleMaid
 		double l = MathHelper.sqrt_double(atl);
 		appendX = atx / l;
 		appendY = aty / l;
@@ -432,10 +441,12 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	/**
-	 * ﾅｽﾃ暁停塲ﾃ・ｿｽﾂｧ窶廃・ｽArotation窶堙ｰ窶慊ｪ窶堙会ｿｽ窶｡窶堙ｭ窶堋ｹ窶堙ｩ
+	 * 射撃管制用、rotationを頭に合わせる
+	 * I fit the head for fire control, the rotation
 	 */
 	public void getValueVectorFire(double atx, double aty, double atz, double atl) {
-		// EntityLittleMaid窶堋ｩ窶堙ｧ窶冤窶堙ｰﾆ坦ﾆ痴・ｽ[
+		// EntityLittleMaidから値をコピー
+		// Copy the value from EntityLittleMaid
 		double l = MathHelper.sqrt_double(atl);
 		appendX = atx / l;
 		appendY = aty / l;
@@ -469,7 +480,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 
 
 	public void setValue() {
-		// EntityLittleMiad窶堙問冤窶堙ｰﾆ坦ﾆ痴・ｽ[
+		// EntityLittleMiadへ値をコピー
+		// Copy the value to EntityLittleMiad
 		avatar.setPosition(posX, posY, posZ);
 		avatar.prevPosX = prevPosX;
 		avatar.prevPosY = prevPosY;
@@ -485,7 +497,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void setValueRotation() {
-		// EntityLittleMiad窶堙問冤窶堙ｰﾆ坦ﾆ痴・ｽ[
+		// EntityLittleMiadへ値をコピー
+		// Copy the value to EntityLittleMiad
 		avatar.rotationPitch = rotationPitch;
 		avatar.rotationYaw = rotationYaw;
 		avatar.prevRotationPitch = prevRotationPitch;
@@ -500,7 +513,8 @@ public class LMM_EntityLittleMaidAvatar extends EntityPlayer {
 	}
 
 	public void setValueVector() {
-		// EntityLittleMiad窶堙問冤窶堙ｰﾆ坦ﾆ痴・ｽ[
+		// EntityLittleMiadへ値をコピー
+		// Copy the value to EntityLittleMiad
 		avatar.posX = posX - appendX;
 		avatar.posY = posY - appendY;
 		avatar.posZ = posZ - appendZ;

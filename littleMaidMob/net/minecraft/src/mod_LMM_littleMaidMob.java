@@ -85,7 +85,7 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 
 	public static void Debug(String pText, Object... pVals) {
-		// ﾆ断ﾆ弛ﾆ鍛ﾆ丹ﾆ抵ｿｽﾆ鍛ﾆ短・ｽ[ﾆ淡
+		// デバッグメッセージ, Debug messages
 		if (cfg_DebugMessage) {
 			System.out.println(String.format("littleMaidMob-" + pText, pVals));
 		}
@@ -98,7 +98,7 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 	@Override
 	public String getPriorities() {
-		// MMMLib窶堙ｰ窶牌窶ｹ・ｽ
+		// MMMLibを要求, Request a MMMLib
 		return "required-after:mod_MMM_MMMLib";
 	}
 
@@ -109,7 +109,7 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 	@Override
 	public void load() {
-		// MMMLib窶堙軍evisionﾆ蛋ﾆ巽ﾆ鍛ﾆ誰
+		// MMMLibのRevisionチェック, Revision of check MMMLib
 		MMM_Helper.checkRevision("6");
 		MMM_Config.checkConfig(this.getClass());
 		
@@ -121,7 +121,7 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 		ModLoader.addLocalization("entity.LittleMaid.name", "LittleMaid");
 		ModLoader.addLocalization("entity.LittleMaid.name", "ja_JP", "ﾆ椎ﾆ暖ﾆ停ｹﾆ抵ｿｽﾆ辰ﾆ檀");
 		if (cfg_enableSpawnEgg) {
-			// ・ｽﾂｵﾅﾂｫ窶廃ﾆ椎槌歎ﾆ痴窶堙ｰ窶凖・ｰﾃ・
+			// 招喚用レシピを追加, Add Spawn Egg recipe
 			ModLoader.addRecipe(new ItemStack(Item.monsterPlacer, 1, cfg_UniqueEntityId), new Object[] {
 				"scs",
 				"sbs",
@@ -134,10 +134,12 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 		}
 		
 		if (MMM_Helper.isClient) {
-			// ﾆ但ﾆ蛋ﾅｽﾃﾅ陳ｱ窶廃
+			// アチ実験用, Achi experimental
 			if (cfg_AchievementID != 0) {
 				while (true) {
-					// ﾆ但ﾆ蛋・ｽ[ﾆ置窶堙ｰﾅl窶慊ｾ窶堋ｵ窶堋ｽ・ｽﾃｳ窶佚披堙・督｢窶徙ﾋ弯窶堋ｾ窶堙・ｿｽAUNKNOWN窶堙姑但ﾆ蛋・ｽ[ﾆ置窶堋ｪ窶徙ﾋ弯窶堋ｳ窶堙ｪ窶堙・堋｢窶堙ｩ窶堙娯堙・ｿｽﾃｭ・ｽﾅ凪堋ｷ窶堙ｩ・ｽB
+					//アチーブを獲得した状態で未登録だと、UNKNOWNのアチーブが登録されているので削除する。
+					// Will be deleted when it is not registered in the state that won the Achieve
+					// Achieve the UNKNOWN, is registered.
 					int laid = 5242880 + cfg_AchievementID;
 					StatBase lsb = StatList.getOneShotStat(laid);
 					boolean lflag = false;
@@ -154,8 +156,8 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 					ac_Contract = new Achievement(cfg_AchievementID, "littleMaid", 1, -4, Item.cake, AchievementList.bakeCake).registerAchievement();
 //	                ModLoader.AddAchievementDesc(ac_Contract, "(21)", "Capture the LittleMaid!");
 					ModLoader.addAchievementDesc(ac_Contract, "Enlightenment!", "Capture the LittleMaid!");
-					ModLoader.addLocalization("achievement.littleMaid", "ja_JP", "ﾅ津･窶堙ｨ・ｽB");
-					ModLoader.addLocalization("achievement.littleMaid.desc", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀窶堋ｳ窶堙ｱ窶堙ｰ窶愿ｼﾅｽﾃｨ窶堋ｵ窶堙懌堋ｵ窶堋ｽ・ｽB");
+					ModLoader.addLocalization("achievement.littleMaid", "ja_JP", "悟り。");
+					ModLoader.addLocalization("achievement.littleMaid.desc", "ja_JP", "メイドさんを入手しました。");
 					if (lflag) {
 						LMM_Client.setAchievement();
 					}
@@ -163,22 +165,22 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 				}
 			}
 			
-			// 窶督ｼ・ｽﾃ娯｢ﾃ焦ﾂｷﾆ弾・ｽ[ﾆ置ﾆ停ｹ
+			// 名称変換テーブル, Name conversion table
 			ModLoader.addLocalization("littleMaidMob.text.Health", "Health");
-			ModLoader.addLocalization("littleMaidMob.text.Health", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀窶ｹﾂｭ窶忸");
+			ModLoader.addLocalization("littleMaidMob.text.Health", "ja_JP", "メイド強度");
 			ModLoader.addLocalization("littleMaidMob.text.AP", "AP");
-			ModLoader.addLocalization("littleMaidMob.text.AP", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀窶倪｢・ｽb");
+			ModLoader.addLocalization("littleMaidMob.text.AP", "ja_JP", "メイド装甲");
 			ModLoader.addLocalization("littleMaidMob.text.STATUS", "Status");
-			ModLoader.addLocalization("littleMaidMob.text.STATUS", "ja_JP", "ﾆ抵ｿｽﾆ辰ﾆ檀・ｽﾃｳ窶佚・);
+			ModLoader.addLocalization("littleMaidMob.text.STATUS", "ja_JP", "メイド状態");
 			
-			// ﾆ断ﾆ稚ﾆ辿ﾆ停ｹﾆ暖ﾆ停堡断ﾆ停ｹ窶堙鯉ｿｽﾃ昶凖ｨ
+			// デフォルトモデルの設定, The default model
 			LMM_Client.init();
 		}
 		
-		// AIﾆ椎ﾆ湛ﾆ暖窶堙娯凖・ｰﾃ・
+		// AIリストの追加, Adding AI list
 		LMM_EntityModeManager.init();
 		
-		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎﾆ湛ﾆ抵ｿｽﾆ鍛ﾆ暖・ｽX・ｽV窶廃窶堙姑恥ﾆ単ﾆ鍛ﾆ暖
+		// アイテムスロット更新用のパケット, Packet of item slot update
 		ModLoader.registerPacketChannel(this, "LMM|Upd");
 		
 	}
@@ -190,14 +192,14 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 
 	@Override
 	public void modsLoaded() {
-		// ﾆ断ﾆ稚ﾆ辿ﾆ停ｹﾆ暖ﾆ停堡断ﾆ停ｹ窶堙鯉ｿｽﾃ昶凖ｨ
+		// デフォルトモデルの設定, The default model
 		MMM_TextureManager.instance.setDefaultTexture(LMM_EntityLittleMaid.class, MMM_TextureManager.instance.getTextureBox("default_Orign"));
 		
 		if (cfg_UniqueEntityId == -1) return;
 		// Dominant
 		if(cfg_spawnWeight > 0) {
 			if (cfg_Dominant) {
-				// 窶堋窶堙ｧ窶堙､窶堙ｩ・ｽﾃｪ・ｽﾅ窶堙家湛ﾆ竹・ｽ[ﾆ停懌堋ｷ窶堙ｩ
+				// あらゆる場所にスポーンする, I spawn all over the place
 				try {
 					Field afield[] = (BiomeGenBase.class).getDeclaredFields();
 					LinkedList<BiomeGenBase> linkedlist = new LinkedList<BiomeGenBase>();
@@ -215,37 +217,38 @@ public class mod_LMM_littleMaidMob extends BaseMod {
 					Debug("Dominate Exception.");
 				}
 			} else {
-				// 窶凖奇ｿｽﾃｭﾆ湛ﾆ竹・ｽ[ﾆ停懶ｿｽﾃ昶凖ｨ
+				// 通常スポーン設定, Usually spawn setting
 				ModLoader.addSpawn(LMM_EntityLittleMaid.class, cfg_spawnWeight, cfg_minGroupSize, cfg_maxGroupSize, EnumCreatureType.creature);
 			}
 		}
 		
-		// ﾆ停夲ｿｽ[ﾆ檀ﾆ椎ﾆ湛ﾆ暖窶堙ｰ・ｽ\窶凛
+		// モードリストを構築, Build mode list
 		LMM_EntityModeManager.loadEntityMode();
 		LMM_EntityModeManager.showLoadedModes();
 		
 		if (MMM_Helper.isClient) {
-			// 窶ｰﾂｹ・ｽﾂｺ窶堙娯ｰﾃｰ・ｽﾃ・
+			// 音声の解析, Analysis of voice
 			LMM_SoundManager.init();
-			// ﾆ探ﾆ脱ﾆ停愴檀ﾆ恥ﾆ鍛ﾆ誰
+			// サウンドパック, Sound Pack
 			LMM_SoundManager.loadDefaultSoundPack();
 			LMM_SoundManager.loadSoundPack();
 		}
 		
-		// IFF窶堙姑抵ｿｽ・ｽ[ﾆ檀
+		// IFFのロード, Load of IFF
 		LMM_IFF.loadIFFs();
 		
 	}
 
 	@Override
 	public void serverCustomPayload(NetServerHandler var1, Packet250CustomPayload var2) {
-		// ﾆ探・ｽ[ﾆ弛窶伉､窶堙娯慊ｮ・ｽﾃｬ
+		// サーバ側の動作, Operation of the server side
 		LMM_Net.serverCustomPayload(var1, var2);
 	}
 
 	@Override
 	public void clientCustomPayload(NetClientHandler var1, Packet250CustomPayload var2) {
-		// ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堙娯愿・ｽﾃｪﾆ恥ﾆ単ﾆ鍛ﾆ暖ﾅｽﾃｳ・ｽM窶慊ｮ・ｽﾃｬ
+		// クライアント側の特殊パケット受信動作
+		// Special packet receive operation on the client side
 		LMM_Client.clientCustomPayload(var1, var2);
 	}
 

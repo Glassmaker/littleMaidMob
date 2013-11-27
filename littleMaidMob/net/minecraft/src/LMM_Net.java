@@ -23,7 +23,8 @@ public class LMM_Net {
 	
 	
 	/**
-	 * 窶從窶堋ｳ窶堙ｪ窶堋ｽﾆ断・ｽ[ﾆ耽窶堙鯉ｿｽﾃｦ窶慊ｪ窶堙嫁ｽﾂｩ窶｢ﾂｪ窶堙窪ntityID窶堙ｰ窶｢t窶膿窶堋ｵ窶堙・牢窶堙・堙姑誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堙問倪費ｿｽM
+	 * 渡されたデータの先頭に自分のEntityIDを付与して全てのクライアントへ送信
+	 * Sent to all clients by applying the EntityID his at the beginning of the data passed
 	 */
 	public static void sendToAllEClient(LMM_EntityLittleMaid pEntity, byte[] pData) {
 		MMM_Helper.setInt(pData, 1, pEntity.entityId);
@@ -31,7 +32,8 @@ public class LMM_Net {
 	}
 
 	/**
-	 * 窶從窶堋ｳ窶堙ｪ窶堋ｽﾆ断・ｽ[ﾆ耽窶堙鯉ｿｽﾃｦ窶慊ｪ窶堙嫁ｽﾂｩ窶｢ﾂｪ窶堙窪ntityID窶堙ｰ窶｢t窶膿窶堋ｵ窶堙・愿≫凖ｨ窶堙娯堙姑誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堙問倪費ｿｽM
+	 * 渡されたデータの先頭に自分のEntityIDを付与して特定ののクライアントへ送信
+	 * Sent to the client's specific by giving the EntityID their own at the beginning of the data passed
 	 */
 	public static void sendToEClient(NetServerHandler pHandler, LMM_EntityLittleMaid pEntity, byte[] pData) {
 		MMM_Helper.setInt(pData, 1, pEntity.entityId);
@@ -43,7 +45,8 @@ public class LMM_Net {
 	}
 
 	/**
-	 * 窶從窶堋ｳ窶堙ｪ窶堋ｽﾆ断・ｽ[ﾆ耽窶堙鯉ｿｽﾃｦ窶慊ｪ窶堙右ntityID窶堙ｰ窶｢t窶膿窶堋ｵ窶堙・探・ｽ[ﾆ弛・ｽ[窶堙問倪費ｿｽM・ｽB
+	 * 渡されたデータの先頭にEntityIDを付与してサーバーへ送信。
+	 * Sent to the server to grant EntityID at the beginning of the data passed.
 	 * 0:Mode, 1-4:EntityID, 5-:Data
 	 */
 	public static void sendToEServer(LMM_EntityLittleMaid pEntity, byte[] pData) {
@@ -58,14 +61,16 @@ public class LMM_Net {
 	}
 
 	/**
-	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙蜂FF窶堙姑短・ｽ[ﾆ置窶堙ｰﾆ椎ﾆ誰ﾆ竪ﾆ湛ﾆ暖
+	 * サーバーへIFFのセーブをリクエスト
+	 * Request to save the IFF to the server
 	 */
 	public static void saveIFF() {
 		sendToServer(new byte[] {LMN_Server_SaveIFF});
 	}
 
 	/**
-	 * littleMaid窶堙窪ntity窶堙ｰ窶｢ﾃ披堋ｷ・ｽB
+	 * littleMaidのEntityを返す。
+	 * I return the Entity of littleMaid.
 	 */
 	public static LMM_EntityLittleMaid getLittleMaid(byte[] pData, int pIndex, World pWorld) {
 		Entity lentity = MMM_Helper.getEntity(pData, pIndex, pWorld);
@@ -76,10 +81,10 @@ public class LMM_Net {
 		}
 	}
 
-	// ﾅｽﾃｳ・ｽMﾆ恥ﾆ単ﾆ鍛ﾆ暖窶堙鯉ｿｽﾋ・費ｿｽ
+	// 受信パケットの処理, Processing of the received packet
 	
 	public static void serverCustomPayload(NetServerHandler pNetHandler, Packet250CustomPayload pPayload) {
-		// ﾆ探・ｽ[ﾆ弛窶伉､窶堙娯慊ｮ・ｽﾃｬ
+		// サーバ側の動作, Operation of the server side
 		byte lmode = pPayload.data[0];
 		int leid = 0;
 		LMM_EntityLittleMaid lemaid = null;
@@ -96,8 +101,8 @@ public class LMM_Net {
 		
 		switch (lmode) {
 		case LMN_Server_UpdateSlots : 
-			// ・ｽ窶ｰ窶ｰﾃｱ・ｽX・ｽV窶堙・堋ｩ
-			// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙鯉ｿｽX・ｽV
+			// 初回更新とか, Such as first update
+			// インベントリの更新, Update of inventory
 			lemaid.maidInventory.clearChanged();
 			for (LMM_SwingStatus lswing : lemaid.mstatSwingStatus) {
 				lswing.lastIndex = -1;
@@ -105,8 +110,8 @@ public class LMM_Net {
 			break;
 			
 		case LMN_Server_DecDyePowder:
-			// ﾆ谷ﾆ停ｰ・ｽ[窶敕費ｿｽ窶窶堙ｰﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堋ｩ窶堙ｧﾅｽﾃｳ窶堋ｯﾅｽﾃｦ窶堙ｩ
-			// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堋ｩ窶堙ｧ・ｽﾃｵ窶板ｿ窶堙ｰﾅ陳ｸ窶堙ｧ窶堋ｷ・ｽB
+			// カラー番号をクライアントから受け取る, I receive from the client a color number
+			// インベントリから染料を減らす。, I reduce the dye from the inventory.
 			int lcolor2 = pPayload.data[1];
 			if (!pNetHandler.playerEntity.capabilities.isCreativeMode) {
 				for (int li = 0; li < pNetHandler.playerEntity.inventory.mainInventory.length; li++) {
@@ -121,7 +126,7 @@ public class LMM_Net {
 			break;
 			
 		case LMN_Server_SetIFFValue:
-			// IFF窶堙鯉ｿｽﾃ昶凖ｨ窶冤窶堙ｰﾅｽﾃｳ・ｽM
+			//  IFFの設定値を受信, Receive the setting of the IFF
 			lval = pPayload.data[1];
 			lindex = MMM_Helper.getInt(pPayload.data, 2);
 			lname = MMM_Helper.getStr(pPayload.data, 6);
@@ -138,7 +143,7 @@ public class LMM_Net {
 			sendIFFValue(pNetHandler, lval, lindex);
 			break;
 		case LMN_Server_SaveIFF:
-			// IFFﾆ稚ﾆ叩ﾆ辰ﾆ停ｹ窶堙娯｢ﾃ帚伉ｶ
+			// IFFファイルの保存, Save IFF file
 			LMM_IFF.saveIFF(pNetHandler.playerEntity.username);
 			if (!MMM_Helper.isClient) {
 				LMM_IFF.saveIFF("");
@@ -149,7 +154,8 @@ public class LMM_Net {
 	}
 
 	/**
-	 * ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堙蜂FF窶堙鯉ｿｽﾃ昶凖ｨ窶冤窶堙ｰ窶凖岩冦窶堋ｷ窶堙ｩ・ｽB
+	 * クライアントへIFFの設定値を通知する。
+	 * I inform the setting of the IFF to the client.
 	 * @param pNetHandler
 	 * @param pValue
 	 * @param pIndex

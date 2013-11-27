@@ -4,7 +4,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 /**
- * ・ｽI・ｽ・ｽ・ｽ・ｽ・ｽﾉサ・ｽ[・ｽo・ｽ[・ｽﾖ撰ｿｽ・ｽ・ｽ・ｽﾌ使・ｽp・ｽ・ｽﾊ知・ｽ・ｽ・ｽ驍ｽ・ｽﾟの擾ｿｽ・ｽ・ｽ・ｽB
+ * 選択時にサーバーへ染料の使用を通知するための処理。
+ * Process for notifying the use of the dye to the server is selected.
  */
 public class LMM_GuiTextureSelect extends MMM_GuiTextureSelect {
 
@@ -20,9 +21,9 @@ public class LMM_GuiTextureSelect extends MMM_GuiTextureSelect {
 		case 200:
 			if (toServer) {
 				if (selectColor != selectPanel.color) {
-					// ・ｽF・ｽ・ｽ・ｽﾌ設抵ｿｽ
+					// 色情報の設定, Setting of the color information
 //					theMaid.maidColor = selectPanel.color | 0x010000 | (selectColor << 8);
-					// ・ｽT・ｽ[・ｽo・ｽ[・ｽﾖ撰ｿｽ・ｽ・ｽ・ｽﾌ使・ｽp・ｽ・ｽﾊ知
+					// サーバーへ染料の使用を通知, The notice the use of the dye to the server
 					byte ldata[] = new byte[2];
 					ldata[0] = LMM_Statics.LMN_Server_DecDyePowder;
 					ldata[1] = (byte)selectColor;

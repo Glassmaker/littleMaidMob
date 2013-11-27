@@ -12,9 +12,9 @@ import net.minecraft.world.World;
 public class LMM_GuiIFF extends MMM_GuiMobSelect {
 
 	public static final String IFFString[] = {
-		"ENEMY", // 窶敖ｽﾅ停夲ｿｽAﾅｽﾃｫ
-		"UNKNOWN", // 窶敖ｽﾅ停・
-		"FRIENDLY" // ・ｽUﾅ停壺堋ｵ窶堙遺堋｢
+		"ENEMY", // 反撃、狩, Counterattack, hunting
+		"UNKNOWN", // 反撃, Counterattack
+		"FRIENDLY" // 攻撃しない, Do not attack
 	};
 
 	protected LMM_EntityLittleMaid target;
@@ -25,7 +25,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 		screenTitle = "LittleMaid IFF";
 		target = pEntity;
 		
-		// IFF窶堙ｰﾆ探・ｽ[ﾆ弛・ｽ[窶堋ｩ窶堙ｧﾅｽﾃｦ窶慊ｾ
+		// IFFをサーバーから取得, Get from the server IFF
 		if (!MMM_Client.isIntegratedServerRunning()) {
 			int li = 0;
 			for (String ls : LMM_IFF.DefaultIFF.keySet()) {
@@ -43,22 +43,22 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 	@Override
 	protected boolean checkEntity(String pName, Entity pEntity, int pIndex) {
 		boolean lf = false;
-		// Entity窶堙娯冤窶堙ｰ・ｽﾃ昶凖ｨ
+		// Entityの値を設定, Set the value of Entity
 		int liff = LMM_IFF.checkEntityStatic(pName, pEntity, pIndex, entityMap);
 		if (pEntity instanceof EntityLivingBase) {
 			if (pEntity instanceof LMM_EntityLittleMaid) {
 				if (pIndex == 0 || pIndex == 1) {
-					// 窶禿ｬ・ｽﾂｶﾅｽﾃｭ・ｽAﾅｽﾂｩ窶｢ﾂｪﾅ胆窶禿ｱﾅｽﾃ・
+					//  野生種、自分契約者, Wild species, their contractor・
 					lf = true;
 				} else {
-					// 窶伉ｼ・ｽl窶堙固胆窶禿ｱﾅｽﾃ・
+					// 他人の契約者, Subscribers of others・
 				}
 			} else if (pEntity instanceof EntityOwnable) {
 				if (pIndex == 0 || pIndex == 1) {
-					// 窶禿ｬ・ｽﾂｶﾅｽﾃｭ・ｽAﾅｽﾂｩ窶｢ﾂｪ窶堙・
+					// 野生種、自分の, Wild species, their
 					lf = true;
 				} else {
-					// 窶伉ｼ・ｽl窶堙娯ｰﾃ・几
+					//  他人の家畜, Livestock of others
 				}
 			}
 		}
@@ -110,7 +110,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 			}
 			
 			if (!mc.isIntegratedServerRunning()) {
-				// ﾆ探・ｽ[ﾆ弛・ｽ[窶堙問｢ﾃ擾ｿｽX窶冤窶堙ｰ窶倪披堙ｩ・ｽB
+				// サーバーへ変更値を送る。, I will send the changed value to the server.
 				int li = 0;
 				for (String ls : LMM_IFF.DefaultIFF.keySet()) {
 					if (ls.contains(pName)) {
@@ -134,7 +134,7 @@ public class LMM_GuiIFF extends MMM_GuiMobSelect {
 	@Override
 	public void drawSlot(int pSlotindex, int pX, int pY, int pDrawheight,
 			Tessellator pTessellator, String pName, Entity pEntity) {
-		// 窶督ｼ窶楼窶堙・廨窶督｡窶｢ﾃｻﾅｽﾂｯ窶｢ﾃ岩堙娯｢`窶ｰﾃｦ
+		// 名前と敵味方識別の描画, Drawing of friend or foe identification name and
 		int tt = LMM_IFF.getIFF(null, pName);
 		int c = 0xffffff;
 		switch (tt) {

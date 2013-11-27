@@ -53,9 +53,9 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 		ModLoader.addLocalization("littleMaidMob.mode.Strike", "Strike");
 		ModLoader.addLocalization("littleMaidMob.mode.Wait", "Wait");
 		ModLoader.addLocalization("littleMaidMob.mode.Wild", "Wild");
-		ModLoader.addLocalization("littleMaidMob.mode.Wild", "ja_JP", "・ｽ・ｶ・ｽ・ｽ");
+		ModLoader.addLocalization("littleMaidMob.mode.Wild", "ja_JP", "野生種");
 		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "Escorter");
-		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "ja_JP", "・ｽ]・ｽ・ｽ");
+		ModLoader.addLocalization("littleMaidMob.mode.Escorter", "ja_JP", "従者");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Escorter", "Freedom");
 		ModLoader.addLocalization("littleMaidMob.mode.D-Escorter", "D-Escorter");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Escorter", "Tracer");
@@ -100,7 +100,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean changeMode(EntityPlayer pentityplayer) {
-		// ・ｽ・ｽ・ｽ・ｽ・ｽI・ｽﾉ奇ｿｽ・ｽ闢厄ｿｽﾄゑｿｽ
+		// 強制的に割り当てる, I forcibly allocating
 		owner.setMaidMode("Escorter");
 		return true;
 	}
@@ -137,7 +137,8 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	public boolean isSearchBlock() {
 		if (owner.getMaidModeInt() == mmode_Escorter && owner.isFreedom() &&
 				owner.maidInventory.getFirstEmptyStack() == -1) {
-			// ・ｽﾎ象ゑｿｽ・ｽﾜゑｿｽ・ｽ・ｽ・ｽﾂゑｿｽ・ｽﾄゑｿｽ・ｽﾈゑｿｽ・ｽﾆゑｿｽ・ｽﾍ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽB
+			// 対象をまだ見つけていないときは検索を行う。
+			// To conduct a search when it is not yet found the target.
 			fDistance = 100F;
 			return myInventory == null;
 		}
@@ -158,15 +159,16 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		if (((IInventory)ltile).getSizeInventory() < 18) {
-			// ・ｽC・ｽ・ｽ・ｽx・ｽ・ｽ・ｽg・ｽ・ｽ・ｽﾌサ・ｽC・ｽY・ｽ・ｽ・ｽP・ｽW・ｽﾈ会ｿｽ・ｽﾈゑｿｽﾎ象とゑｿｽ・ｽﾈゑｿｽ・ｽB
+			// インベントリのサイズが１８以下なら対象としない。
+			// It does not cover the size of your inventory if 18 or less.
 			return false;
 		}
 		
-		// ・ｽ・ｽ・ｽE・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽ・ｽ
+		// 世界のメイドから, Made from the world's
 		if (checkWorldMaid(ltile)) return false;
-		// ・ｽg・ｽp・ｽﾏみチ・ｽF・ｽb・ｽN
+		// 使用済みチェック, Use MySpace
 		if (fusedTiles.contains(ltile)) {
-			// ・ｽ・ｽﾉ通ゑｿｽﾟゑｿｽ・ｽ・ｽ・ｽ齒奇ｿｽ・ｽb・ｽI
+			// 既に通り過ぎた場所よッ！, Tsu'll place you have already passed!
 			return false;
 		}
 		
@@ -180,17 +182,18 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean overlooksBlock(int pMode) {
-		// ・ｽ`・ｽF・ｽX・ｽg・ｽJ・ｽ[・ｽg・ｽﾌ鯉ｿｽ・ｽ・ｽ
+		// チェストカートの検索, Search the chest Cart
 		List<Entity> list = owner.worldObj.getEntitiesWithinAABB(IInventory.class, owner.boundingBox.expand(8D, 2D, 8D));
 		double cartl = 256D;
 		for (Entity lentity : list) {
 			if (!fusedTiles.contains(lentity)) {
 				if (((IInventory)lentity).getSizeInventory() < 18) {
-					// ・ｽC・ｽ・ｽ・ｽx・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽT・ｽC・ｽY・ｽﾈ会ｿｽ・ｽﾍス・ｽL・ｽb・ｽv
+					// インベントリが一定サイズ以下はスキップ, Inventory is below a certain size Skip
 					continue;
 				}
 				double lr = lentity.getDistanceSqToEntity(owner);
-				// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ置・ｽﾉゑｿｽ・ｽ・ｽﾅゑｿｽ・ｽﾟゑｿｽ・ｽ・ｽ・ｽﾗてゑｿｽ・ｽﾈゑｿｽ・ｽJ・ｽ[・ｽg・ｽ`・ｽF・ｽX・ｽg
+				// 見える位置にある最も近い調べていないカートチェスト
+				// Cart chest you have not studied the closest in a position to be able to see
 				
 				if (fDistance > lr && owner.getEntitySenses().canSee(lentity)) {
 					myInventory = (IInventory)lentity;
@@ -235,34 +238,34 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	public boolean executeBlock(int pMode, int px, int py, int pz) {
 //		isMaidChaseWait = true;
 		if (myInventory instanceof TileEntityChest) {
-			// ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽn・ｽﾌチ・ｽF・ｽX・ｽg
+			// ブロック系のチェスト, Chest of block-based
 			TileEntityChest lchest = (TileEntityChest)myInventory;
 			if (!lchest.isInvalid()) {
-				// ・ｽg・ｽp・ｽ・ｽ・ｽO・ｽﾉ可趣ｿｽ・ｽ・ｽ・ｽ・ｽ
+				// 使用直前に可視判定, Visualization decision just prior to use
 				if (MMM_Helper.canBlockBeSeen(owner, lchest.xCoord, lchest.yCoord, lchest.zCoord, false, true, false)) {
 					if (myChest == null) {
 						getChest();
 						if (myChest != null) {
 							myChest.openChest();
 						} else {
-							// ・ｽJ・ｽ・ｽ・ｽﾈゑｿｽ・ｽ`・ｽF・ｽX・ｽg
+							// 開かないチェスト, Chest does not open
 							myInventory = null;
 						}
 					}
-					// ・ｽ`・ｽF・ｽX・ｽg・ｽﾉ趣ｿｽ[
+					// チェストに収納, I put away the chest
 					owner.setWorking(true);
 					putChest();
 					return true;
 				} else {
-					// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+					// 見失った, Lost sight
 					clearMy();
 				}
 			} else {
-				// Tile・ｽﾌ擾ｿｽ・ｽ・ｽ
+				// Tileの消失, Disappearance of the Tile
 				clearMy();
 			}
 		} else {
-			// ・ｽz・ｽ・ｽO・ｽﾌイ・ｽ・ｽ・ｽx・ｽ・ｽ・ｽg・ｽ・ｽ
+			// 想定外のインベントリ, Inventory of unexpected
 			if (myInventory != null) {
 				fusedTiles.add(myInventory);
 			}
@@ -273,15 +276,16 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean outrangeBlock(int pMode, int pX, int pY, int pZ) {
-		// ・ｽ`・ｽF・ｽX・ｽg・ｽﾜでのパ・ｽX・ｽ・ｽ・ｽ・ｽ・ｽ
+		// チェストまでのパスを作る, I make the path to the chest
 		boolean lf = false;
 		if (!owner.isMaidWaitEx()) {
 			double distance;
 			if (myInventory instanceof TileEntity) {
 				distance = owner.getDistanceTilePos();
 				if (distance == lastdistance) {
-					// TODO:・ｽ・ｽ・ｽｳ意厄ｿｽ
-					// ・ｽﾚ難ｿｽ・ｽ・ｽ・ｽﾅまゑｿｽﾈゑｿｽ・ｽ謔､・ｽﾉ暦ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+					// TODO:現状無意味, Current situation meaningless
+					// 移動が固まらないように乱数加速
+					// Random number accelerated movement so as not to harden
 					mod_LMM_littleMaidMob.Debug("Assert.");
 					//XXX: experimental
 					//owner.updateWanderPath();
@@ -294,7 +298,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 				distance = 0;
 			}
 			lastdistance = distance;
-			// ・ｽ・ｽ・ｽ・ｽ・ｽW・ｽO・ｽﾌチ・ｽF・ｽX・ｽg・ｽﾍ閉ゑｿｽ・ｽ・ｽ
+			// レンジ外のチェストは閉じる, Chest out of range Close
 			if (myChest != null) {
 				myChest.closeChest();
 				myChest = null;
@@ -311,11 +315,11 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 
 	protected boolean getChest() {
-		// ・ｽ`・ｽF・ｽX・ｽg・ｽ・ｽ・ｽl・ｽ・ｽ
+		// チェストを獲得, Earn chest
 		if (myInventory == null) {
 			return false;
 		}
-		// ・ｽ・ｽ・ｽ・ｽ・ｽﾏみにス・ｽ^・ｽb・ｽN
+		// 検索済みにスタック, Stack a tracked
 		fusedTiles.add(myInventory);
 		if (myInventory instanceof TileEntityChest) {
 			TileEntityChest lchest = (TileEntityChest)myInventory;
@@ -339,9 +343,10 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	}
 
 	protected void putChest() {
-		// ・ｽ`・ｽF・ｽX・ｽg・ｽﾉ近撰ｿｽ
+		// チェストに近接, The proximity to the chest
 		if (owner.getSwingStatusDominant().canAttack() && myChest != null) {
-			// ・ｽ・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽv・ｽA・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽw・ｽ・ｽ・ｽ・ｽ・ｽﾈ外・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽﾋゑｿｽ・ｽ・ｽ・ｽ・ｽ
+			// 砂糖、時計、被っているヘルム以外のアイテムを突っ込む
+			// I shove the helm of items other than sugar, watch, suffer
 			ItemStack is;
 			mod_LMM_littleMaidMob.Debug(String.format("getChest:%d", maidSearchCount));
 			while ((is = owner.maidInventory.getStackInSlot(maidSearchCount)) == null && maidSearchCount < owner.maidInventory.mainInventory.length) {
@@ -392,12 +397,12 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 			}
 //			mod_littleMaidMob.Debug(String.format("getchest3:%d", maidSearchCount));
 			if (++maidSearchCount >= owner.maidInventory.mainInventory.length) {
-				// ・ｽ・ｽ・ｽ・ｽ・ｽﾏみの対象ゑｿｽ・ｽX・ｽ^・ｽb・ｽN
+				// 検索済みの対象をスタック, Stack the subject of the search has been
 //				serchedChest.add(myChest);
 				clearMy();
 				lastdistance = 0D;
 				mod_LMM_littleMaidMob.Debug("endChest.");
-				// ・ｽｫゑｿｽ・ｽﾅゑｿｽ・ｽ・ｽ・ｽ・ｽ{・ｽ・ｽ・ｽI・ｽ・ｽ
+				// 空きができたら捜索終了, Search ends when you are free
 				if (owner.maidInventory.getFirstEmptyStack() > -1) {
 					mod_LMM_littleMaidMob.Debug("Search clear.");
 					fusedTiles.clear();
@@ -409,7 +414,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 	@Override
 	public boolean attackEntityAsMob(int pMode, Entity pEntity) {
 		if (pEntity == myInventory) {
-			// ・ｽ`・ｽF・ｽX・ｽg・ｽt・ｽJ・ｽ[・ｽg・ｽﾆゑｿｽ
+			// チェスト付カートとか, Such as chest with cart
 			Entity lentity = (Entity)myInventory;
 			if (!lentity.isDead) {
 				if (owner.getDistanceSqToEntity(lentity) < 5D)	{
@@ -422,14 +427,14 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 					if (myChest != null) {
 						owner.getLookHelper().setLookPositionWithEntity(lentity, 30F, 40F);
 					}
-					// ・ｽ`・ｽF・ｽX・ｽg・ｽﾉ趣ｿｽ[
+					// チェストに収納, I put away the chest
 					putChest();
 				} else {
-					// ・ｽ`・ｽF・ｽX・ｽg・ｽﾜでのパ・ｽX・ｽ・ｽ・ｽ・ｽ・ｽ
+					// チェストまでのパスを作る, I make the path to the chest
 					if (!owner.isMaidWaitEx()) {
 						double distance = owner.getDistanceSqToEntity(lentity);
 						if (distance == lastdistance) {
-							// TODO: ・ｽ・ｽ・ｽｳ意厄ｿｽ
+							// TODO: 現状無意味, Current situation meaningless
 							mod_LMM_littleMaidMob.Debug("Assert.");
 							//XXX: exprimental 
 							//owner.updateWanderPath();
@@ -446,12 +451,12 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 					}
 				}
 			} else {
-				// Entity・ｽﾌ趣ｿｽ・ｽS
+				// Entityの死亡, Death of Entity
 				clearMy();
 			}
 			return true;
 		} else {
-			// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽﾏゑｿｽ・ｽ・ｽﾄゑｿｽH
+			// ターゲットが変わってる？, Target is changed?
 			clearMy();
 		}
 		return true;
@@ -467,19 +472,19 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean preInteract(EntityPlayer pentityplayer, ItemStack pitemstack) {
-		// ・ｽ・ｽ・ｽ痰ｪ・ｽﾝ趣ｿｽ・ｽﾍ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		// しゃがみ時は処理無効,Processing disabled when squatting
 		if (pentityplayer.isSneaking()) {
 			return false;
 		}
 		if (owner.isContract()) {
-			// ・ｽ_・ｽ・ｽ・ｽ・ｽ
+			// 契約状態, Agreement state
 			if (owner.isEntityAlive() && owner.isMaidContractOwner(pentityplayer)) {
 				if (pitemstack != null) {
-					// ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ
+					// 追加分の処理, Processing an additional portion of
 					owner.setPathToEntity(null);
 					if (owner.isRemainsContract()) {
 						if (pitemstack.getItem() instanceof ItemAppleGold) {
-							// ・ｽS・ｽ[・ｽ・ｽ・ｽf・ｽ・ｽ・ｽA・ｽb・ｽ|・ｽ[
+							// ゴールデンアッポー, Golden Apple
 							if(!owner.worldObj.isRemote) {
 								//XXX: experimenting
 								//((ItemAppleGold)pitemstack.getItem()).onFoodEaten(pitemstack, owner.worldObj, owner.maidAvatar);
@@ -489,7 +494,7 @@ public class LMM_EntityMode_Basic extends LMM_EntityModeBlockBase {
 							return true;
 						}
 						else if (pitemstack.getItem() instanceof ItemBucketMilk && !owner.getActivePotionEffects().isEmpty()) {
-							// ・ｽ・ｽ・ｽ・ｽﾉ托ｿｽ・ｽk・ｽ・ｽ
+							// 牛乳に相談だ, The Consultation on milk
 							if(!owner.worldObj.isRemote) {
 								owner.clearActivePotions();
 							}

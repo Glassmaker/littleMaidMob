@@ -49,7 +49,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		modelMain.setCapsValue(MMM_IModelCaps.caps_entityIdFactor, lmaid.entityIdFactor);
 		modelMain.setCapsValue(MMM_IModelCaps.caps_ticksExisted, lmaid.ticksExisted);
 		modelMain.setCapsValue(MMM_IModelCaps.caps_dominantArm, lmaid.maidDominantArm);
-		// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾓ厄ｿｽ・ｽ・ｽ
+		// だが無意味だ, But it's pointless
 //		plittleMaid.textureModel0.isChild = plittleMaid.textureModel1.isChild = plittleMaid.textureModel2.isChild = plittleMaid.isChild();
 	}
 
@@ -105,10 +105,10 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 	}
 /*
 	public void doRenderLitlleMaid(LMM_EntityLittleMaid plittleMaid, double px, double py, double pz, float f, float f1) {
-		// ・ｽ・ｽ・ｽ・ｽ・ｽﾂゑｿｽ・ｽd・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽﾌでゑｿｽ・ｽﾆで確・ｽF
-		// ・ｽp・ｽ・ｽ・ｽﾉゑｿｽ骰ゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		// いくつか重複してるのであとで確認, Ask me later because it is some overlap
+		// 姿勢による高さ調整, Height adjustment by attitude
 		
-		// ・ｽ・ｽ・ｽ・ｽ・ｽﾍ本・ｽ・ｽ・ｽI・ｽﾉは要・ｽ・ｽﾈゑｿｽ・ｽB
+		// ここは本来的には要らない。, Here do not need to nature.
 		if (plittleMaid.worldObj instanceof WorldServer) {
 			// RSHUD-ACV・ｽp
 			MMM_TextureBox ltbox0 = ((MMM_TextureBoxServer)plittleMaid.textureData.textureBox[0]).localBox;
@@ -146,7 +146,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 //		doRenderLitlleMaid(lmm, par2, par4, par6, par8, par9);
 		renderModelMulti(lmm, par2, par4, par6, par8, par9, fcaps);
 		renderString(lmm, par2, par4, par6, par8, par9);
-		// ・ｽ・ｽ・ｽ[・ｽv
+		// ロープ, Rope
 //		func_110827_b(lmm, par2, par4 - modelMain.model.getLeashOffset(lmm.maidCaps), par6, par8, par9);
 	}
 
@@ -158,7 +158,8 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		} else {
 			modelMain.setArmorRendering(false);
 		}
-		// ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽﾌ・ｿｽ・ｽ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽO・ｽﾊ置・ｽ・ｽ・ｽl・ｽ・ｽ・ｽ・ｽ・ｽ驍ｽ・ｽ・ｽrender・ｽ・ｽ・ｽﾄぶ必・ｽv・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		// アイテムのレンダリング位置を獲得するためrenderを呼ぶ必要がある
+		// Need to call the render to acquire the rendering position of the item
 		mainModel.render(par1EntityLiving, par2, par3, par4, par5, par6, par7);
 	}
 
@@ -167,7 +168,7 @@ public class LMM_RenderLittleMaid extends MMM_RenderModelMulti {
 		super.passSpecialRender(par1EntityLiving, par2, par4, par6);
 		
 		LMM_EntityLittleMaid llmm = (LMM_EntityLittleMaid)par1EntityLiving;
-		// ・ｽﾇ会ｿｽ・ｽ・ｽ
+		// 追加分, Additions
 		for (int li = 0; li < llmm.maidEntityModeList.size(); li++) {
 			llmm.maidEntityModeList.get(li).showSpecial(this, par2, par4, par6);
 		}

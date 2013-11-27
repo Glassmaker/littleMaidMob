@@ -10,7 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
 /**
- * ・ｽﾆ趣ｿｽ・ｽ譓・ｽﾆゑｿｽ・ｽﾄ・ｿｽ・ｽ[・ｽh・ｽ關費ｿｽ・ｽ0x0080・ｽﾍ包ｿｽ・ｽ・ｽA0x00c0・ｽﾍ鯉ｿｽ・ｽﾜみれモ・ｽ[・ｽh・ｽﾆ具ｿｽﾊ。
+ * 独自基準としてモード定数は0x0080は平常、0x00c0は血まみれモードと区別。
+ * 0x0080 is normal, constant mode is distinguished from the bloody mode 0x00c0 as the original standard.
  */
 public class LMM_EntityMode_Fencer extends LMM_EntityModeBase {
 
@@ -29,17 +30,17 @@ public class LMM_EntityMode_Fencer extends LMM_EntityModeBase {
 
 	@Override
 	public void init() {
-		// ・ｽo・ｽ^・ｽ・ｽ・ｽ[・ｽh・ｽﾌ厄ｿｽ・ｽﾌ追会ｿｽ
+		// 登録モードの名称追加, Add name registration mode
 		ModLoader.addLocalization("littleMaidMob.mode.Fencer", "Fencer");
-		ModLoader.addLocalization("littleMaidMob.mode.Fencer", "ja_JP", "・ｽ・ｽq・ｽ・ｽ・ｽm");
+		ModLoader.addLocalization("littleMaidMob.mode.Fencer", "ja_JP", "護衛剣士");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Fencer", "F-Fencer");
-		ModLoader.addLocalization("littleMaidMob.mode.F-Fencer", "ja_JP", "・ｽ・ｽ・ｽR・ｽ・ｽ・ｽm");
+		ModLoader.addLocalization("littleMaidMob.mode.F-Fencer", "ja_JP", "自由剣士");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Fencer", "T-Fencer");
 		ModLoader.addLocalization("littleMaidMob.mode.D-Fencer", "D-Fencer");
 		ModLoader.addLocalization("littleMaidMob.mode.Bloodsucker", "Bloodsucker");
-		ModLoader.addLocalization("littleMaidMob.mode.Bloodsucker", "ja_JP", "・ｽ・ｽ・ｽﾉ飢・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽy");
+		ModLoader.addLocalization("littleMaidMob.mode.Bloodsucker", "ja_JP", "血に飢えた冥土");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Bloodsucker", "F-Bloodsucker");
-		ModLoader.addLocalization("littleMaidMob.mode.F-Bloodsucker", "ja_JP", "・ｽﾊ厄ｿｽ・ｽ・ｽ・ｽy");
+		ModLoader.addLocalization("littleMaidMob.mode.F-Bloodsucker", "ja_JP", "通魔冥土");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Bloodsucker", "T-Bloodsucker");
 		ModLoader.addLocalization("littleMaidMob.mode.D-Bloodsucker", "D-Bloodsucker");
 		LMM_TriggerSelect.appendTriggerItem(null, "Sword", "");
@@ -112,19 +113,20 @@ public class LMM_EntityMode_Fencer extends LMM_EntityModeBase {
 		double lld;
 		ItemStack litemstack;
 		
-		// ・ｽ・ｽ・ｽ[・ｽh・ｽﾉ会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽA・ｽ・ｽ・ｽx・ｽD・ｽ・ｽ
+		// モードに応じた識別判定、速度優先
+		// Identification determined according to the mode and speed priority
 		switch (pMode) {
 		case mmode_Fencer : 
 			for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
 				litemstack = owner.maidInventory.getStackInSlot(li);
 				if (litemstack == null) continue;
 				
-				// ・ｽ・ｽ
+				// 剣, Sword
 				if (litemstack.getItem() instanceof ItemSword || LMM_TriggerSelect.checkWeapon(owner.getMaidMaster(), "Sword", litemstack)) {
 					return li;
 				}
 				
-				// ・ｽU・ｽ・ｽ・ｽﾍな搾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌゑｿｽ・ｽL・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+				// 攻撃力な高いものを記憶する, I will remember the high offensive power
 				lld = 1;
 				try {
 					lld = MMM_Helper.getAttackVSEntity(litemstack);
@@ -142,12 +144,12 @@ public class LMM_EntityMode_Fencer extends LMM_EntityModeBase {
 				litemstack = owner.maidInventory.getStackInSlot(li);
 				if (litemstack == null) continue;
 				
-				// ・ｽ・ｽ
+				// 斧, Axe
 				if (litemstack.getItem() instanceof ItemAxe || LMM_TriggerSelect.checkWeapon(owner.getMaidMaster(), "Axe", litemstack)) {
 					return li;
 				}
 				
-				// ・ｽU・ｽ・ｽ・ｽﾍな搾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌゑｿｽ・ｽL・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+				// 攻撃力な高いものを記憶する, I will remember the high offensive power
 				lld = 1;
 				try {
 					lld = MMM_Helper.getAttackVSEntity(litemstack);
@@ -167,7 +169,7 @@ public class LMM_EntityMode_Fencer extends LMM_EntityModeBase {
 
 	@Override
 	public boolean checkItemStack(ItemStack pItemStack) {
-		// ・ｽ・ｽ・ｽ・ｽ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		// 装備アイテムを回収, The recovery equipment items
 		return pItemStack.getItem() instanceof ItemSword || pItemStack.getItem() instanceof ItemAxe;
 	}
 

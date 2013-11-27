@@ -90,7 +90,7 @@ public class LMM_GuiInventory extends GuiContainer {
 				"littleMaidMob.mode.".concat(entitylittlemaid.getMaidModeString())), 86, 61, 0x404040);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
-		// ・ｽL・ｽ・ｽ・ｽ・ｽ
+		// キャラ, Cara
 		int lj = 0;
 		int lk = 0;
 		GL11.glEnable(EXTRescaleNormal.GL_RESCALE_NORMAL_EXT);
@@ -131,7 +131,7 @@ public class LMM_GuiInventory extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-		// ・ｽw・ｽi
+		// 背景, Background
 		ResourceLocation lrl = entitylittlemaid.textureData.getGUITexture();
 		if (lrl == null) {
 			lrl = fguiTex;
@@ -335,14 +335,14 @@ public class LMM_GuiInventory extends GuiContainer {
 		int ii = i - guiLeft;
 		int jj = j - guiTop;
 		if (ii > 25 && ii < 78 && jj > 7 && jj < 60) {
-			// ・ｽ{・ｽ^・ｽ・ｽ・ｽﾌ表・ｽ・ｽ
+			// ボタンの表示, Display of button
 			txbutton[0].drawButton = true;
 			txbutton[1].drawButton = true;
 			txbutton[2].drawButton = true;
 			txbutton[3].drawButton = true;
 			selectbutton.drawButton = true;
 			
-			// ・ｽe・ｽN・ｽX・ｽ`・ｽ・ｽ・ｽ・ｽ・ｽﾌの表・ｽ・ｽ
+			// テクスチャ名称の表示, Display name of the texture
 			GL11.glPushMatrix();
 			GL11.glTranslatef(i - ii, j - jj, 0.0F);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -394,7 +394,7 @@ public class LMM_GuiInventory extends GuiContainer {
 		int ii = i - guiLeft;
 		int jj = j - guiTop;
 		
-		// TODO:・ｽ・ｽ・ｽC・ｽh・ｽA・ｽZ・ｽ・ｽ・ｽu・ｽ・ｽ・ｽ・ｽﾊゑｿｽ・ｽ・ｽ・ｽ
+		// TODO:メイドアセンブル画面を作る, I will make a maid assemble screen
 		if (ii > 25 && ii < 78 && jj > 7 && jj < 60) {
 			// ・ｽ・ｽ・ｽ・ｽ・ｽ\・ｽ・ｽ・ｽﾌ茨ｿｽ
 			if (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54)) {
@@ -453,7 +453,7 @@ public class LMM_GuiInventory extends GuiContainer {
 	}
 
 	private void displayDebuffEffects() {
-		// ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ・ｽG・ｽt・ｽF・ｽN・ｽg・ｽﾌ表・ｽ・ｽ
+		// ポーションエフェクトの表示, Display of potion effect
 		int lx = guiLeft - 124;
 		int ly = guiTop;
 		Collection collection = entitylittlemaid.getActivePotionEffects();

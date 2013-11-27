@@ -8,8 +8,10 @@ import net.minecraft.item.ItemStack;
 
 
 /**
- * Entity・ｽﾌデ・ｽ[・ｽ^・ｽﾇみ趣ｿｽ・ｽp・ｽﾌク・ｽ・ｽ・ｽX
- * ・ｽﾊゑｿｽEntity・ｽﾉイ・ｽ・ｽ・ｽ^・ｽ[・ｽt・ｽF・ｽ[・ｽX・ｽt・ｽ・ｽ・ｽﾄゑｿｽOK
+ * Entityのデータ読み取り用のクラス
+ * 別にEntityにインターフェース付けてもOK
+ * Class of data for reading of Entity
+ * It is OK even if I put the Entity interface separately
  */
 public class LMM_EntityCaps extends MMM_EntityCaps {
 

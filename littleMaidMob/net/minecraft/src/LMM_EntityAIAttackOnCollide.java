@@ -113,18 +113,18 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 		theMaid.getLookHelper().setLookPositionWithEntity(entityTarget, 30F, 30F);
 		
 //		if ((isReroute || theMaid.getEntitySenses().canSee(entityTarget)) && --rerouteTimer <= 0) {
-//			// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽg
+//			// リルート, Reroute
 //			rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 //			theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 //		}
 		if (--rerouteTimer <= 0) {
 			if (isReroute) {
-				// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽg
+				// リルート, Reroute
 				rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 				theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 			}
 			if (theMaid.getEntitySenses().canSee(entityTarget)) {
-				// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽg
+				// リルート, Reroute
 				rerouteTimer = 4 + theMaid.getRNG().nextInt(7);
 				theMaid.getNavigator().tryMoveToXYZ(entityTarget.posX, entityTarget.posY, entityTarget.posZ, moveSpeed);
 			} else {
@@ -155,7 +155,8 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 		if (!theMaid.getSwingStatusDominant().canAttack()) {
 			return;
 		} else {
-			// ・ｽ・ｽ・ｽﾊゑｿｽ・ｽ・ｽ110・ｽx・ｽ・ｽ・ｽU・ｽ・ｽ・ｽﾍ茨ｿｽ
+			// 正面から110度方向が攻撃範囲
+			// Direction of attack range 110 degrees from the front
 			double tdx = entityTarget.posX - theMaid.posX;
 			double tdz = entityTarget.posZ - theMaid.posZ;
 			double vdx = -Math.sin(theMaid.renderYawOffset * 3.1415926535897932384626433832795F / 180F);
@@ -166,10 +167,10 @@ public class LMM_EntityAIAttackOnCollide extends EntityAIBase implements LMM_IEn
 				return;
 			}
 			
-			// ・ｽU・ｽ・ｽ
+			// 攻撃, Attack
 			theMaid.attackEntityAsMob(entityTarget);
 			if (theMaid.getActiveModeClass().isChangeTartget(entityTarget)) {
-				// ・ｽﾎ象ゑｿｽ・ｽﾄ設定さ・ｽ・ｽ・ｽ・ｽ
+				// 対象を再設定させる, I to re-set the target
 				theMaid.setAttackTarget(null);
 				theMaid.setTarget(null);
 				theMaid.getNavigator().clearPathEntity();

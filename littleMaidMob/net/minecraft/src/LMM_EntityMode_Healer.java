@@ -28,7 +28,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 
 	@Override
 	public void init() {
-		// ・ｽo・ｽ^・ｽ・ｽ・ｽ[・ｽh・ｽﾌ厄ｿｽ・ｽﾌ追会ｿｽ
+		// 登録モードの名称追加, Add name registration mode
 		ModLoader.addLocalization("littleMaidMob.mode.Healer", "Healer");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Healer", "F-Healer");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Healer", "T-Healer");
@@ -42,7 +42,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 		ltasks[0] = pDefaultMove;
 		ltasks[1] = new EntityAITasks(owner.aiProfiler);
 		
-		// ・ｽ・ｽ・ｽG・ｽn
+		// 索敵系, Search operation system
 		ltasks[1].addTask(1, new EntityAIHurtByTarget(owner, true));
 		owner.addMaidMode(ltasks, "Healer", mmode_Healer);
 	}
@@ -80,7 +80,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 			for (int i = 0; i < owner.maidInventory.getSizeInventory(); i++) {
 				ItemStack is = owner.maidInventory.getStackInSlot(i);
 				if (is == null) continue;
-				// ・ｽﾎ象は食・ｽ・ｽ・ｽ・ｽ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ
+				// 対象は食料かポーション, Target potion or food
 				if (is.getItem() instanceof ItemFood || (is.getItem() instanceof ItemPotion && MMM_Helper.hasEffect(is))) {
 					return i;
 				}
@@ -98,20 +98,22 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 	@Override
 	public void updateAITick(int pMode) {
 		if (pMode == mmode_Healer) {
-			// ・ｽﾟ接ゑｿｽ・ｽ・ｽ・ｽ・ｽﾉ食・ｽ・ｽ・ｽ・ｽﾋゑｿｽ・ｽ・ｽ・ｽ・ｽ
+			// 近接した主に食物を突っ込む, The thrust food mainly in close proximity
 			if (owner.getSwingStatusDominant().canAttack()) {
-				// ・ｽ・ｽﾌ会ｿｽ
+				// 主の回復, Master recovery
 				if (owner.isContractEX() && owner.mstatMasterDistanceSq < 16D
 						&& owner.mstatMasterEntity != null && owner.mstatMasterEntity.isEntityAlive()
 						&& owner.mstatMasterEntity instanceof EntityPlayer
 						&& owner.canEntityBeSeen(owner.mstatMasterEntity)) {
 					EntityPlayer lmaster = owner.mstatMasterEntity; 
 					int h = lmaster.getFoodStats().getFoodLevel();
-					// ・ｽ}・ｽX・ｽN・ｽh・ｽ・ｽ・ｽC・ｽh・ｽﾍ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ
+					// マスクドメイドは賢いな, Masked maid I clever
 					while (owner.isMaskedMaid()) {
-						// ・ｽ・ｽﾌ擾ｿｽﾔに搾ｿｽ・ｽ墲ｹ・ｽﾄア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽI・ｽ・ｽ
+						// 主の状態に合わせてアイテムを選択
+						// Select an item to match the state of the Master
 						if (lmaster.getHealth() < 9F) {
-							// HP・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽﾆゑｿｽ・ｽﾍポ・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽg・ｽ・ｽ
+							// HPが減っているときはポーションを使う
+							// I use a potion when HP has decreased
 							int j = owner.maidInventory.getInventorySlotContainItemPotion(false, Potion.heal.id, lmaster.isEntityUndead());
 							if (j > -1) {
 								owner.setEquipItem(j);
@@ -119,7 +121,8 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 							}
 						} 
 						if (h < 18) {
-							// ・ｽ・ｽ・ｽR・ｽ怩ﾅゑｿｽ・ｽﾈゑｿｽ・ｽ・ｽ・ｽ・・ｿｽﾈゑｿｽH・ｽ・ｽ
+							// 自然回復できない腹具合なら食料
+							// Food if stomach condition that can not be spontaneous recovery
 							int j = owner.maidInventory.getInventorySlotContainItemFood();
 							if (j > -1) {
 								owner.setEquipItem(j);
@@ -132,7 +135,7 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 					ItemStack itemstack1 = owner.maidInventory.getCurrentItem();
 					if (itemstack1 != null) {
 						if (itemstack1.getItem() instanceof ItemFood) {
-							// ・ｽH・ｽ・ｽ・ｽ・ｽﾋゑｿｽ・ｽ・ｽ・ｽ・ｽ
+							// 食料を突っ込む, I shove the food
 							if (h < 18) {
 								owner.setSwing(10, LMM_EnumSound.healing);
 								itemstack1 = itemstack1.onFoodEaten(owner.worldObj, lmaster);
@@ -146,7 +149,8 @@ public class LMM_EntityMode_Healer extends LMM_EntityModeBase {
 						}
 						else if (itemstack1.getItem() instanceof ItemPotion) {
 							boolean lswing = true;
-							// ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ・ｽﾌ鯉ｿｽﾊゑｿｽ・ｽd・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ・ｽ謔､・ｽﾉ使・ｽ・ｽ
+							// ポーションの効果が重複しないように使う
+							// I use the effect of the potion to avoid duplication
 							List list = ((ItemPotion)itemstack1.getItem()).getEffects(itemstack1);
 							if (list != null) {
 								PotionEffect potioneffect;

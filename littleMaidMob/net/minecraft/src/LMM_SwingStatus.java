@@ -37,14 +37,16 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * TODO:・ｽ窶昶冤窶堙鯉ｿｽX・ｽV窶廃・ｽAonEntityUpdate窶愿窶堙・津・堙版ｽ窶・窶堋｢窶堙ｧ窶堙ｱ窶堋ｩ・ｽH
+	 * 数値の更新用、onEntityUpdate内で呼ぶ事:いらんか？
+	 * Update of the number, it will be referred to in onEntityUpdate within: Iranka?
 	 */
 	public void onEntityUpdate(LMM_EntityLittleMaid pEntity) {
 		prevSwingProgress = swingProgress;
 	}
 
 	/**
-	 * ・ｽ窶昶冤窶堙鯉ｿｽX・ｽV窶廃・ｽAonUpdate窶愿窶堙・津・堙版ｽ窶・
+	 * 数値の更新用、onUpdate内で呼ぶ事
+	 * Update of the number, sometimes referred to in the onUpdate within
 	 */
 	public void onUpdate(LMM_EntityLittleMaid pEntity) {
 		prevSwingProgress = swingProgress;
@@ -52,7 +54,7 @@ public class LMM_SwingStatus {
 			attackTime--;
 		}
 		
-		// ﾋ徨・ｽU窶堙ｨ
+		// 腕振り, Arm swing
 		int li = pEntity.getSwingSpeedModifier();
 		if (isSwingInProgress) {
 			swingProgressInt++;
@@ -73,7 +75,7 @@ public class LMM_SwingStatus {
 				clearItemInUse(lrentity);
 			} else {
 				if (itemInUseCount <= 25 && itemInUseCount % 4 == 0) {
-					// ・ｽH窶堙冷堋ｩ窶堋ｷ窶堙・堋ｩ
+					// 食べかすとか, Such as food particles
 					updateItemUse(pEntity, 5);
 				}
 				if (--itemInUseCount <= 0 && lrentity != null) {
@@ -84,7 +86,8 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * 窶露窶佚ｰ窶吮窶堙姑湛ﾆ抵ｿｽﾆ鍛ﾆ暖窶敕費ｿｽ窶窶堙ｰ・ｽﾃ昶凖ｨ
+	 * 選択中のスロット番号を設定
+	 * Set the slot number of the selected
 	 */
 	public void setSlotIndex(int pIndex) {
 		index = pIndex;
@@ -92,7 +95,8 @@ public class LMM_SwingStatus {
 	}
 
 	/**
-	 * 窶露窶佚ｰ窶吮窶堙姑辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶愿ﾆ但ﾆ辰ﾆ弾ﾆ停ぎﾆ湛ﾆ耽ﾆ鍛ﾆ誰窶堙ｰ窶｢ﾃ披堋ｷ
+	 *選択中のインベントリ内アイテムスタックを返す
+	 *I return the item in the inventory stack of selected
 	 */
 	public ItemStack getItemStack(LMM_EntityLittleMaid pEntity) {
 		if (index > -1) {
@@ -108,7 +112,7 @@ public class LMM_SwingStatus {
 
 
 
-// ﾋ徨・ｽU窶堙ｨﾅﾃ滅淡
+// 腕振り関係, Arm swing relationship
 
 
 	public float getSwingProgress(float ltime) {
@@ -132,7 +136,8 @@ public class LMM_SwingStatus {
 
 
 	/**
-	 * 窶｢ﾃ擾ｿｽX窶堋ｪ窶堋窶堙ｩ窶堋ｩ窶堙・堋､窶堋ｩ窶堙ｰ窶｢ﾃ披堋ｵ・ｽAﾆ稚ﾆ停ｰﾆ丹窶堙ｰﾆ誰ﾆ椎ﾆ但窶堋ｷ窶堙ｩ・ｽB
+	 * 変更があるかどうかを返し、フラグをクリアする。
+	 * Returns whether or not there is a change, I want to clear the flag.
 	 */
 	public boolean checkChanged() {
 		boolean lflag = index != lastIndex;
@@ -140,7 +145,7 @@ public class LMM_SwingStatus {
 		return lflag;
 	}
 
-// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙固ｽg窶廃窶堙嫁ﾃ問堙ｭ窶堙ｩﾅﾃ厄ｿｽ窶敘嘆
+// アイテムの使用に関わる関数群, Set of functions related to the use of the item
 
 	public ItemStack getItemInUse() {
 		return itemInUse;
@@ -161,7 +166,8 @@ public class LMM_SwingStatus {
 	/**
 	 * 
 	 * @param pEntity
-	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙固ｽﾅｾ窶堙孔ntity窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｷ窶堙ｩ・ｽB
+	 * サーバーの時はEntityを設定する。
+	 * I set the Entity When the server.
 	 */
 	public void stopUsingItem(Entity pEntity) {
 		if (itemInUse != null && pEntity instanceof EntityPlayer) {
@@ -174,7 +180,8 @@ public class LMM_SwingStatus {
 	/**
 	 * 
 	 * @param pEntity
-	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙固ｽﾅｾ窶堙孔ntity窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｷ窶堙ｩ・ｽB
+	 * サーバーの時はEntityを設定する。
+	 * I set the Entity When the server.
 	 */
 	public void clearItemInUse(Entity pEntity) {
 		itemInUse = null;
@@ -194,7 +201,8 @@ public class LMM_SwingStatus {
 	 * @param par1ItemStack
 	 * @param par2
 	 * @param pEntity
-	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙固ｽﾅｾ窶堙孔ntity窶堙ｰ・ｽﾃ昶凖ｨ窶堋ｷ窶堙ｩ・ｽB
+	 * サーバーの時はEntityを設定する。
+	 * I set the Entity When the server.
 	 */
 	public void setItemInUse(ItemStack par1ItemStack, int par2, Entity pEntity) {
 		if (par1ItemStack != itemInUse) {

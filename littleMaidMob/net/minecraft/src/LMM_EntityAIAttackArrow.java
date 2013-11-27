@@ -76,42 +76,45 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 		double ldist = fMaid.getDistanceSqToEntity(fTarget);
 		boolean lsee = fMaid.getEntitySenses().canSee(fTarget);
 		
-		// ・ｽ・ｽ・ｽE・ｽﾌ外・ｽﾉ出・ｽ・ｽ・ｽ・ｽ・ｽ闔橸ｿｽﾔで飽・ｽ・ｽ・ｽ・ｽ
+		// 視界の外に出たら一定時間で飽きる
+		// Get bored in a certain period of time if you go out of sight
 		if (lsee) {
 			fForget = 0;
 		} else {
 			fForget++;
 		}
 		
-		// ・ｽU・ｽ・ｽ・ｽﾎ象ゑｿｽ・ｽ・ｽ・ｽ・ｽ
+		// 攻撃対象を見る, I see the attack
 		fMaid.getLookHelper().setLookPositionWithEntity(fTarget, 30F, 30F);
 		
 		if (ldist < lrange) {
-			// ・ｽL・ｽ・ｽﾋ抵ｿｽ・ｽ・ｽ
+			// 有効射程内, Effective within range
 			double atx = fTarget.posX - fMaid.posX;
 			double aty = fTarget.posY - fMaid.posY;
 			double atz = fTarget.posZ - fMaid.posZ;
 			if (fTarget.isEntityAlive()) {
 				ItemStack litemstack = fMaid.getCurrentEquippedItem();
-				// ・ｽG・ｽﾆのベ・ｽN・ｽg・ｽ・ｽ
+				// 敵とのベクトル, Vector with the enemy
 				double atl = atx * atx + aty * aty + atz * atz;
 				double il = -1D;
 				double milsq = 10D;
 				Entity masterEntity = fMaid.getMaidMasterEntity();
 				if (masterEntity != null && !fMaid.isPlaying()) {
-					// ・ｽ・ｽﾆのベ・ｽN・ｽg・ｽ・ｽ
+					// 主とのベクトル, Vector of the main
 					double amx = masterEntity.posX - fMaid.posX;
 					double amy = masterEntity.posY - fMaid.posY;//-2D
 					double amz = masterEntity.posZ - fMaid.posZ;
 					
-					// ・ｽ・ｽ・ｽﾌ値・ｽ・ｽ・ｽO・ｽ`・ｽP・ｽﾈゑｿｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽﾆの間に主が・ｽ・ｽ・ｽ・ｽ
+					// この値が０～１ならターゲットとの間に主がいる
+					// There are mainly between the target if this value is 0-1
 					il = (amx * atx + amy * aty + amz * atz) / atl;
 					
-					// ・ｽﾋ撰ｿｽx・ｽN・ｽg・ｽ・ｽ・ｽﾆ趣ｿｽﾆの撰ｿｽ・ｽ・ｽ・ｽx・ｽN・ｽg・ｽ・ｽ
+					// 射線ベクトルと主との垂直ベクトル
+					// Vertical vector of the main line of fire and vector
 					double mix = (fMaid.posX + il * atx) - masterEntity.posX;
 					double miy = (fMaid.posY + il * aty) - masterEntity.posY;// + 2D;
 					double miz = (fMaid.posZ + il * atz) - masterEntity.posZ;
-					// ・ｽﾋ撰ｿｽ・ｽ・ｽﾆの具ｿｽ・ｽ・ｽ
+					// 射線から主との距離, Distance from the main line of fire
 					milsq = mix * mix + miy * miy + miz * miz;
 //					mod_LMM_littleMaidMob.Debug("il:%f, milsq:%f", il, milsq);
 				}
@@ -121,14 +124,15 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 					int itemcount = litemstack.stackSize;
 					fMaid.mstatAimeBow = true;
 					fAvatar.getValueVectorFire(atx, aty, atz, atl);
-					// ・ｽ_・ｽC・ｽ・ｽ・ｽA・ｽ・ｽ・ｽw・ｽ・ｽ・ｽ・ｽ・ｽﾈら味・ｽ・ｽﾖの鯉ｿｽﾋゑｿｽ・ｽC・ｽ・ｽ・ｽ・ｽ・ｽy・ｽ・ｽ
+					// ダイヤ、金ヘルムなら味方への誤射を気持ち軽減
+					// And reduce the feeling of Ayamai to ally diamond, if gold helm
 					boolean lcanattack = true;
 					boolean ldotarget = false;
 					double tpr = Math.sqrt(atl);
 					Entity lentity = MMM_Helper.getRayTraceEntity(fMaid.maidAvatar, tpr + 1.0F, 1.0F, 1.0F);
 					int helmid = !fMaid.isMaskedMaid() ? 0 : fInventory.armorInventory[3].getItem().itemID;
 					if (helmid == Item.helmetDiamond.itemID || helmid == Item.helmetGold.itemID) {
-						// ・ｽﾋ撰ｿｽﾌ確・ｽF
+						// 射線軸の確認, Confirmation of the ray axis
 						if (lentity != null && fMaid.getIFF(lentity)) {
 							lcanattack = false;
 //							mod_LMM_littleMaidMob.Debug("ID:%d-friendly fire to ID:%d.", fMaid.entityId, lentity.entityId);
@@ -139,20 +143,20 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 					}
 					lcanattack &= (milsq > 3D || il < 0D);
 					lcanattack &= ldotarget;
-					// ・ｽ・ｽ・ｽﾚ難ｿｽ
+					// 横移動, Lateral motion
 					if (!lcanattack) {
-						// ・ｽﾋ鯉ｿｽ・ｽﾊ置・ｽ・ｽ・ｽm・ｽﾛゑｿｽ・ｽ・ｽ
+						// 射撃位置を確保する, I will ensure the firing position
 						double tpx = fMaid.posX;
 						double tpy = fMaid.posY;
 						double tpz = fMaid.posZ;
 //						double tpr = Math.sqrt(atl) * 0.5D;
 						tpr = tpr * 0.5D;
 						if (fMaid.isBloodsuck()) {
-							// ・ｽ・ｽ・ｽ・ｽ・ｽ
+							// 左回り, Counterclockwise rotation
 							tpx += (atz / tpr);
 							tpz -= (atx / tpr);
 						} else {
-							// ・ｽE・ｽ・ｽ・ｽ
+							// 右回り, clockwise rotation
 							tpx -= (atz / tpr);
 							tpz += (atx / tpr);
 						}
@@ -166,20 +170,22 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 					lcanattack &= lsee;
 //            		mod_littleMaidMob.Debug(String.format("id:%d at:%d", entityId, attackTime));
 					if (((fMaid.weaponFullAuto && !lcanattack) || (lcanattack && fMaid.getSwingStatusDominant().canAttack())) && fAvatar.isItemTrigger) {
-						// ・ｽV・ｽ・ｽ・ｽ[・ｽg
-						// ・ｽt・ｽ・ｽ・ｽI・ｽ[・ｽg・ｽ・ｽ・ｽ・ｽﾍ射鯉ｿｽ・ｽ・ｽ~
+						// シュート, Shoot
+						// フルオート武器は射撃停止, Fully automatic weapons fire stop
 						mod_LMM_littleMaidMob.Debug("id:%d shoot.", fMaid.entityId);
 						fAvatar.stopUsingItem();
 						fMaid.setSwing(30, LMM_EnumSound.shoot);
 					} else {
-						// ・ｽ`・ｽ・ｽ・ｽ[・ｽW
+						// チャージ, Charge
 						if (litemstack.getMaxItemUseDuration() > 500) {
 //                			mod_littleMaidMob.Debug(String.format("non reload.%b", isMaskedMaid));
-							// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh・ｽ・ｽ・ｽ・ｽ・ｽﾌ通常兵・ｽ・ｽ
+							// リロード無しの通常兵装
+							// Normal armament of without reloading
 							if (!fAvatar.isUsingItemLittleMaid()) {
-								// ・ｽ\・ｽ・ｽ
+								// 構え, Stance
 								if (!fMaid.weaponFullAuto || lcanattack) {
-									// ・ｽt・ｽ・ｽ・ｽI・ｽ[・ｽg・ｽ・ｽ・ｽ・ｽ・ｽﾌ場合・ｽﾍ射撰ｿｽm・ｽF
+									// フルオート兵装の場合は射線確認
+									// The rays confirmed case of fully automatic weapons instrumentation
 									int at = ((helmid == Item.helmetIron.itemID) || (helmid == Item.helmetDiamond.itemID)) ? 26 : 16;
 									if (swingState.attackTime < at) {
 										fMaid.setSwing(at, LMM_EnumSound.sighting);
@@ -192,11 +198,12 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 							}
 						} 
 						else if (litemstack.getMaxItemUseDuration() == 0) {
-							// ・ｽﾊ常投・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+							// 通常投擲兵装, Usually throwing weapon
 							if (swingState.canAttack() && !fAvatar.isUsingItem()) {
 								if (lcanattack) {
 									litemstack = litemstack.useItemRightClick(worldObj, fAvatar);
-									// ・ｽﾓ図・ｽI・ｽﾉシ・ｽ・ｽ・ｽ[・ｽg・ｽX・ｽp・ｽ・ｽ・ｽﾅ会ｿｽ・ｽ・ｽ・ｽﾂゑｿｽ謔､・ｽﾉゑｿｽ・ｽﾄゑｿｽ・ｽ・ｽ
+									// 意図的にショートスパンで音が鳴るようにしてある
+									// It is sound is set to be a short span intentionally
 									fMaid.mstatAimeBow = false;
 									fMaid.setSwing(10, (litemstack.stackSize == itemcount) ? LMM_EnumSound.shoot_burst : LMM_EnumSound.Null);
 									mod_LMM_littleMaidMob.Debug(String.format("id:%d throw weapon.(%d:%f:%f)", fMaid.entityId, swingState.attackTime, fMaid.rotationYaw, fMaid.rotationYawHead));
@@ -205,18 +212,18 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 								}
 							}
 						} else {
-							// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh・ｽL・ｽ・ｽﾌ難ｿｽ・ｽ齦ｺ・ｽ・ｽ
+							// リロード有りの特殊兵装, Special weapons of there reload
 							if (!fAvatar.isUsingItemLittleMaid()) {
 								litemstack = litemstack.useItemRightClick(worldObj, fAvatar);
 								mod_LMM_littleMaidMob.Debug(String.format("%d reload.", fMaid.entityId));
 							}
-							// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh・ｽI・ｽ・ｽ・ｽﾜで具ｿｽ・ｽ・ｽ・ｽI・ｽﾉ構・ｽ・ｽ・ｽ・ｽ
+							// リロード終了まで強制的に構える, I set up forced to reload the end
 							swingState.attackTime = 5;
 						}
 					}
 //            		maidAvatarEntity.setValueRotation();
 					fAvatar.setValueVector();
-					// ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽS・ｽ・ｽ・ｽﾈゑｿｽ・ｽ・ｽ
+					// アイテムが亡くなった, Item died
 					if (litemstack.stackSize <= 0) {
 						fMaid.destroyCurrentEquippedItem();
 						fMaid.getNextEquipItem();
@@ -224,7 +231,8 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 						fInventory.setInventoryCurrentSlotContents(litemstack);
 					}
 					
-					// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽEntity・ｽ・ｽ・ｽ`・ｽF・ｽb・ｽN・ｽ・ｽ・ｽ・ｽmaidAvatarEntity・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽm・ｽF
+					// 発生したEntityをチェックしてmaidAvatarEntityが居ないかを確認
+					// Check maidAvatarEntity whether absent Check the Entity that occurred
 					List<Entity> newentitys = worldObj.loadedEntityList.subList(lastentityid, worldObj.loadedEntityList.size());
 					boolean shootingflag = false;
 					if (newentitys != null && newentitys.size() > 0) {
@@ -235,11 +243,12 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 								continue;
 							}
 							try {
-								// ・ｽ・ｽ・ｽﾄ体の趣ｿｽ・ｽu・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+								// 飛翔体の主を置き換える, I replace the main body of flying
 								Field fd[] = te.getClass().getDeclaredFields();
 //                				mod_littleMaidMob.Debug(String.format("%s, %d", e.getClass().getName(), fd.length));
 								for (Field ff : fd) {
-									// ・ｽﾏ撰ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽAvatar・ｽﾆ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾆ置・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+									// 変数を検索しAvatarと同じ物を自分と置き換える
+									// Is replaced with yourself the same as Avatar Find the variable
 									ff.setAccessible(true);
 									Object eo = ff.get(te);
 									if (eo.equals(fAvatar)) {
@@ -252,7 +261,8 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 							}
 						}
 					}
-					// ・ｽ・ｽﾉ厄ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ鼾・ｿｽﾌ擾ｿｽ・ｽ・ｽ
+					// 既に命中していた場合の処理
+					// Processing of the case, which has been hit already
 					if (shootingflag) {
 						for (Object obj : worldObj.loadedEntityList) {
 							if (obj instanceof EntityCreature && !(obj instanceof LMM_EntityLittleMaid)) {
@@ -266,7 +276,7 @@ public class LMM_EntityAIAttackArrow extends EntityAIBase implements LMM_IEntity
 				}
 			}
 		} else {
-			// ・ｽL・ｽ・ｽﾋ抵ｿｽ・ｽO
+			// 有効射程外, Valid beyond the scope
 			if (fMaid.getNavigator().noPath()) {
 				fMaid.getNavigator().tryMoveToEntityLiving(fTarget, 1.0);
 			}

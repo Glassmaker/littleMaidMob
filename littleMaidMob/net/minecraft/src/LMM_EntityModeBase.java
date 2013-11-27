@@ -16,10 +16,14 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /**
- * LMM・ｽp・ｽﾆ趣ｿｽAI・ｽ・ｽ・ｽ・ｽ・ｽﾉ使・ｽp・ｽB
- * ・ｽ・ｽ・ｽﾌ継・ｽ・ｽ・ｽN・ｽ・ｽ・ｽX・ｽ・ｽAI・ｽ・ｽ・ｽ・ｽ・ｽﾆゑｿｽ・ｽﾄ渡・ｽ・ｽ・ｽ・ｽ・ｽﾆゑｿｽ・ｽﾅゑｿｽ・ｽ・ｽB
- * ・ｽﾜゑｿｽ・ｽAAI・ｽ・ｽ・ｽ・ｽ・ｽI・ｽ・ﾍ難ｿｽ・ｽ・ｽﾌ関撰ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄ選・ｽ・ﾌク・ｽ・ｽ・ｽX・ｽﾌみゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
- * ・ｽC・ｽ・ｽ・ｽX・ｽ^・ｽ・ｽ・ｽX・ｽ・ｽ・ｽ・ｽ・ｽ骼厄ｿｽﾉゑｿｽ閭搾ｿｽ[・ｽJ・ｽ・ｽ・ｽﾏ撰ｿｽ・ｽ・ｽﾛ趣ｿｽ・ｽB
+ * LMM用独自AI処理に使用
+ * この継承クラスをAI処理として渡すことができる。
+ * また、AI処理選択中は特定の関数を除いて選択中のクラスのみが処理される。
+ * インスタンス化する事によりローカル変数を保持。
+ * Used for LMM for its own AI processing
+ * It can be passed as AI processing the inherited class.
+ * In addition, only the selected class is processed, except for the function of specific AI processing selected.
+ * To keep a local variable by instantiating.
  */
 public abstract class LMM_EntityModeBase {
 
@@ -27,7 +31,8 @@ public abstract class LMM_EntityModeBase {
 
 
 	/**
-	 * ・ｽ・ｽ・ｽ・ｽ
+	 * 初期化
+	 * Initialization
 	 */
 	public LMM_EntityModeBase(LMM_EntityLittleMaid pEntity) {
 		owner = pEntity;
@@ -35,143 +40,176 @@ public abstract class LMM_EntityModeBase {
 
 	public int fpriority;
 	/**
-	 * ・ｽD・ｽ謠・ｿｽﾊ。
-	 * ・ｽﾔ搾ｿｽ・ｽ・ｽ・ｽ痰｢・ｽﾙゑｿｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
-	 * ・ｽ・ｽ・ｽ・・ｽ00・ｽﾌゑｿｽ・ｽﾌはシ・ｽX・ｽe・ｽ・ｽ・ｽ\・ｽ・ｽB
+	 * 優先順位。
+	 * 番号が若いほうが先に処理される。
+	 * 下二桁が00のものはシステム予約。
+	 * Priorities.
+	 * More young number is processed first.
+	 * The last two digits are reserved for the system of 00 things.
 	 */
 	public abstract int priority();
 
 	/**
-	 * ・ｽN・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽB
+	 * 起動時の初期化。
+	 * Initialization at startup.
 	 */
 	public void init() {
 	}
 
 	/**
-	 * Entity・ｽ・ｽ・ｽ・ｽ・ｽﾌ趣ｿｽ・ｽs・ｽ・ｽ
+	 * Entity初期化時の実行部
+	 * Execution of the Entity initialization
 	 */
 	public void initEntity() {
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ[・ｽh・ｽﾌ追会ｿｽ・ｽB
+	 * モードの追加。
+	 * Add mode.
 	 */
 	public abstract void addEntityMode(EntityAITasks pDefaultMove, EntityAITasks pDefaultTargeting);
 
 	/**
-	 * ・ｽﾆ趣ｿｽ・ｽf・ｽ[・ｽ^・ｽﾛ托ｿｽ・ｽp・ｽB
+	 * 独自データ保存用。
+	 * Own data storage.
 	 */
 	public void writeEntityToNBT(NBTTagCompound par1nbtTagCompound) {
 	}
 	/**
-	 * ・ｽﾆ趣ｿｽ・ｽf・ｽ[・ｽ^・ｽﾇ搾ｿｽ・ｽp・ｽB
+	 * 独自データ読込用。
+	 * Own data for reading.
 	 */
 	public void readEntityFromNBT(NBTTagCompound par1nbtTagCompound) {
 	}
 
 	/**
-	 * renderSpecial・ｽﾌ追会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽB
+	 * renderSpecialの追加実装用。
+	 * Additional implementation for renderSpecial.
 	 */
 	public void showSpecial(LMM_RenderLittleMaid prenderlittlemaid, double px, double py, double pz) {
 	}
 
 	/**
-	 * ・ｽT・ｽ[・ｽo・ｽ[・ｽ・ｽ・ｽﾌみの厄ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
-	 * AI・ｽ・ｽ・ｽ・ｽ・ｽﾌ鯉ｿｽﾌ包ｿｽﾉ呼ばゑｿｽ・ｽB
+	 * サーバー側のみの毎時処理。
+	 * AI処理の後の方に呼ばれる。
+	 * Hourly processing server-side only.
+	 * Called in later in the AI process.
 	 */
 	public void updateAITick(int pMode) {
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
-	 * ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽﾌ前・ｽﾉ呼ばゑｿｽ・ｽ
+	 * 毎時処理。
+	 * 他の処理の前に呼ばれる
+	 * Per hour processing.
+	 * It is called before processing other
 	 */
 	public void onUpdate(int pMode) {
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽﾌへゑｿｽﾌ擾ｿｽ・ｽ・ｽ・ｽﾍ若干・ｽ・ｽ・ｽﾔゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽﾇゑｿｽ・ｽB
-	 * ・ｽ・ｽ・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
-	 * ・ｽ竓ｮ・ｽ・ｽ・ｽ・ｽ・ｽﾉ撰ｿｽｶて趣ｿｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽﾌ托ｿｽ・ｽ阡ｻ・ｽ・ｽ・ｽ・ｽS・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * このへんの処理は若干時間かかっても良し。
+	 * 他のアイテムを使用したい時。
+	 * 補完処理に先んじて実行される、その代わり判定も全部自分持ち。
+	 * Processing of this neighborhood is good even if it takes some time.
+	 * If you want to use other items.
+	 * Is carried out ahead of the completion process, but instead also determined their possession all.
 	 */
 	public boolean preInteract(EntityPlayer pentityplayer, ItemStack pitemstack) {
 		return false;
 	}
 	/**
-	 * ・ｽ・ｽ・ｽﾌへゑｿｽﾌ擾ｿｽ・ｽ・ｽ・ｽﾍ若干・ｽ・ｽ・ｽﾔゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽﾇゑｿｽ・ｽB
-	 * ・ｽ・ｽ・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * このへんの処理は若干時間かかっても良し。
+	 * 他のアイテムを使用したい時。
+	 * Processing of this neighborhood is good even if it takes some time.
+	 * If you want to use other items.
 	 */
 	public boolean interact(EntityPlayer pentityplayer, ItemStack pitemstack) {
 		return false;
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ・ｽ・ｽﾅ・ｿｽ・ｽ[・ｽh・ｽ`・ｽF・ｽ・ｽ・ｽW・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * 砂糖でモードチェンジした時。
+	 * When you change mode in sugar.
 	 */
 	public boolean changeMode(EntityPlayer pentityplayer) {
 		return false;
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ[・ｽh・ｽ`・ｽF・ｽ・ｽ・ｽW・ｽ・ｽ・ｽﾌ設定処・ｽ・ｽ・ｽﾌ本・ｽﾌ。
-	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ・ｽﾆ・ｿｽ・ｽ[・ｽh・ｽ・ｽ・ｽﾉゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈるか・ｽ・ｽ・ｽH
+	 * モードチェンジ時の設定処理の本体。
+	 * こっちに処理を書かないとロード時におかしくなるかも？
+	 * The body of the process of setting the mode change time.
+	 * The cause odd at load time if you do not write a treatment over here?
 	 */
 	public boolean setMode(int pMode) {
 		return false;
 	}
 
 	/**
-	 * ・ｽg・ｽp・ｽA・ｽC・ｽe・ｽ・ｽ・ｽﾌ選・ｽ・ｽ・ｽB
-	 * ・ｽﾟゑｿｽl・ｽﾍス・ｽ・ｽ・ｽb・ｽg・ｽﾔ搾ｿｽ
+	 * 使用アイテムの選択。
+	 * 戻り値はスロット番号
+	 * Selection of the item.
+	 * The return value is the slot number
 	 */
 	public int getNextEquipItem(int pMode) {
-		// ・ｽ・ｽ・ｽI・ｽ・ｽ
+		// 未選択, Not selected
 		return -1;
 	}
 	
 	/**
-	 * ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽﾂ否の費ｿｽ・ｽ闔ｮ・ｽB
-	 * ・ｽE・ｽ・ｽ・ｽﾉ行・ｽ・ｽ・ｽA・ｽC・ｽe・ｽ・ｽ・ｽﾌ費ｿｽ・ｽ・ｽB
+	 * アイテム回収可否の判定式。
+	 * 拾いに行くアイテムの判定。
+	 * Discriminants item recovery propriety.
+	 * Judgment of the items that go to pick up.
 	 */
 	public boolean checkItemStack(ItemStack pItemStack) {
-		// ・ｽ・ｽ・ｽﾎ象ア・ｽC・ｽe・ｽ・ｽ・ｽﾌ設抵ｿｽﾈゑｿｽ
+		// 回収対象アイテムの設定なし, No set of recalled items
 		return false;
 	}
 
 	/**
-	 * ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽ闖茨ｿｽ・ｽ・ｽB
-	 * ・ｽ・ｽ・ｽ・ｽﾈ攻・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾍゑｿｽ・ｽ・ｽ・ｽﾅ趣ｿｽ・ｽ・ｽ・ｽB
+	 * 攻撃判定処理。
+	 * 特殊な攻撃動作はここで実装。
+	 * Attack determination process.
+	 * Special attack operation implemented here.
 	 */
 	public boolean attackEntityAsMob(int pMode, Entity pEntity) {
-		// ・ｽ・ｽ・ｽ・ｽU・ｽ・ｽ・ｽﾌ設抵ｿｽﾈゑｿｽ
+		// 特殊攻撃の設定なし, No set of special attacks
 		return false;
 	}
 
 	/**
-	 * ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾌチ・ｽF・ｽb・ｽN・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ驍ｩ・ｽﾇゑｿｽ・ｽ・ｽ・ｽB
-	 * ・ｽ・ｽ・ｽ闔ｮ・ｽﾌどゑｿｽ・ｽ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾅ選・ｽ・ｽ・ｽB
+	 * ブロックのチェック判定をするかどうか。
+	 * 判定式のどちらを使うかをこれで選択。
+	 * You if you want to check the decision of block.
+	 * Can be selected by this use either of the judgment formula.
 	 */
 	public boolean isSearchBlock() {
 		return false;
 	}
 
 	/**
-	 * isSearchBlock=false・ｽﾌとゑｿｽ・ｽﾉ費ｿｽ・ｽ閧ｳ・ｽ・ｽ・ｽB
+	 * isSearchBlock=falseのときに判定される。
+	 * it is determined at the time of isSearchBlock = false.
 	 */
 	public boolean shouldBlock(int pMode) {
 		return false;
 	}
 
 	/**
-	 * ・ｽT・ｽ・ｽ・ｽ・ｽ・ｽﾟゑｿｽ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾅゑｿｽ・ｽ驍ｩ・ｽB
-	 * true・ｽ・ｽﾔゑｿｽ・ｽﾆ鯉ｿｽ・ｽ・ｽ・ｽI・ｽ・ｽ・ｽB
+	 * 探し求めたブロックであるか。
+	 * trueを返すと検索終了。
+	 * Or a block sought.
+	 * Search and end return true.
 	 */
 	public boolean checkBlock(int pMode, int px, int py, int pz) {
 		return false;
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ・ｽ・ｽﾍ囲に搾ｿｽ・ｽG・ｽﾎ象ゑｿｽ・ｽﾈゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * 検索範囲に索敵対象がなかった。
+	 * There was no searching for the enemy target in the search range.
 	 */
 	public boolean overlooksBlock(int pMode) {
 		return false;
@@ -182,14 +220,16 @@ public abstract class LMM_EntityModeBase {
 //	}
 
 	/**
-	 * ・ｽ・ｽ・ｽE・ｽ・ｽ・ｽ・ｽ・ｽｴゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ
+	 * 限界距離を超えた時の処理
+	 * Process when it exceeds the limit distance
 	 */
 	public void farrangeBlock() {
 		owner.getNavigator().clearPathEntity();
 	}
 
 	/**
-	 * ・ｽL・ｽ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽｴゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ
+	 * 有効射程距離を超えた時の処理
+	 * Process when it exceeds the effective firing range
 	 */
 	public boolean outrangeBlock(int pMode, int pX, int pY, int pZ) {
 		return owner.getNavigator().tryMoveToXYZ(pX, pY, pZ, 1.0F);
@@ -199,8 +239,10 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽB
-	 * ・ｽﾟゑｿｽl・ｽ・ｽtrue・ｽﾌ趣ｿｽ・ｽﾍ終・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ難ｿｽ・ｽ・ｽp・ｽ・ｽ
+	 * 射程距離に入ったら実行される。
+	 * 戻り値がtrueの時は終了せずに動作継続
+	 * It is executed Once inside the firing range.
+	 * The return value is to continue operation without end when the true
 	 */
 	public boolean executeBlock(int pMode, int px, int py, int pz) {
 		return false;
@@ -210,82 +252,98 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * AI・ｽ・ｽ・ｽs・ｽ・ｽ・ｽﾉ呼ばゑｿｽ・ｽB
+	 * AI実行時に呼ばれる。
+	 * Referred to AI runtime.
 	 */
 	public void startBlock(int pMode) {
 	}
 
 	/**
-	 * AI・ｽI・ｽ・ｽ・ｽ・ｽ・ｽﾉ呼ばゑｿｽ・ｽB
+	 * AI終了時に呼ばれる。
+	 * The called AI end.
 	 */
 	public void resetBlock(int pMode) {
 	}
 
 	/**
-	 * ・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽﾉ呼ばゑｿｽ・ｽB
+	 * 継続判定を行う時に呼ばれる。
+	 * It is called when performing the continuation decision.
 	 */
 	public void updateBlock() {
 	}
 
 
 	/**
-	 * ・ｽﾆ趣ｿｽ・ｽ・ｽ・ｽG・ｽ・ｽ・ｽ・ｽ・ｽﾌ使・ｽp・ｽL・ｽ・ｽ
+	 * 独自索敵処理の使用有無
+	 * Use or non-use of its own search operation processing
 	 */
 	public boolean isSearchEntity() {
 		return false;
 	}
 
 	/**
-	 * ・ｽﾆ趣ｿｽ・ｽ・ｽ・ｽG・ｽ・ｽ・ｽ・ｽ
+	 * 独自索敵処理
+	 * Own search operation processing
 	 */
 	public boolean checkEntity(int pMode, Entity pEntity) {
 		return false;
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp
+	 * 発光処理用
+	 * Emission processing
 	 */
 	public int colorMultiplier(float pLight, float pPartialTicks) {
 		return 0;
 	}
 	
 	/**
-	 * ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽP・ｽB
-	 * 0・ｽﾈ擾ｿｽ・ｽﾔゑｿｽ・ｽﾆ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
-	 * 1:false・ｽﾅ鯉ｿｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽI・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
-	 * 2:true・ｽﾅ鯉ｿｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽI・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * 被ダメ時の処理１。
+	 * 0以上を返すと処理を乗っ取る。
+	 * 1:falseで元の処理を終了する。
+	 * 2:trueで元の処理を終了する。
+	 * Processing one of the bad time.
+	 * Take over the process and returns 0 or more.
+	 * 1: I will end the processing of original false.
+	 * 2: I will end the processing of original true.
 	 */
 	public float attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		return 0;
 	}
 	/**
-	 * ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽQ・ｽB
-	 * true・ｽ・ｽﾔゑｿｽ・ｽﾆ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * 被ダメ時の処理２。
+	 * trueを返すと処理を乗っ取る。
+	 * Processing two of the bad time.
+	 * take over the process and return true.
 	 */
 	public boolean damageEntity(int pMode, DamageSource par1DamageSource, float par2) {
 		return false;
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽTile・ｽﾈゑｿｽTrue・ｽ・ｽﾔゑｿｽ・ｽB
+	 * 自分が使っているTileならTrueを返す。
+	 * Returns True if Tile which you are using.
 	 */
 	public boolean isUsingTile(TileEntity pTile) {
 		return false;
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽTile・ｽ・ｽﾔゑｿｽ・ｽB
+	 * 持ってるTileを返す。
+	 * I return the Tile have.
 	 */
 	public List<TileEntity> getTiles() {
 		return null;
 	}
 
 	/**
-	 * do1:・ｽ・ｽ・ｽ・ｽ・ｽ阡ｻ・ｽ・ｽﾌチ・ｽF・ｽb・ｽN
-	 * do2:・ｽ寬橸ｿｽu・ｽ・ｽ・ｽN・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽﾟ費ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ阡ｻ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * do1:当たり判定のチェック
+	 * do2:常時ブロク判定、透過判定も当たり判定も無視。
+	 * do1: Check per decision
+	 * do2: Brok always determines, hit also determined transparent decision or ignored.
 	 */
 	protected boolean canBlockBeSeen(int pX, int pY, int pZ, boolean toTop, boolean do1, boolean do2) {
-		// ・ｽu・ｽ・ｽ・ｽb・ｽN・ｽﾌ可趣ｿｽ・ｽ・ｽ・ｽ・ｽ
+		// ブロックの可視判定, Visible decision of block
 		World worldObj = owner.worldObj;
 		Block lblock = Block.blocksList[worldObj.getBlockId(pX, pY, pZ)];
 		if (lblock == null) {
@@ -299,7 +357,7 @@ public abstract class LMM_EntityModeBase {
 		MovingObjectPosition movingobjectposition = worldObj.rayTraceBlocks_do_do(vec3do, vec3dt, do1, do2);
 		
 		if (movingobjectposition != null && movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
-			// ・ｽﾚ触・ｽu・ｽ・ｽ・ｽb・ｽN・ｽ・ｽ・ｽw・ｽ閧ｵ・ｽ・ｽ・ｽ・ｽ・ｽﾌなゑｿｽ・ｽ
+			// 接触ブロックが指定したものならば, If those specified contact block
 			if (movingobjectposition.blockX == pX && 
 					movingobjectposition.blockY == pY &&
 					movingobjectposition.blockZ == pZ) {
@@ -310,7 +368,8 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * ・ｽ・ｽﾆの具ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	 * 主との距離感。
+	 * Sense of distance with the Master.
 	 * @param pIndex
 	 * 0:minRange;
 	 * 1:maxRange;
@@ -321,7 +380,8 @@ public abstract class LMM_EntityModeBase {
 	}
 
 	/**
-	 * ・ｽU・ｽ・ｽ・ｽ・ｽﾉタ・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽﾄ設定さ・ｽ・ｽ・ｽ驍ｩ・ｽﾌ指・ｽ・ｽB
+	 * 攻撃後にターゲットを再設定させるかの指定。
+	 * Specify whether to reset the target after the attack.
 	 * @param pTarget
 	 * @return
 	 */

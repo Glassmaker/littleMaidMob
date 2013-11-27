@@ -97,7 +97,8 @@ public class LMM_EntityAIFollowOwner extends EntityAIBase implements LMM_IEntity
 		if (theMaid.isSitting()) {
 			return;
 		}
-		// ・ｽw・ｽ闍暦ｿｽ・ｽ・ｽﾈ擾ｿｽﾈゑｿｽ_・ｽb・ｽV・ｽ・ｽ
+		// 指定距離以上ならダッシュ
+		// Dash if specified distance or more
 		theMaid.setSprinting(toDistance > sprintDist);
 		if (--field_48310_h > 0) {
 			return;

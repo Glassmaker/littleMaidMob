@@ -29,7 +29,7 @@ public class LMM_EntityAIRestrictRain extends EntityAIBase implements
 		theEntity.getNavigator().setAvoidSun(false);
 	}
 
-	// ・ｽ・ｽ・ｽs・ｽﾂ能・ｽt・ｽ・ｽ・ｽO
+	// 実行可能フラグ, Executable flag
 	@Override
 	public void setEnable(boolean pFlag) {
 		isEnable = pFlag;

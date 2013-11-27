@@ -14,12 +14,13 @@ public abstract class LMM_EntityModeBlockBase extends LMM_EntityModeBase {
 
 	@Override
 	public void updateBlock() {
-		// ・ｽ譓・ｽﾆなゑｿｽTile・ｽ・ｽ・ｽZ・ｽb・ｽg
+		// 基準となるTileをセット, Set the Tile as a reference
 		owner.setTilePos(0);
 	}
 
 	/**
-	 * ・ｽ・ｽ・ｽﾅに使・ｽp・ｽ・ｽ・ｽ・ｽTile・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ鼾・ｿｽ・ｽshouldBlock・ｽﾖ費ｿｽﾔよう・ｽﾉゑｿｽ・ｽ・ｽB
+	 * すでに使用中のTileがある場合はshouldBlockへ飛ぶようにする。
+	 * I want to fly to shouldBlock If there is a Tile already in use.
 	 */
 	@Override
 	public boolean isSearchBlock() {
@@ -48,17 +49,18 @@ public abstract class LMM_EntityModeBlockBase extends LMM_EntityModeBase {
 
 
 	/**
-	 * ・ｽ・ｽ・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ・ｽﾄゑｿｽ・ｽ驍ｩ・ｽ・ｽ・ｽ`・ｽF・ｽb・ｽN・ｽB
+	 * 他のメイドが使用しているかをチェック。
+	 * Check other maid is using.
 	 * @return
 	 */
 	protected boolean checkWorldMaid(TileEntity pTile) {
-		// ・ｽ・ｽ・ｽE・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽ・ｽ
+		// 世界のメイドから, Made from the world's
 		for (Object lo : owner.worldObj.loadedEntityList) {
 			if (lo == owner) continue;
 			if (lo instanceof LMM_EntityLittleMaid) {
 				LMM_EntityLittleMaid lem = (LMM_EntityLittleMaid)lo;
 				if (lem.isUsingTile(pTile)) {
-					// ・ｽN・ｽ・ｽ・ｽ・ｽ・ｽg・ｽp・ｽ・ｽ
+					// 誰かが使用中, Someone is in use
 					return true;
 				}
 			}

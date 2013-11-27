@@ -13,7 +13,7 @@ public class LMM_EntityAIBeg extends EntityAIBase {
 	protected World worldObj;
 	protected float effectiveRange;
 	protected double effectiveRangeSq;
-	protected int field_48347_e; // ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ骼橸ｿｽﾔ？
+	protected int field_48347_e; // 興味を持っている時間？, Time you are interested?
 
 	public LMM_EntityAIBeg(LMM_EntityLittleMaid pentityLittlemaid, float par2) {
 		littleMaid = pentityLittlemaid;
@@ -75,7 +75,7 @@ public class LMM_EntityAIBeg extends EntityAIBase {
 
 	@Override
 	public void updateTask() {
-		// ・ｽﾚで殺・ｽ・ｽ
+		// 目で殺す, I kill eyes
 		littleMaid.getLookHelper().setLookPositionWithEntity(targetPlayer, 10F,
 				littleMaid.getVerticalFaceSpeed());
 		if (littleMaid.getNavigator().noPath()) {

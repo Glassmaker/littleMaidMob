@@ -93,26 +93,26 @@ import net.minecraft.world.biome.BiomeGenBase;
  
 public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITextureEntity {
 
-	// 窶凖ｨ・ｽ窶昶堙拘tatics窶堙麺・壺慊ｮ
+	// 定数はStaticsへ移動, Constant move to Statics
 //	protected static final UUID maidUUID = UUID.nameUUIDFromBytes("net.minecraft.src.littleMaidMob".getBytes());
 	protected static final UUID maidUUID = UUID.fromString("e2361272-644a-3028-8416-8536667f0efb");
 	protected static AttributeModifier attCombatSpeed = (new AttributeModifier(maidUUID, "Combat speed boost", 0.07D, 0)).setSaved(false);
 	protected static AttributeModifier attAxeAmp = (new AttributeModifier(maidUUID, "Axe Attack boost", 0.5D, 1)).setSaved(false);
 
 
-	// 窶｢ﾃ擾ｿｽ窶敘陳ｸ窶堙ｧ窶堋ｵ窶堋ｽ窶堋｢窶堙遺塲ｸ
-//    protected long maidContractLimit;		// ﾅ胆窶禿ｱﾅｽﾂｸﾅ津ｸ窶愿ｺ
-	protected int maidContractLimit;		// ﾅ胆窶禿ｱﾅﾃｺﾅﾃ・
-	protected long maidAnniversary;			// ﾅ胆窶禿ｱ窶愿ｺUID窶堙・堋ｵ窶堙・ｽg窶廃
-	protected int maidDominantArm;			// 窶藩懌堋ｫﾋ徨・ｽA1Byte
-	/** ﾆ弾ﾆ誰ﾆ湛ﾆ蛋ﾆ槌椎ﾃ麺廣窶堙姑断・ｽ[ﾆ耽窶堙ｰﾅﾃ・費ｿｽ **/
+	// 変数減らしたいなぁ, And I want to reduce variable
+//    protected long maidContractLimit;		// 契約失効日, Contract expiration date
+	protected int maidContractLimit;		// 契約期間, Contract period
+	protected long maidAnniversary;			// 契約日UIDとして使用, Used as the contract date UID
+	protected int maidDominantArm;			// 利き腕、1Byte, Dominant arm, 1Byte
+	/** テクスチャ関連のデータを管理, Manage data of texture related **/
 	public MMM_TextureData textureData;
 	public Map<String, MMM_EquippedStabilizer> maidStabilizer = new HashMap<String, MMM_EquippedStabilizer>();
 	
 	
 	public LMM_InventoryLittleMaid maidInventory;
 	public LMM_EntityLittleMaidAvatar maidAvatar;
-	public LMM_EntityCaps maidCaps;	// Client窶伉､窶堙娯堙・
+	public LMM_EntityCaps maidCaps;	// Client側のみ, Client side only
 	
 	public List<LMM_EntityModeBase> maidEntityModeList;
 	public Map<Integer, EntityAITasks[]> maidModeList;
@@ -128,15 +128,16 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	public int maidTile[] = new int[3];
 	public TileEntity maidTileEntity;
 	
-	// 窶慊ｮ窶廬窶堙茨ｿｽﾃｳ窶佚・
-	protected EntityPlayer mstatMasterEntity;	// ﾅｽﾃ･
-	protected double mstatMasterDistanceSq;		// ﾅｽﾃ･窶堙・堙娯ｹ窶披板｣・ｽAﾅ致ﾅｽZﾅ馳窶氾岩ｰﾂｻ窶廃
-	protected Entity mstatgotcha;				// ﾆ抵ｿｽﾆ辰ﾆ停橸ｿｽ[ﾆ檀窶廃
+	// 動的な状態, Dynamic state
+	protected EntityPlayer mstatMasterEntity;	// 主, Master
+	// 主との距離、計算軽量化用, Distance from the Master, the calculation for distance reduction
+	protected double mstatMasterDistanceSq;		
+	protected Entity mstatgotcha;				// ワイヤード用, Wired for
 	protected boolean mstatBloodsuck;
 	protected boolean mstatClockMaid;
-	// ﾆ筑ﾆ湛ﾆ誰窶敖ｻ窶凖ｨ
+	// マスク判定, Mask judgment
 	protected int mstatMaskSelect;
-	// 窶凖・ｰﾃ≫堙娯慊ｪ窶｢窶昶倪｢窶敕ｵ
+	// 追加の頭部装備, Head equipped with additional
 	protected boolean mstatCamouflage;
 	protected boolean mstatPlanter;
 //	protected boolean isMaidChaseWait;
@@ -150,32 +151,33 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	protected int mstatWorkingInt;
 	protected String mstatModeName;
 	protected boolean mstatOpenInventory;
-	// ﾋ徨・ｽU窶堙ｨ
+	// 腕振り, Arm swing
 	public LMM_SwingStatus mstatSwingStatus[]; 
 	public boolean mstatAimeBow;
-	// ﾅｽﾃｱﾅｽﾃｼ窶堙ｨ
+	// 首周り, Around the neck
 	private boolean looksWithInterest;
 	private boolean looksWithInterestAXIS;
 	private float rotateAngleHead;			// Angle
 	private float prevRotateAngleHead;		// prevAngle
 
 	/**
-	 * ﾅ津や佚娯堋ｲ窶堙・堙俄冤窶堙ｰﾆ弛ﾆ停ｰ窶堙や堋ｩ窶堋ｹ窶堙ｩ窶堙娯堙嫁ｽg窶堋､・ｽB
+	 * 個体ごとに値をバラつかせるのに使う。
+	 * To use in order to tell the value rose from individual to individual.
 	 */
 	public float entityIdFactor;
 	
-	public boolean weaponFullAuto;	// 窶倪｢窶敕ｵ窶堋ｪﾆ稚ﾆ停ｹﾆ棚・ｽ[ﾆ暖窶｢・ｽﾅﾃｭ窶堋ｩ窶堙・堋､窶堋ｩ
-	public boolean weaponReload;	// 窶倪｢窶敕ｵ窶堋ｪﾆ椎ﾆ抵ｿｽ・ｽ[ﾆ檀窶堙ｰ窶梅窶堋ｵ窶堙・堋｢窶堙ｩ窶堋ｩ窶堙・堋､窶堋ｩ
+	public boolean weaponFullAuto;	// 装備がフルオート武器かどうか, Equipment whether full auto weapon
+	public boolean weaponReload;	// 装備がリロードを欲しているかどうか, Equipped with whether they are good reload
 	public boolean maidCamouflage;
 	
 	
-	// 窶ｰﾂｹ・ｽﾂｺ
+	// 音声, Voice
 //	protected LMM_EnumSound maidAttackSound;
 	protected LMM_EnumSound maidDamegeSound;
 	protected int maidSoundInterval;
 	protected float maidSoundRate;
 	
-	// ﾅｽﾃﾅ陳ｱ窶廃
+	// 実験用, Experimental
 	private int firstload = 1;
 	public String statusMessage = "";
 	
@@ -206,7 +208,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	public LMM_EntityLittleMaid(World par1World) {
 		super(par1World);
-		// ・ｽ窶ｰﾅﾃｺ・ｽﾃ昶凖ｨ
+		// 初期設定, 	initialization
 		maidInventory = new LMM_InventoryLittleMaid(this);
 		if (par1World != null ) {
 			maidAvatar = new LMM_EntityLittleMaidAvatar(par1World, this);
@@ -217,10 +219,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		maidOverDriveTime = new MMM_Counter(5, 300, -100);
 		mstatWorkingCount = new MMM_Counter(11, 10, -10);
 		
-		// ﾆ停堡断ﾆ停ｹﾆ椎槌停愴胆ﾆ椎ﾆ停愴丹窶廃窶堙姑稚ﾆ停ｰﾆ丹ﾅl窶慊ｾ窶廃ﾆ蜘ﾆ停ｹﾆ恥・ｽ[ﾅﾃ厄ｿｽ窶・
+		// モデルレンダリング用のフラグ獲得用ヘルパー関数
+		// Flag for acquisition helper function of model rendering
 		maidCaps = new LMM_EntityCaps(this);
 		
-		// ﾅ蛋窶佚版蛋・ｽﾂｬ・ｽﾃｪ
+		// 形態形成場, Morphogenetic field
 		textureData = new MMM_TextureData(this, maidCaps);
 		textureData.setColor(12);
 		MMM_TextureBox ltb[] = new MMM_TextureBox[2];
@@ -228,38 +231,38 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		setTexturePackName(ltb);
 		
 		entityIdFactor = (float)(entityId * 70);
-		// ﾋ徨・ｽU窶堙ｨ
+		// 腕振り, Arm swing
 		mstatSwingStatus = new LMM_SwingStatus[] { new LMM_SwingStatus(), new LMM_SwingStatus()};
 		setDominantArm(rand.nextInt(mstatSwingStatus.length));
 		
-		// ・ｽﾃ・ｿｽﾂｶ窶ｰﾂｹ・ｽﾂｺ
+		// 再生音声, Play sound
 //		maidAttackSound = LMM_EnumSound.attack;
 		maidDamegeSound = LMM_EnumSound.hurt;
 		maidSoundInterval = 0;
 		
-		// 窶禿ｬ・ｽﾂｶﾅｽﾃｭ窶廃・ｽ窶ｰﾅﾃｺ窶冤・ｽﾃ昶凖ｨ
+		// 野生種用初期値設定, Wild species for initial value setting
 		setHealth(15F);
 		
-		// ﾋ・壺慊ｮ窶廃ﾆ稚ﾆ達ﾆ淡ﾆ谷ﾆ停ｹ・ｽﾃ昶凖ｨ
+		// 移動用フィジカル設定, Moving physical setting
 		getNavigator().setAvoidsWater(true);
 		getNavigator().setBreakDoors(true);
 		
 		
-		// TODO:窶堋ｱ窶堙ｪ窶堙哉弾ﾆ湛ﾆ暖
+		// TODO:これはテスト, This test
 //		maidStabilizer.put("HeadTop", MMM_StabilizerManager.getStabilizer("WitchHat", "HeadTop"));
 		
 		
 		
-		// EntityMode窶堙娯凖・ｰﾃ・
+		// EntityModeの追加, Add EntityMode
 		maidEntityModeList = LMM_EntityModeManager.getModeList(this);
-		// ﾆ停夲ｿｽ[ﾆ檀ﾆ椎ﾆ湛ﾆ暖
+		// モードリスト, Mode list
 		maidActiveModeClass = null;
 		maidModeList = new HashMap<Integer, EntityAITasks[]>();
 		maidModeIndexList = new HashMap<String, Integer>();
 		initModeList();
 		mstatModeName = "";
 		maidMode = 65535;
-		// ・ｽ窶ｰﾅﾃｺ窶ｰﾂｻﾅｽﾅｾﾅｽﾃ・ｽsﾆ坦・ｽ[ﾆ檀
+		// 初期化時実行コード, Executable code initialization
 		for (LMM_EntityModeBase lem : maidEntityModeList) {
 			lem.initEntity();
 		}
@@ -267,7 +270,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData) {
-		// ﾆ弾ﾆ誰ﾆ湛ﾆ蛋ﾆ槌抵ｿｽ[窶堙ｰﾆ停ｰﾆ停愴胆ﾆ停ぎ窶堙・露窶佚ｰ
+		// テクスチャーをランダムで選択, Can be selected by random texture
 		String ls;
 		if (mod_LMM_littleMaidMob.cfg_defaultTexture.isEmpty()) {
 			ls = MMM_TextureManager.instance.getRandomTextureString(rand);
@@ -281,14 +284,15 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		return super.onSpawnWithEgg(par1EntityLivingData);
 	}
 
-	protected void func_110147_ax() {
-		// ・ｽ窶ｰﾅﾃｺﾆ恥ﾆ停ｰﾆ抵ｿｽ・ｽ[ﾆ耽・ｽ[
+	@Override
+	protected void applyEntityAttributes() {
+		// 初期パラメーター, Initial parameter
 		super.applyEntityAttributes();
-		// 窶佚趣ｿｽﾃ嵳・壺慊ｮ窶ｰﾃや拿窶敕才・・
+		// 対象移動可能範囲, Target mobile range
 		getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(20.0D);
-		// ﾅﾃｮ窶怒ﾋ・壺慊ｮ窶伉ｬ窶忸
+		// 基本移動速度, Base speed
 		getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.23000000417232513D);
-		// 窶｢W・ｽ竄ｬ・ｽUﾅ停壺氾坂啀
+		// 標準攻撃力１, Standard attack power 1
 		getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage).setAttribute(1.0D);
 	}
 
@@ -296,49 +300,52 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	protected void entityInit() {
 		super.entityInit();
 		/*
-		 * DataWatcher窶堙哉誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶堋ｩ窶堙ｧﾆ探・ｽ[ﾆ弛・ｽ[窶堙問堙坂冤窶堙ｰ窶從窶堋ｳ窶堙遺堋｢・ｽA窶從窶堋ｹ窶堙遺堋｢・ｽB
+		 *  DataWatcherはクライアントからサーバーへは値を渡さない、渡せない。
+		 *  You do not pass a value from the client to the server, DataWatcher can not pass.
 		 */
 		
-		// ﾅｽg窶廃窶吮ﾆ椎ﾆ湛ﾆ暖
+		// 使用中リスト, Use list
 		// 0:Flags
 		// 1:Air
 		// 2, 3, 4, 5,
 		// 6: HP
 		// 7, 8:PotionMap
 		// 9: ArrowCount
-		// 10: ﾅ津・猫窶督ｼ・ｽﾃ・
-		// 11: 窶督ｼ窶｢t窶敖ｻ窶凖ｨ
+		// 10: 固有名称, Proper names
+		// 11: 名付判定, Named decision
 		// 12: GrowingAge
 		// 16: Tame(4), Sit(1) 
 		// 17: ownerName
 		
-		// maidAvater窶廃EntityPlayerﾅ津敘ﾂｷ窶｢ﾃ擾ｿｽ窶・
+		// maidAvater用EntityPlayer互換変数, maidAvater for EntityPlayer compatible variable
 		// 17 -> 18
-		// 18 : Absoptionﾅ津ｸ窶ｰﾃ岩堙ｰﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堙問彎窶倪披堋ｷ窶堙ｩ窶堙娯堙嫁ｽg窶堋､
+		// 18 : Absoption効果をクライアント側へ転送するのに使う, To use it to transfer to the client side effect Absoption
 		dataWatcher.addObject(dataWatch_Absoption, Float.valueOf(0.0F));
 		
-		// 窶愿・ｽﾂｩ窶｢ﾂｪ
+		// 独自分, Germany myself
 		// 19:maidColor
 		dataWatcher.addObject(dataWatch_Color, Byte.valueOf((byte)0));
-		// 20:窶露窶佚ｰﾆ弾ﾆ誰ﾆ湛ﾆ蛋ﾆ槌槌辰ﾆ停愴断ﾆ鍛ﾆ誰ﾆ湛
+		// 20:選択テクスチャインデックス, Select texture index
 		dataWatcher.addObject(dataWatch_Texture, Integer.valueOf(0));
-		// 21:ﾆ停堡断ﾆ停ｹﾆ恥・ｽ[ﾆ団窶堙娯｢\ﾅｽﾂｦﾆ稚ﾆ停ｰﾆ丹
+		// 21:モデルパーツの表示フラグ, Display flag of model parts
 		dataWatcher.addObject(dataWatch_Parts, Integer.valueOf(0));
-		// 22:・ｽﾃｳ窶佚披労ﾋ・堡稚ﾆ停ｰﾆ丹ﾅ嘆(32Bit)・ｽA・ｽﾃ夲ｿｽﾃ冷堙拘taticsﾅｽQ・ｽﾃ・
+		// 22:状態遷移フラグ群(32Bit)、詳細はStatics参照
+		// State transition flag group (32Bit), for more information see Statics
 		dataWatcher.addObject(dataWatch_Flags, Integer.valueOf(0));
 		// 23:GotchaID
 		dataWatcher.addObject(dataWatch_Gotcha, Integer.valueOf(0));
-		// 24:ﾆ抵ｿｽﾆ辰ﾆ檀ﾆ停夲ｿｽ[ﾆ檀
+		// 24:メイドモード, Maid mode
 		dataWatcher.addObject(dataWatch_Mode, Short.valueOf((short)0));
-		// 25:窶藩懌堋ｫﾋ徨
+		// 25:利き腕, Dominant arm
 		dataWatcher.addObject(dataWatch_DominamtArm, Byte.valueOf((byte)0));
-		// 26:ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙固ｽg窶廃窶敖ｻ窶凖ｨ
+		// 26:アイテムの使用判定, Use determination of item
 		dataWatcher.addObject(dataWatch_ItemUse, Integer.valueOf(0));
-		// 27:窶｢ﾃ崘ｽ・ｽﾅ弛ﾅ陳ｱ窶冤
+		// 27:保持経験値, Retention experience
 		dataWatcher.addObject(dataWatch_ExpValue, Integer.valueOf(0));
 		
 		// TODO:test
-		// 31:ﾅｽﾂｩ窶燃窶｢ﾃ擾ｿｽ窶晢ｿｽAEntityMode窶懌┐窶堙・ｽg窶廃窶ｰﾃや拿窶堙遺｢ﾃ擾ｿｽ窶晢ｿｽB
+		// 31:自由変数、EntityMode等で使用可能な変数。
+		// Variables available free variables, such as in EntityMode.
 		dataWatcher.addObject(dataWatch_Free, new Integer(0));
 	}
 
@@ -363,10 +370,10 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		aiTracer = new LMM_EntityAITracerMove(this);
 		aiSit = new LMM_EntityAIWait(this);
 		
-		// TODO:窶堋ｱ窶堙ｪ窶堋｢窶堙ｧ窶堙遺堋ｭ窶堙具ｿｽH
+		// TODO:これいらなくね？, I not need this?
 		aiProfiler = worldObj != null && worldObj.theProfiler != null ? worldObj.theProfiler : null;
 
-		// 窶慊ｮ・ｽﾃｬﾆ停夲ｿｽ[ﾆ檀窶廃窶堙卦asksList窶堙ｰ・ｽ窶ｰﾅﾃｺ窶ｰﾂｻ
+		// 動作モード用のTasksListを初期化, Initialize TasksList of operating mode for
 		EntityAITasks ltasks[] = new EntityAITasks[2];
 		ltasks[0] = new EntityAITasks(aiProfiler);
 		ltasks[1] = new EntityAITasks(aiProfiler);
@@ -384,20 +391,20 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		ltasks[0].addTask(20, aiAvoidPlayer);
 		ltasks[0].addTask(21, aiFreeRain);
 		ltasks[0].addTask(22, aiCollectItem);
-		// ﾋ・壺慊ｮ窶廃AI
+		// 移動用AI, Move for AI
 		ltasks[0].addTask(30, aiTracer);
 		ltasks[0].addTask(31, aiFollow);
 		ltasks[0].addTask(32, aiWander);
 		ltasks[0].addTask(33, new EntityAILeapAtTarget(this, 0.3F));
-		// Mutex窶堙娯ｰe窶ｹﾂｿ窶堋ｵ窶堙遺堋｢窶愿・ｽﾃｪ・ｽs窶慊ｮ
+		// Mutexの影響しない特殊行動, Special actions that do not affect the Mutex
 		ltasks[0].addTask(40, aiCloseDoor);
 		ltasks[0].addTask(41, aiOpenDoor);
 		ltasks[0].addTask(42, aiRestrictRain);
-		// ﾅｽﾃｱ窶堙娯慊ｮ窶堋ｫ窶儕窶愿・
+		// 首の動き単独, Movement of the neck alone
 		ltasks[0].addTask(51, new EntityAIWatchClosest(this, EntityLivingBase.class, 10F));
 		ltasks[0].addTask(52, new EntityAILookIdle(this));
 		
-		// 窶凖・ｰﾃ≫｢ﾂｪ
+		// 追加分, Additions
 		for (LMM_EntityModeBase ieml : maidEntityModeList) {
 			ieml.addEntityMode(ltasks[0], ltasks[1]);
 		}
@@ -439,7 +446,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	public String getMaidModeString(int pindex) {
-		// ﾆ停夲ｿｽ[ﾆ檀窶督ｼ・ｽﾃ娯堙固l窶慊ｾ
+		// モード名称の獲得, Acquisition mode name
 		String ls = "";
 		for (Entry<String, Integer> le : maidModeIndexList.entrySet()) {
 			if (le.getValue() == pindex) {
@@ -467,7 +474,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 
 	public boolean setMaidMode(int pindex, boolean pplaying) {
-		// ﾆ停夲ｿｽ[ﾆ檀窶堙俄ｰﾅｾ窶堋ｶ窶堙БI窶堙ｰ・ｽﾃ倪堙ｨ窶佚問堋ｦ窶堙ｩ
+		// モードに応じてAIを切り替える
+		// To switch the AI depending on the mode
 		velocityChanged = true;
 		if (!maidModeList.containsKey(pindex)) return false;
 		if (maidMode == pindex) return true;
@@ -482,7 +490,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		dataWatcher.updateObject(dataWatch_Mode, (short)maidMode);
 		EntityAITasks[] ltasks = maidModeList.get(pindex);
 		
-		// AI窶堙ｰ・ｽﾂｪ窶凖ｪ窶堋ｩ窶堙ｧ・ｽ窶倪堋ｫﾅﾂｷ窶堋ｦ窶堙ｩ
+		// AIを根底から書き換える, I rewrite from the ground up AI
 		if (ltasks.length > 0 && ltasks[0] != null) {
 			setMaidModeAITasks(ltasks[0], tasks);
 		} else {
@@ -494,7 +502,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			setMaidModeAITasks(null, targetTasks);
 		}
 
-		// ﾆ停夲ｿｽ[ﾆ檀・ｽﾃ倪佚問堙俄ｰﾅｾ窶堋ｶ窶堋ｽ・ｽﾋ・費ｿｽﾅ地窶堙ｰﾅm窶｢ﾃ・
+		// モード切替に応じた処理系を確保
+		// I secure processing system in accordance with the mode switching
 		maidAvatar.stopUsingItem();
 		setSitting(false);
 		setSneaking(false);
@@ -522,8 +531,10 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	protected void setMaidModeAITasks(EntityAITasks pTasksSRC, EntityAITasks pTasksDEST) {
-		// ﾅﾃｹ窶伉ｶ窶堙窟I窶堙ｰ・ｽﾃｭ・ｽﾅ凪堋ｵ窶堙・冰窶堋ｫﾅﾂｷ窶堋ｦ窶堙ｩ・ｽB
-		// 窶慊ｮ・ｽﾃｬ窶堙ｰﾆ誰ﾆ椎ﾆ但
+		// 既存のAIを削除して置き換える。
+		// Be replaced by removing the existing AI.
+		// 動作をクリア
+		// Clear operation
 		try {
 			ArrayList<EntityAITaskEntry> ltasksDoDEST = (ArrayList<EntityAITaskEntry>)ModLoader.getPrivateValue(EntityAITasks.class, pTasksDEST, 0);
 			ArrayList<EntityAITaskEntry> ltasksExeDEST = (ArrayList<EntityAITaskEntry>)ModLoader.getPrivateValue(EntityAITasks.class, pTasksDEST, 1);
@@ -545,7 +556,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 				
 				ltasksDoDEST.clear();
 				ltasksDoDEST.addAll(ltasksDoSRC);
-				// TODO: 窶督｢ﾅｽﾃ窶倪｢窶堙娯ｹ@窶拿・ｽAﾆ停夲ｿｽ[ﾆ檀ﾆ蛋ﾆ巽ﾆ停愴淡ﾅｽﾅｾ窶堙鯉ｿｽ窶ｰﾅﾃｺ窶ｰﾂｻ窶堙ｰ・ｽs窶堋､・ｽB
+				// TODO: 未実装の機能、モードチェンジ時の初期化を行う。
+				// I do function not implemented, the initialization of the mode change at the time.
 				for (EntityAITaskEntry ltask : ltasksDoSRC) {
 					if (ltask instanceof LMM_IEntityAI) {
 //						((LMM_IEntityAI)ltask).setDefaultEnable();
@@ -558,7 +570,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * 窶廳窶廃窶堋ｳ窶堙ｪ窶堙・堋｢窶堙ｩﾆ停夲ｿｽ[ﾆ檀ﾆ誰ﾆ停ｰﾆ湛
+	 * 適用されているモードクラス
+	 * Mode class that has been applied
 	 */
 	public LMM_EntityModeBase getActiveModeClass() {
 		return maidActiveModeClass;
@@ -572,7 +585,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		return maidActiveModeClass != null;
 	}
 
-	// ﾅ津ｸ窶ｰﾃ岩ｰﾂｹ窶堙鯉ｿｽﾃ昶凖ｨ
+	// 効果音の設定
+	// Set of sound effects
 	@Override
 	protected String getHurtSound() {
 		playSound(maidDamegeSound, true);
@@ -587,7 +601,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	protected String getLivingSound() {
-		// 窶｢・ｽ窶冓窶堙鯉ｿｽﾂｺ
+		// 普段の声, Voice of everyday
 		LMM_EnumSound so = LMM_EnumSound.Null;
 		if (getHealth() < 10)
 			so = LMM_EnumSound.living_whine;
@@ -626,14 +640,16 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾅﾃ依・補ｰﾂｹ・ｽﾂｺ・ｽﾃ・ｿｽﾂｶ・ｽA窶｢W・ｽ竄ｬ窶堙娯ｰﾂｹ・ｽﾂｺ窶堙娯堙敘ｽg窶廃窶堋ｷ窶堙ｩ窶堋ｱ窶堙・ｿｽB
+	 * 簡易音声再生、標準の音声のみ使用すること。
+	 * The use simple audio playback, audio-only standard.
 	 */
 	public void playSound(String pname) {
 		playSound(pname, 0.5F, (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
 	}
 
 	/**
-	 * ﾆ値ﾆ鍛ﾆ暖ﾆ抵ｿｽ・ｽ[ﾆ誰窶佚寂ｰﾅｾ窶ｰﾂｹ・ｽﾂｺ・ｽﾃ・ｿｽﾂｶ
+	 * ネットワーク対応音声再生
+	 * Network-enabled audio playback
 	 */
 	public void playSound(LMM_EnumSound enumsound, boolean force) {
 		if ((maidSoundInterval > 0 && !force) || enumsound == LMM_EnumSound.Null) return;
@@ -657,11 +673,13 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * 窶ｰﾂｹ・ｽﾂｺ・ｽﾃ・ｿｽﾂｶ窶廃・ｽB
-	 * 窶凖奇ｿｽﾃｭ窶堙鯉ｿｽﾃ・ｿｽﾂｶ窶堙・堙哉値ﾆ鍛ﾆ暖ﾆ抵ｿｽ・ｽ[ﾆ誰窶ｰz窶堋ｵ窶堙俄堙遺堙ｩ窶堙娯堙・堋ｻ窶堙娯佚趣ｿｽﾃｴ・ｽB
+	 * 音声再生用。
+	 * 通常の再生ではネットワーク越しになるのでその対策。
+	 * Audio playback.
+	 * The measures to so over the network in the normal playback.
 	 */
 	public void playLittleMaidSound(LMM_EnumSound enumsound, boolean force) {
-		// 窶ｰﾂｹ・ｽﾂｺ窶堙鯉ｿｽﾃ・ｿｽﾂｶ
+		// 音声の再生, Playback of audio
 		if ((maidSoundInterval > 0 && !force) || enumsound == LMM_EnumSound.Null) return;
 		maidSoundInterval = 20;
 		if (worldObj.isRemote) {
@@ -687,13 +705,13 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	protected boolean canDespawn() {
-		// ﾆ断ﾆ湛ﾆ竹・ｽ[ﾆ停懌敖ｻ窶凖ｨ
+		// デスポーン判定, De-spawn decision
 		return mod_LMM_littleMaidMob.cfg_canDespawn || super.canDespawn();
 	}
 
 	@Override
 	public boolean getCanSpawnHere() {
-		// ﾆ湛ﾆ竹・ｽ[ﾆ停懌ｰﾃや拿窶堋ｩ・ｽH
+		// スポーン可能か？, Or spawn possible?
 		if (mod_LMM_littleMaidMob.cfg_spawnLimit <= getMaidCount()) {
 			mod_LMM_littleMaidMob.Debug("Spawn Limit.");
 			return false;
@@ -702,7 +720,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		int ly = MathHelper.floor_double(this.boundingBox.minY);
 		int lz = MathHelper.floor_double(this.posZ);
 		/*
-		// TODO:ﾆ探・ｽ[ﾆ弛・ｽ[窶伉､窶堙・敖ｻ窶凖ｨ窶堙・堋ｫ窶堙遺堋｢窶堙娯堙・・凪督｡窶堙遺堋ｵ?
+		// TODO:サーバー側で判定できないので意味なし?
+		// There is no meaning because it can not be determined on the server side?
 		MMM_TextureBox lbox = MMM_TextureManager.instance.getTextureBox(textureBox[0]);
 		if (worldObj == null || textureModel == null  
 				|| !textureBox[0].mo.getCanSpawnHere(worldObj, lx, ly, lz, this)) {
@@ -711,7 +730,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		}
 		*/
 		if (mod_LMM_littleMaidMob.cfg_Dominant) {
-			// ﾆ檀ﾆ蓄ﾆ段ﾆ停愴暖
+			// ドミナント, Dominant
 			return this.worldObj.checkNoEntityCollision(this.boundingBox) 
 					&& this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() 
 					&& !this.worldObj.isAnyLiquid(this.boundingBox)
@@ -724,7 +743,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	@Override
 	public void setDead() {
 		if (mstatgotcha != null) {
-			// ﾅｽﾃｱ窶｢R窶堙ｰﾆ檀ﾆ抵ｿｽﾆ鍛ﾆ致
+			// 首紐をドロップ, Drop neck string
 			EntityItem entityitem = new EntityItem(worldObj, mstatgotcha.posX, mstatgotcha.posY, mstatgotcha.posZ, new ItemStack(Item.silk));
 			worldObj.spawnEntityInWorld(entityitem);
 			mstatgotcha = null;
@@ -733,7 +752,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * 窶愿・堙晢ｿｽﾅｾ窶堙昶氾戸・ｦ窶愿窶堙姑抵ｿｽﾆ辰ﾆ檀窶堋ｳ窶堙ｱ窶堙鯉ｿｽ窶・
+	 * 読み込み領域内のメイドさんの数
+	 * Number of maid's reading area
 	 */
 	public int getMaidCount() {
 		int lj = 0;
@@ -747,11 +767,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable var1) {
-		// 窶堋ｨﾅｽq窶堋ｳ窶堙ｱ窶堙鯉ｿｽﾃ昶凖ｨ
+		// お子さんの設定, Setting your child
 		return null;
 	}
 
-	// ﾆ竪ﾆ稚ﾆ巽ﾆ誰ﾆ暖窶｢\ﾅｽﾂｦ
+	// エフェクト表示, Effect Display
 	protected void showParticleFX(String s) {
 		showParticleFX(s, 1D, 1D, 1D);
 	}
@@ -771,14 +791,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public void handleHealthUpdate(byte par1) {
-		// worldObj.setEntityState(this, (byte))窶堙・ｽw窶凖ｨ窶堋ｳ窶堙ｪ窶堋ｽﾆ但ﾆ誰ﾆ歎ﾆ停｡ﾆ停懌堙ｰﾅｽﾃ・ｽs
+		// worldObj.setEntityState(this, (byte)) で指定されたアクションを実行, In and performs the specified action
 		switch (par1) {
 		case 10:
-			// 窶｢s窶ｹ@ﾅ停┐
+			// 不機嫌, Sulk
 			showParticleFX("smoke", 0.02D, 0.02D, 0.02D);
 			break;
 		case 11:
-			// ﾆ担ﾆ鱈ﾆ嘆ﾆ停・
+			// ゴキゲン, Gokigen
 			double a = getContractLimitDays() / 7D;
 			double d6 = a * 0.3D;
 			double d7 = a;
@@ -786,15 +806,15 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			worldObj.spawnParticle("note", posX, posY + height + 0.1D, posZ, d6, d7, d8);
 			break;
 		case 12:
-			// ﾅｽﾂｩ窶燃・ｽs窶慊ｮ
+			// 自由行動, Free action
 			showParticleFX("reddust", 0.5D, 0.5D, 0.5D, 1.0D, 1.0D, 1.0D);
 			break;
 		case 13:
-			// 窶｢sﾅｽﾂｩ窶燃・ｽs窶慊ｮ
+			// 不自由行動, Challenged action
 			showParticleFX("smoke", 0.02D, 0.02D, 0.02D);
 			break;
 		case 14:
-			// ﾆ暖ﾆ椎抵ｿｽ[ﾆ探・ｽ[
+			// トレーサー, Tracer
 			showParticleFX("explode", 0.3D, 0.3D, 0.3D, 0.0D, 0.0D, 0.0D);
 			break;
 			
@@ -817,7 +837,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 
 	public int colorMultiplier(float pLight, float pPartialTicks) {
-		// 窶敖ｭﾅ津ｵ・ｽﾋ・費ｿｽ窶廃
+		// 発光処理用, Emission processing
 		int lbase = 0;
 		if (maidOverDriveTime.isDelay()) {
 			int i;
@@ -837,18 +857,19 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 
-	// AIﾅﾃ麺廣
+	// AI関連, AI-related
 	@Override
 	protected boolean isAIEnabled() {
-		// ・ｽVAI窶佚寂ｰﾅｾ
+		// 新AI対応, New AI support
 		return true;
 	}
 	
 	/**
-	 * 窶廨窶督｡窶｢ﾃｻﾅｽﾂｯ窶｢ﾃ・
+	 * 敵味方識別
+	 * Identification friend or foe
 	 */
 	public boolean getIFF(Entity pEntity) {
-		// 窶廨窶督｡窶｢ﾃｻﾅｽﾂｯ窶｢ﾃ・窶廨=false)
+		// 敵味方識別(敵=false),Identification friend or foe (enemy = false)
 		if (pEntity == null || pEntity == mstatMasterEntity) {
 			return true;
 		}
@@ -861,17 +882,17 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			return true;
 		case LMM_IFF.iff_Unknown:
 			if (isBloodsuck()) {
-				// ﾅ椎停堙俄ｰﾃｬ窶堋ｦ窶堙・堋｢窶堙ｩﾅｽﾅｾ窶堙坂廨
+				// 血に餓えている時は敵, Enemy when you are starving to blood
 				return false;
 			}
 			if (pEntity instanceof LMM_EntityLittleMaid) {
-				// 窶堋ｨ窶之窶堙柁停夲ｿｽ[ﾆ檀窶堙姑抵ｿｽﾆ辰ﾆ檀窶堙俄堙坂廨窶佚寂堋ｵ窶堙遺堋｢
+				// お遊びモードのメイドには敵対しない, It is not hostile to the maid of your play mode
 				if (((LMM_EntityLittleMaid)pEntity).mstatPlayingRole > LMM_EntityMode_Playing.mpr_NULL) {
 					return true;
 				}
 			}
 			if (pEntity instanceof EntityCreature) {
-				// 窶佛ﾅｽﾃｨ窶堋ｪ窶ｰﾂｽ窶堙ｰﾆ耽・ｽ[ﾆ嘆ﾆ鍛ﾆ暖窶堙俄堋ｵ窶堙・堋｢窶堙ｩ窶堋ｩ窶堙・塚・堙懌堙ｩ
+				// 相手が何をターゲットにしているかで決まる, I decided what the other party is in whether the targeted
 				Entity et = ((EntityCreature)pEntity).getEntityToAttack();
 				if (et != null && et == mstatMasterEntity) {
 					return false;
@@ -880,7 +901,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 					return false;
 				}
 				if (et instanceof LMM_EntityLittleMaid) {
-					// 窶慊ｯ窶堋ｶﾆ筑ﾆ湛ﾆ耽・ｽ[窶堙姑抵ｿｽﾆ辰ﾆ檀窶堙ｰ・ｽUﾅ停壺佚趣ｿｽﾃ帚堙・堋ｵ窶堙・堋｢窶堙ｩ
+					// 同じマスターのメイドを攻撃対象としている, I have attacked the maid of the same master
 					if (((LMM_EntityLittleMaid)et).getMaidMasterEntity() == mstatMasterEntity) {
 						return false;
 					}
@@ -895,24 +916,28 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public boolean canAttackClass(Class par1Class) {
-		// IFF窶堙鯉ｿｽﾃ昶凖ｨ・ｽAﾆ誰ﾆ停ｰﾆ湛窶突・堙娯敖ｻ窶凖ｨ窶堋ｵ窶堋ｩ窶堙・堋ｫ窶堙遺堋｢窶堙娯堙・ｽg窶堙ｭ窶堙遺堋｢・ｽB
+		// IFFの設定、クラス毎の判定しかできないので使わない。
+		// I do not use because it can not be set of IFF, only the determination of each class.
 		return true;
 	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity par1Entity) {
 		
-		// ・ｽﾂｳ・ｽﾃｭﾅｽﾅｾ窶堙坂ｰﾃｱ窶｢ﾅ凪妊・ｽﾃｦ・ｽﾋ・費ｿｽ
+		// 正常時は回復優先処理
+		// Recovery priority processing during normal operation
 		if (getHealth() < 10 && !isBloodsuck() && maidInventory.hasItem(Item.sugar.itemID)) {
 			return true;
 		}
 		
-		// 窶愿・ｽﾃｪ窶堙茨ｿｽUﾅ停夲ｿｽﾋ・費ｿｽ
+		// 特殊な攻撃処理
+		// Special attack process
 		if (isActiveModeClass() && getActiveModeClass().attackEntityAsMob(maidMode, par1Entity)) {
 			return true;
 		}
 		
-		// 窶｢W・ｽ竄ｬ・ｽﾋ・費ｿｽ
+		// 標準処理
+		// Standard processing
 		setSwing(20, isBloodsuck() ? LMM_EnumSound.attack_bloodsuck : LMM_EnumSound.attack);
 		maidAvatar.attackTargetEntityWithCurrentItem(par1Entity);
 		return true;
@@ -920,7 +945,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public boolean isBreedingItem(ItemStack par1ItemStack) {
-		// 窶堋ｨ・ｽD窶堙昶堙坂ｰﾂｽ・ｽH
+		// お好みは何？, What is your favorite?
 		if (isContractEX()) {
 			return par1ItemStack.itemID == Item.sugar.itemID;
 		} else {
@@ -931,7 +956,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound par1nbtTagCompound) {
-		// ﾆ断・ｽ[ﾆ耽ﾆ短・ｽ[ﾆ置
+		// データセーブ, Save data
 		super.writeEntityToNBT(par1nbtTagCompound);
 		
 		par1nbtTagCompound.setTag("Inventory", maidInventory.writeToNBT(new NBTTagList()));
@@ -959,7 +984,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 				lnbt.setIntArray(String.valueOf(li), maidTiles[li]);
 			}
 		}
-		// 窶凖・ｰﾃ≫｢ﾂｪ
+		// 追加分, Additions
 		for (int li = 0; li < maidEntityModeList.size(); li++) {
 			maidEntityModeList.get(li).writeEntityToNBT(par1nbtTagCompound);
 		}
@@ -967,11 +992,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound par1nbtTagCompound) {
-		// ﾆ断・ｽ[ﾆ耽ﾆ抵ｿｽ・ｽ[ﾆ檀
+		// データロード, Data load
 		super.readEntityFromNBT(par1nbtTagCompound);
 		
 		if (par1nbtTagCompound.hasKey("ModeColor")) {
-			// 窶ｹﾅ停敕・堋ｩ窶堙ｧ窶堙固恥・ｽﾂｳ
+			// 旧版からの継承, Inherited from the previous version
 	        String s = par1nbtTagCompound.getString("Master");
 	        if(s.length() > 0) {
 	        	setOwner(s);
@@ -979,7 +1004,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	        }
 	        NBTTagList nbttaglist = par1nbtTagCompound.getTagList("Inventory");
 	        maidInventory.readFromNBT(nbttaglist);
-	        // ﾆ但・ｽ[ﾆ筑・ｽ[ﾆ湛ﾆ抵ｿｽﾆ鍛ﾆ暖窶｢ﾃ擾ｿｽX窶堙俄佚寂ｰﾅｾ窶堋ｷ窶堙ｩ窶堋ｽ窶堙溪堙姑坦・ｽ[ﾆ檀
+	        // アーマースロット変更に対応するためのコード
+	        // Code in order to respond to change armor slot
 	        ItemStack[] armi = new ItemStack[4];
 	        for (int i = 0; i < 4; i++) {
 	        	ItemStack is = maidInventory.armorItemInSlot(i);
@@ -1064,12 +1090,12 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			}
 			maidAnniversary = par1nbtTagCompound.getLong("Anniversary");
 			if (maidAnniversary == 0L && isContract()) {
-				// ﾆ胆ﾆ蓄・ｽ[窶堙鯉ｿｽ窶昶冤窶堙ｰ窶愿ｼ窶堙ｪ窶堙ｩ
+				// ダミーの数値を入れる, I put a number of dummy
 				maidAnniversary = worldObj.getWorldTime() - entityId;
 			}
 			
 		} else {
-			// ・ｽVﾅ耽
+			// 新型, New model
 			mod_LMM_littleMaidMob.Debug("read." + worldObj.isRemote);
 			
 			maidInventory.readFromNBT(par1nbtTagCompound.getTagList("Inventory"));
@@ -1088,13 +1114,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 				}
 			}
 			if (isContract() && maidContractLimit == 0) {
-				// 窶冤窶堋ｪ窶堋ｨ窶堋ｩ窶堋ｵ窶堋｢ﾅｽﾅｾ窶堙坂啀窶愿ｺ窶｢ﾂｪ
+				// 値がおかしい時は１日分
+				// When the value of number is funny one day
 //	        	maidContractLimit = worldObj.getWorldTime() + 24000L;
 				maidContractLimit = 24000;
 			}
 			maidAnniversary = par1nbtTagCompound.getLong("Anniversary");
 			if (maidAnniversary == 0L && isContract()) {
-				// ﾆ胆ﾆ蓄・ｽ[窶堙鯉ｿｽ窶昶冤窶堙ｰ窶愿ｼ窶堙ｪ窶堙ｩ
+				// ダミーの数値を入れる, I put a number of dummy
 				maidAnniversary = worldObj.getWorldTime() - entityId;
 			}
 			if (maidAvatar != null) {
@@ -1125,14 +1152,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 				maidTiles[li] = ltile.length > 0 ? ltile : null;
 			}
 			
-			// 窶凖・ｰﾃ≫｢ﾂｪ
+			// 追加分, Additions
 			for (int li = 0; li < maidEntityModeList.size(); li++) {
 				maidEntityModeList.get(li).readEntityFromNBT(par1nbtTagCompound);
 			}
 		}
 		onInventoryChanged();
 		
-		// ﾆ檀ﾆ鍛ﾆ馳ﾆ停ｹ窶佚趣ｿｽﾃｴ
+		// ドッペル対策, Doppel measures
 		if (mod_LMM_littleMaidMob.cfg_antiDoppelganger && maidAnniversary > 0L) {
 			for (int i = 0; i < worldObj.loadedEntityList.size(); i++) {
 				Entity entity1 = (Entity)worldObj.loadedEntityList.get(i);
@@ -1140,7 +1167,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 					LMM_EntityLittleMaid elm = (LMM_EntityLittleMaid)entity1;
 					if (elm != this && elm.isContract() && elm.maidAnniversary == maidAnniversary
 							&& elm.getMaidMaster().equalsIgnoreCase(getMaidMaster())) {
-						// ・ｽV窶堋ｵ窶堋｢窶｢ﾃｻ窶堙ｰﾅｽc窶堋ｷ
+						// 新しい方を残す, I leave the new one
 						if (entityId > elm.entityId) {
 							mod_LMM_littleMaidMob.Debug(String.format("Load Doppelganger ID:%d, %d" ,elm.entityId, maidAnniversary));
 							elm.setDead();
@@ -1160,7 +1187,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public Icon getItemIcon(ItemStack par1ItemStack, int par2) {
-		// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙娯｢\ﾅｽﾂｦ
+		// アイテムの表示, View Items
 		if (maidAvatar != null) {
 			return maidAvatar.getItemIcon(par1ItemStack, par2);
 		}
@@ -1173,7 +1200,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 
-	// 窶堋ｨ窶堙ｱ窶堙披堋ｨ窶堙寂堋ｯ窶堙坂督ｳ窶廨
+	// おんぶおばけは無敵, Piggyback Ghost invincible
 	@Override
 	public boolean canBeCollidedWith() {
 		if (ridingEntity != null && ridingEntity == mstatMasterEntity) {
@@ -1195,7 +1222,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public double getMountedYOffset() {
-		// TODO:窶堋ｱ窶堋ｱ窶堙坂牌窶卍ｲ・ｽﾂｮ
+		// TODO:ここは要調整, Here is the main adjustment
 		if (riddenByEntity instanceof EntityChicken) {
 			return height + 0.03D;
 		}
@@ -1208,7 +1235,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	@Override
 	public double getYOffset() {
 		if(ridingEntity instanceof EntityPlayer) {
-			// ﾅｽp・ｽﾂｨ・ｽﾂｧﾅ津､
+			// 姿勢制御
 //        	setSneaking(true);
 //        	mstatAimeBow = true;
 //        	updateAimebow();
@@ -1220,14 +1247,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public void updateRidden() {
-		// TODO:ﾆ但ﾆ鍛ﾆ致ﾆ断・ｽ[ﾆ暖ﾅｽﾅｾ窶堙家蛋ﾆ巽ﾆ鍛ﾆ誰
+		// TODO:アップデート時にチェック, Check when updating
 		++ticksExisted;
 		//
 		
 		if(ridingEntity instanceof EntityPlayer) {
 			EntityPlayer lep = (EntityPlayer)ridingEntity;
 			
-			// ﾆ蜘ﾆ鍛ﾆ檀ﾆ地ﾆ狸・ｽ[
+			// ヘッドハガー, Heddohaga
 			renderYawOffset = lep.renderYawOffset;
 			prevRenderYawOffset = lep.prevRenderYawOffset;
 			double llpx = lastTickPosX;
@@ -1274,7 +1301,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		return getSwingStatusDominant().onGround;
 	}
 
-	// ﾅｽﾃｱﾅｽﾃｼ窶堙ｨ
+	// 首周り, Around the neck
 	public void setLooksWithInterest(boolean f) {
 		if (looksWithInterest != f) {
 			looksWithInterest = f;
@@ -1300,7 +1327,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 
-	// ﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡ﾆ坦ﾆ停愴暖ﾆ抵ｿｽ・ｽ[ﾆ停ｹ
+	// ダメージコントロール, Damage control
 //	@Override
 	public boolean isBlocking() {
 		return getSwingStatusDominant().isBlocking();
@@ -1333,25 +1360,25 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	protected void damageEntity(DamageSource par1DamageSource, float par2) {
-		// ﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡ﾆ箪・ｽ[ﾆ湛窶堙俄ｰﾅｾ窶堋ｶ窶堙・ｰﾂｹ・ｽﾂｺ窶｢ﾃ擾ｿｽX
+		// ダメージソースに応じて音声変更, Voice change depending on the damage source
 		if (par1DamageSource == DamageSource.fall) {
 			maidDamegeSound = LMM_EnumSound.hurt_fall;
 		}
 		if(!par1DamageSource.isUnblockable() && isBlocking()) {
-			// ﾆ置ﾆ抵ｿｽﾆ鍛ﾆ鱈ﾆ停愴丹
+			// ブロッキング, Blocking
 //			par2 = (1.0F + par2) * 0.5F;
 			mod_LMM_littleMaidMob.Debug(String.format("Blocking success ID:%d, %f -> %f" , this.entityId, par2, (par2 = (1.0F + par2) * 0.5F)));
 			maidDamegeSound = LMM_EnumSound.hurt_guard;
 		}
 		
-		// 窶敕ｭﾆ胆ﾆ抵ｿｽ
+		// 被ダメ, The bad
 		float llasthealth = getHealth();
 		if (par2 > 0 && getActiveModeClass() != null && !getActiveModeClass().damageEntity(maidMode, par1DamageSource, par2)) {
 			//XXX: experimenting
 			//maidAvatar.damageEntity(par1DamageSource, par2);
 			maidAvatar.attackEntityFrom(par1DamageSource, par2);
 			
-			// ﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡窶堙ｰﾅｽﾃｳ窶堋ｯ窶堙ｩ窶堙・佚停ｹ@窶堙ｰ窶ｰﾃｰ・ｽﾅ・
+			// ダメージを受けると待機を解除, Dequeue to be damaged
 			setMaidWait(false);
 		}
 		
@@ -1366,7 +1393,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		Entity entity = par1DamageSource.getEntity();
 		
-		// ﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡ﾆ箪・ｽ[ﾆ湛窶堙ｰ窶愿≫凖ｨ窶堋ｵ窶堙・ｰﾂｹ・ｽﾂｺ窶堙鯉ｿｽﾃ昶凖ｨ
+		// ダメージソースを特定して音声の設定
+		// Configuring Voice and to identify the damage source
 		maidDamegeSound = LMM_EnumSound.hurt;
 		if (par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.onFire || par1DamageSource == DamageSource.lava) {
 			maidDamegeSound = LMM_EnumSound.hurt_fire;
@@ -1379,11 +1407,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		setMaidWait(false);
 		setMaidWaitCount(0);
 		if (par2 > 0) {
-			// 窶之窶堙鯛堙搾ｿｽI窶堙ｭ窶堙ｨ窶堋ｾ・ｽI
+			// 遊びは終わりだ！, Play is over!
 			setPlayingRole(0);
 			getNextEquipItem();
 		}
-		// ﾆ嘆・ｽ[ﾆ停ぎ窶愿ｯﾋ・補忸窶堙俄堙ｦ窶堙ｩﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡窶堙娯｢ﾃ｢・ｽﾂｳ
+		// ゲーム難易度によるダメージの補正, Compensation of damage caused by game difficulty
 		if(isContract() && (entity instanceof EntityLivingBase) || (entity instanceof EntityArrow)) {
 			if(worldObj.difficultySetting == 0) {
 				par2 = 0;
@@ -1398,7 +1426,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		
 //		if (par2 == 0 && maidMode != mmode_Detonator) {
 		if (par2 == 0) {
-			// ﾆ知・ｽ[ﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡
+			// ノーダメージ, No damage
 			if (maidDamegeSound == LMM_EnumSound.hurt) {
 				maidDamegeSound = LMM_EnumSound.hurt_nodamege;
 			}
@@ -1407,7 +1435,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		}
 		
 		if(super.attackEntityFrom(par1DamageSource, par2)) {
-			//ﾅ胆窶禿ｱﾅｽﾃ停堙娯督ｼ窶楼ﾆ蛋ﾆ巽ﾆ鍛ﾆ誰窶堙哉筑ﾆ停ｹﾆ蛋窶廃
+			// 契約者の名前チェックはマルチ用, Check name of contractor for multi-
 			if (isContract() && entity != null) {
 				if (getIFF(entity) && !isPlaying()) {
 					fleeingTick = 0;
@@ -1423,7 +1451,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
                 setPathToEntity(worldObj.getPathEntityToEntity(this, entityToAttack, 16F, true, false, false, true));
             }
     		if (maidMode == mmode_Healer && entity instanceof EntityLiving) {
-    			// ﾆ智・ｽ[ﾆ停ｰ・ｽ[窶堙坂禿ｲ・ｽﾃ懌堙・ｿｽUﾅ停・
+    			// ヒーラーは薬剤で攻撃, Healers throw Potion
     			maidInventory.currentItem = maidInventory.getInventorySlotContainItemPotion(true, 0, ((EntityLiving)entity).isEntityUndead() & isMaskedMaid);
     		}
     		*/
@@ -1437,12 +1465,13 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * 窶佚趣ｿｽﾃ帚堙家竹・ｽ[ﾆ歎ﾆ停｡ﾆ停懌堙ｰﾅｽg窶堋､・ｽB
+	 * 対象にポーションを使う。
+	 * use a potion on a target.
 	 */
 	public void usePotionTotarget(EntityLivingBase entityliving) {
 		ItemStack itemstack = maidInventory.getCurrentItem();
 		if (itemstack != null && itemstack.getItem() instanceof ItemPotion) {
-			// ﾆ竹・ｽ[ﾆ歎ﾆ停｡ﾆ停愬津ｸ窶ｰﾃ岩堙娯敖ｭ窶慊ｮ
+			// ポーション効果の発動, Activation of potion effect
 			itemstack.stackSize--;
 			List list = ((ItemPotion)itemstack.getItem()).getEffects(itemstack);
 			if (list != null) {
@@ -1460,7 +1489,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	protected void dropFewItems(boolean par1, int par2) {
-		// ﾆ抵ｿｽﾆ辰ﾆ檀窶堋ｳ窶堙ｱ窶堙坂堋ｨ・ｽﾂｻ窶愬凪堙・坦ﾆ坦ﾆ但窶堙・｢s窶凖ｨﾅ蛋窶堙娯ｰﾂｽ窶堋ｩ窶堙・堙・堋ｫ窶堙・堙ｩ窶堙鯉ｿｽI
+		// メイドさんはお砂糖とココアと不定形の何かでできてるの！
+		// The maid's are made of something amorphous and cocoa and sugar!
 		int k = rand.nextInt(3 + par2);
 		for(int j = 0; j <= k; j++) {
 			if(rand.nextInt(30) == 0) {
@@ -1472,7 +1502,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			dropItem(Item.sugar.itemID, 1);
 		}
 		
-		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙ｰﾆ置ﾆ蛋ﾆ筑ﾆ単ﾆ抵ｿｽ・ｽI
+		// インベントリをブチマケロ！, The Buchimakero inventory!
 		maidInventory.dropAllItems();
 	}
 
@@ -1489,7 +1519,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public void applyEntityCollision(Entity par1Entity) {
-		// 窶｢ﾃゑｿｽﾅ・ｽﾃ夲ｿｽG窶ｰﾃｱ窶敕ｰ窶廃
+		// 閉所接触回避用, Claustrophobia contact avoidance
 		super.applyEntityCollision(par1Entity);
 		
 		if (par1Entity instanceof LMM_EntityLittleMaid) {
@@ -1503,10 +1533,10 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	protected void updateAITick() {
-//		// AI窶佚寂ｰﾅｾﾅ耽窶堙坂堋ｱ窶堙≫堋ｿ窶堋ｪﾅ津・堙寂堙ｪ窶堙ｩ
+//		// AI対応型はこっちが呼ばれる, AI corresponding type is called here
 //		dataWatcher.updateObject(dataWatch_Health, Integer.valueOf(getHealth()));
 		
-		// 窶凖・ｰﾃ≫｢ﾂｪ
+		// 追加分
 		for (LMM_EntityModeBase ieml : maidEntityModeList) {
 			ieml.updateAITick(getMaidModeInt());
 		}
@@ -1518,18 +1548,21 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * 窶凪樞倪吮佚趣ｿｽﾃｴﾆ坦ﾆ痴・ｽ[
+	 * 埋葬対策コピー
+	 * Burial measures copy
 	 */
 	private boolean isBlockTranslucent(int par1, int par2, int par3) {
 		return this.worldObj.isBlockNormalCube(par1, par2, par3);
 	}
 
 	/**
-	 * 窶凪樞倪吮佚趣ｿｽﾃｴﾆ坦ﾆ痴・ｽ[
+	 * 埋葬対策コピー
+	 * Burial measures copy
 	 */
 	@Override
 	protected boolean pushOutOfBlocks(double par1, double par3, double par5) {
-		// EntityPlayerSP窶堙娯堙ｰﾋ・ｸ窶堙≫卍｣窶堙≫堙・堋ｫ窶堋ｽ
+		// EntityPlayerSPのを引っ張ってきた
+		// I've been pulling the EntityPlayerSP of
 		int var7 = MathHelper.floor_double(par1);
 		int var8 = MathHelper.floor_double(par3);
 		int var9 = MathHelper.floor_double(par5);
@@ -1594,13 +1627,13 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public void onLivingUpdate() {
-		// 窶ｰﾃｱ窶｢ﾅ凪敖ｻ窶凖ｨ
+		// 回復判定, Recovery decision
 		float lhealth = getHealth();
 		if (lhealth > 0) {
 			if (!worldObj.isRemote) {
 				if (getSwingStatusDominant().canAttack()) {
 					if (!isBloodsuck()) {
-						// 窶凖奇ｿｽﾃｭﾅｽﾅｾ窶堙坂ｰﾃｱ窶｢ﾅ凪妊・ｽﾃｦ
+						// 通常時は回復優先, Recovery priority in a normal state
 						if (lhealth < getMaxHealth()) {
 							if (maidInventory.consumeInventoryItem(Item.sugar.itemID)) {
 								eatSugar(true, false);
@@ -1614,7 +1647,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		super.onLivingUpdate();
 		
 		maidInventory.decrementAnimations();
-		// 窶凪樞倪吮佚趣ｿｽﾃｴ
+		// 埋葬対策, Burial measures
 		boolean grave = true;
 		grave &= pushOutOfBlocks(posX - (double)width * 0.34999999999999998D, boundingBox.minY, posZ + (double)width * 0.34999999999999998D);
 		grave &= pushOutOfBlocks(posX - (double)width * 0.34999999999999998D, boundingBox.minY, posZ - (double)width * 0.34999999999999998D);
@@ -1624,8 +1657,10 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			jump();
 		}
 		if(lhealth > 0) {
-			// 窶ｹﾃ滂ｿｽﾃ塲ﾃ・ｽ窶ｹ窶堙娯凖・ｰﾃ≫堙坂堋ｱ窶堋ｱ
-			// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙娯ｰﾃｱﾅｽﾃｻ
+			// 近接監視の追加はここ
+			// アイテムの回収
+			// Add proximity monitoring here
+			// Recovery of items
 			if (!worldObj.isRemote) {
 				List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(1.0D, 0.0D, 1.0D));
 				if (list != null) {
@@ -1633,22 +1668,24 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 						Entity entity = (Entity)list.get(i);
 						if (!entity.isDead) {
 							if (entity instanceof EntityArrow) {
-								// 窶愿・ｽﾃｪ窶ｰﾃｱﾅｽﾃｻ
+								// 特殊回収, Special recovery
 								((EntityArrow)entity).canBePickedUp = 1;
 							}
 							entity.onCollideWithPlayer(maidAvatar);
 						}
 					}
-					// ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｪﾋ・ｪ窶掖窶堙俄堙遺堙≫堙・堋｢窶堙・但ﾆ辰ﾆ弾ﾆ停ぎ窶堙家耽ﾆ嘆窶堙ｰ窶堙・堙≫堙・堋｢窶堙ｩ・ｽﾃｪ・ｽ窶｡窶堙哉耽ﾆ嘆窶堙ｰﾆ誰ﾆ椎ﾆ但
+					// アイテムが一杯になっていてアイテムにタゲをとっている場合はタゲをクリア
+					// Clear Tage If you are taking Tage item to item they become full
 					if (entityToAttack instanceof EntityItem && maidInventory.getFirstEmptyStack() == -1) {
 						setTarget(null);
 					}
 				}
 			}
-			// ﾅｽﾅｾﾅ致窶堙ｰﾅｽ・ｽ窶堙≫堙・堋｢窶堙ｩ
-			// TODO:窶伉ｽ窶｢ﾂｪ窶堋ｱ窶堙娯｢ﾃ凪堙ｨ窶堙鯉ｿｽﾋ・費ｿｽ窶堙坂堋ｨ窶堋ｩ窶堋ｵ窶堋｢
+			// 時計を持っている, I have a watch
+			// TODO:多分この辺りの処理はおかしい, Treatment of this area is probably funny
 			if (isContractEX() && mstatClockMaid) {
-				// ﾆ嘆・ｽ[ﾆ停ぎ窶愿ﾅｽﾅｾﾅﾃ披堙会ｿｽ窶｡窶堙ｭ窶堋ｹ窶堋ｽ窶ｰﾂｹ・ｽﾂｺ窶堙鯉ｿｽﾃ・ｿｽﾂｶ
+				// ゲーム内時間に合わせた音声の再生
+				// Reproduction of the audio to match the game time
 				mstatTime = (int)(worldObj.getWorldTime() % 24000);
 				if (mstatMasterEntity != null) {
 					boolean b = mstatMasterEntity.isPlayerSleeping();
@@ -1712,21 +1749,21 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			if (!worldObj.isRemote) {
 				if (getSwingStatusDominant().canAttack()) {
 //					mod_LMM_littleMaidMob.Debug("isRemort:" + worldObj.isRemote);
-					// 窶ｰﾃｱ窶｢ﾅ・
+					// 回復, Recovery
 					if (getHealth() < getMaxHealth()) {
 						if (maidInventory.consumeInventoryItem(Item.sugar.itemID)) {
 							eatSugar(true, false);
 						}
 					}
-					// 窶堙や堙懌堙晢ｿｽH窶堋｢
+					// つまみ食い, Tsumamigui
 					if (rand.nextInt(50000) == 0 && maidInventory.consumeInventoryItem(Item.sugar.itemID)) {
 						eatSugar(true, false);
 					}
-					// ﾅ胆窶禿ｱ・ｽX・ｽV
+					// 契約更新, Renewal of a contract
 					if (isContractEX()) {
 						float f = getContractLimitDays();
 						if (f <= 6 && maidInventory.consumeInventoryItem(Item.sugar.itemID)) {
-							// ﾅ胆窶禿ｱ・ｽX・ｽV
+							// 契約更新, Renewal of a contract
 							eatSugar(true, true);
 						}
 					}
@@ -1737,11 +1774,13 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 	@Override
 	public void onUpdate() {
-		// Entity・ｽ窶ｰ窶ｰﾃｱ・ｽﾂｶ・ｽﾂｬﾅｽﾅｾ窶堙姑辰ﾆ停愴遅ﾆ停愴暖ﾆ椎・ｽX・ｽV窶廃
-		// ﾆ探・ｽ[ﾆ弛・ｽ[窶堙娯｢ﾃｻ窶堋ｪ・ｽﾃｦ窶堙俄ｹN窶慊ｮ窶堋ｷ窶堙ｩ窶堙娯堙・誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堋ｪ・ｽX・ｽV窶堙ｰﾅｽﾃｳ窶堋ｯﾅｽﾃｦ窶堙ｪ窶堙遺堋｢
+		// Entity初回生成時のインベントリ更新用, Inventory update of Entity first generation
+		// サーバーの方が先に起動するのでクライアント側が更新を受け取れない
+		// The client is not able to receive updates towards the server is launched before
 		if (firstload > 0) {
-			// ・ｽ窶ｰ窶ｰﾃｱ・ｽX・ｽV窶廃
-			// ﾆ探・ｽ[ﾆ弛・ｽ[窶堙娯｢ﾃｻ窶堋ｪ・ｽﾃｦ窶堙俄ｹN窶慊ｮ窶堋ｵ窶堙・堋｢窶堙ｩ窶堙娯堙・ｹﾂｭ・ｽﾂｧ窶愿・堙晢ｿｽﾅｾ窶堙昶堙固ｽﾃｨ・ｽ窶｡窶堋ｪ窶｢K窶牌
+			// 初回更新用, First update
+			// サーバーの方が先に起動しているので強制読み込みの手順が必要
+			// Steps must be forced towards the read because server started before
 			if (--firstload == 0) {
 				if (worldObj.isRemote) {
 					LMM_Net.sendToEServer(this, new byte[] {LMM_Statics.LMN_Server_UpdateSlots, 0, 0, 0, 0});
@@ -1750,20 +1789,20 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			}
 		}
 		
-		// 窶敕ｲ窶堙鯛慊ｹ窶ｹﾃｯ窶廃
+		// 飛び道具用, Missile for
 		weaponFullAuto = false;
 		weaponReload = false;
 		
-		// ﾅｽﾃ･窶堙固m窶戳窶堙遺堙・
+		// 主の確認など, And confirmation of the main
 		mstatMasterEntity = getMaidMasterEntity();
 		if (mstatMasterEntity != null) {
 			mstatMasterDistanceSq = getDistanceSqToEntity(mstatMasterEntity);
 		}
-		// ﾆ停堡断ﾆ停ｹﾆ探ﾆ辰ﾆ炭窶堙姑椎ﾆ但ﾆ停ｹﾆ耽ﾆ辰ﾆ停ぎ窶｢ﾃ擾ｿｽX窶猫窶堙ｨ・ｽH
+		// モデルサイズのリアルタイム変更有り？, Yes real-time change of model size?
 		textureData.onUpdate();
-		// ﾆ椎ﾆ但ﾆ停ｹﾆ耽ﾆ辰ﾆ停ぎ窶｢ﾃ鞘慊ｮ窶冤窶堙ｰﾆ但ﾆ鍛ﾆ致ﾆ断・ｽ[ﾆ暖
+		// リアルタイム変動値をアップデート, Updates real-time variation value
 		if (worldObj.isRemote) {
-			// ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､
+			// クライアント側, Client side
 			boolean lupd = false;
 			lupd |= updateMaidContract();
 			lupd |= updateMaidColor();
@@ -1778,7 +1817,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			updateGotcha();
 		} else {
 			boolean lf;
-			// ﾆ探・ｽ[ﾆ弛・ｽ[窶伉､
+			// サーバー側, Server-side
 			updateRemainsContract();
 			// Overdrive
 			lf = maidOverDriveTime.isEnable();
@@ -1793,24 +1832,24 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			if (getMaidFlags(dataWatch_Flags_Working) != lf) {
 				setMaidFlags(lf, dataWatch_Flags_Working);
 			}
-			// ・ｽX窶堙銀堙ｩ
+			// 拗ねる, Sulk
 			if (!isContractEX() && !isFreedom()) {
 				setFreedom(true);
 				setMaidWait(false);
 			}
-			// ﾋ・壺慊ｮ窶伉ｬ窶忸窶堙娯｢ﾃ擾ｿｽX
+			// 移動速度の変更, Change of movement speed
 			AttributeInstance latt = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
-			// 窶伉ｮ・ｽﾂｫ窶堙ｰ窶ｰﾃｰ・ｽﾅ・
+			// 属性を解除, Releasing attributes
 			latt.removeModifier(attCombatSpeed);
 			if (isContract()) {
 				if (!isFreedom() || (entityToAttack != null || getAttackTarget() != null)) {
-					// 窶伉ｮ・ｽﾂｫ窶堙ｰ・ｽﾃ昶凖ｨ
+					// 属性を設定, Set attribute
 					latt.applyModifier(attCombatSpeed);
 				}
 			}
 		}
 		
-		// 窶愿・ｽﾂｩ・ｽﾋ・費ｿｽ窶廃窶突・ｽﾅｾ・ｽﾋ・費ｿｽ
+		// 独自処理用毎時処理, Own processing per hour processing
 		for (LMM_EntityModeBase leb : maidEntityModeList) {
 			leb.onUpdate(maidMode);
 		}
@@ -1824,14 +1863,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		swingProgressInt = maidAvatar.swingProgressInt = lmss1.swingProgressInt;
 		isSwingInProgress = maidAvatar.isSwingInProgress = lmss1.isSwingInProgress;
 		
-		// Aveter窶堙娯突・ｽﾅｾ・ｽﾋ・費ｿｽ
+		// Aveterの毎時処理, Hourly processing of Avatar
 		if (maidAvatar != null) {
 			maidAvatar.getValue();
 			maidAvatar.onUpdate();
 //			maidAvatar.setValue();
 		}
 		
-		// ﾆ谷ﾆ脱ﾆ停愴耽ﾅ地
+		// カウンタ系, Counter system
 		if (mstatWaitCount > 0) {
 			if (hasPath()) {
 				mstatWaitCount = 0;
@@ -1843,7 +1882,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			maidSoundInterval--;
 		}
 		
-		// 窶堋ｭ窶堙鯛堋ｩ窶堋ｵ窶堋ｰ	
+		// くびかしげ , Kubikashige
 		prevRotateAngleHead = rotateAngleHead;
 		if (getLooksWithInterest()) {
 			rotateAngleHead = rotateAngleHead + (1.0F - rotateAngleHead) * 0.4F;
@@ -1866,26 +1905,26 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		swingProgressInt = maidAvatar.swingProgressInt = lmss.swingProgressInt;
 		isSwingInProgress = maidAvatar.isSwingInProgress = lmss.isSwingInProgress;
 		
-		// ﾅｽ・ｽ窶堋ｿ窶｢ﾂｨ窶堙固m窶戳
+		// 持ち物の確認, Confirmation of belongings
 		if (maidInventory.inventoryChanged) {
 			onInventoryChanged();
 			maidInventory.inventoryChanged = false;
 		}
 		if (!worldObj.isRemote) {
-			// ﾆ探・ｽ[ﾆ弛・ｽ[窶伉､・ｽﾋ・費ｿｽ
-			// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙鯉ｿｽX・ｽV
+			// サーバー側処理, Server-side processing
+			// インベントリの更新, Update of inventory
 //			if (!mstatOpenInventory) {
 				for (int li = 0 ;li < maidInventory.getSizeInventory(); li++) {
 					boolean lchange = false;
 					int lselect = 0xff;
-					// 窶露窶佚ｰ窶倪｢窶敕ｵ窶堋ｪ窶｢ﾃ鞘堙ｭ窶堙≫堋ｽ
+					// 選択装備が変わった, Equipment selection has changed
 					for (int lj = 0; lj < mstatSwingStatus.length; lj++) {
 						lchange = mstatSwingStatus[lj].checkChanged();
 						if (mstatSwingStatus[lj].index == li) {
 							lselect = lj;
 						}
 					}
-					// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙娯吮・ｽg窶堋ｪ窶｢ﾃ鞘堙ｭ窶堙≫堋ｽ
+					// インベントリの中身が変わった, Contents of the inventory has changed
 					if (lchange || maidInventory.isChanged(li)) {
 						((WorldServer)worldObj).getEntityTracker().sendPacketToAllPlayersTrackingEntity(this, new Packet5PlayerInventory(this.entityId, (li | lselect << 8) + 5, maidInventory.getStackInSlot(li)));
 						maidInventory.resetChanged(li);
@@ -1894,9 +1933,9 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 //				}
 			}
 			
-			// 窶ｹ|・ｽ\窶堋ｦ
+			// 弓構え, Bow stance
 			mstatAimeBow &= !getSwingStatusDominant().canAttack();
-			// ・ｽ\窶堋ｦ窶堙鯉ｿｽX・ｽV
+			// 構えの更新, Update poised
 			updateAimebow();
 			
 			// TODO:test
@@ -1904,7 +1943,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 				dataWatcher.updateObject(dataWatch_ExpValue, Integer.valueOf(experienceValue));
 			}
 			
-			// ﾅｽﾂｩ窶｢ﾂｪ窶堙ｦ窶堙ｨ窶佚･窶堋ｫ窶堙遺堙窶堙娯堙搾ｿｽﾃｦ窶堙≫堋ｯ窶堙遺堋｢・ｽiﾆ辰ﾆ谷・ｽﾅ凪堋ｭ・ｽj
+			// 自分より大きなものは乗っけない（イカ除く）, You do not ride to big ones than themselves (except squid)
 			if (riddenByEntity != null && !(riddenByEntity instanceof EntitySquid)) {
 				if (height * width < riddenByEntity.height * riddenByEntity.width) {
 					if (riddenByEntity instanceof EntityLivingBase) {
@@ -1915,13 +1954,13 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 				}
 			}
 			
-			// 窶｢竄ｬ窶倪｢窶敕ｵﾅｽﾅｾ窶堙搾ｿｽUﾅ停壺氾坂堋ｪ・ｽﾃ｣窶堋ｪ窶堙ｩ
+			// 斧装備時は攻撃力が上がる, Attack power goes up ax when equipped
 			AttributeInstance latt = this.getEntityAttribute(SharedMonsterAttributes.attackDamage);
-			// 窶伉ｮ・ｽﾂｫ窶堙ｰ窶ｰﾃｰ・ｽﾅ・
+			// 属性を解除, Releasing attributes
 			latt.removeModifier(attAxeAmp);
 			ItemStack lis = getCurrentEquippedItem();
 			if (lis != null && lis.getItem() instanceof ItemAxe) {
-				// 窶伉ｮ・ｽﾂｫ窶堙ｰ・ｽﾃ昶凖ｨ
+				// 属性を設定, Set attribute
 				latt.applyModifier(attAxeAmp);
 			}
 		} else {
@@ -1930,11 +1969,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			experienceValue = dataWatcher.getWatchableObjectInt(dataWatch_ExpValue);
 		}
 		
-		// 窶｢R窶堙・ｿｽf窶况
+		// 紐で拉致, Abduction with a string
 		if(mstatgotcha != null) {
 			double d = mstatgotcha.getDistanceSqToEntity(this);
 			if (entityToAttack == null) {
-				// ﾆ辰ﾆ停愴坦ﾆ停ぎ窶堋ｲ窶堙≫堋ｱ窶廃
+				// インコムごっこ用, Incom pretend for
 				if (d > 4D) {
 //                    setPathToEntity(null);
 					getNavigator().clearPathEntity();
@@ -1991,9 +2030,9 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	public void onDeath(DamageSource par1DamageSource) {
 		super.onDeath(par1DamageSource);
 		
-		// ﾅｽ竄ｬﾋ・ｶ窶堙ｰ窶｢\ﾅｽﾂｦ
+		// 死因を表示, Show cause of death
 		if (!worldObj.isRemote) {
-			// ﾆ筑ﾆ湛ﾆ耽・ｽ[窶敖ｻ窶凖ｨﾅｽﾂｸ窶捏窶堋ｷ窶堙ｩ窶堋ｩ窶堙・ｽH
+			// マスター判定失敗するかも？, May fail to master judgment?
 			if (mod_LMM_littleMaidMob.cfg_DeathMessage && mstatMasterEntity != null) {
 				String ls = par1DamageSource.getDamageType();
 				Entity lentity = par1DamageSource.getEntity();
@@ -2013,7 +2052,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		}
 	}
 
-	// ﾆ竹・ｽ[ﾆ歎ﾆ停｡ﾆ停愴竪ﾆ稚ﾆ巽ﾆ誰ﾆ暖
+	// ポーションエフェクト, Potion effects
 	@Override
 	protected void onNewPotionEffect(PotionEffect par1PotionEffect) {
 		super.onNewPotionEffect(par1PotionEffect);
@@ -2025,7 +2064,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	@Override
 	protected void onChangedPotionEffect(PotionEffect par1PotionEffect, boolean par2) {
 		super.onChangedPotionEffect(par1PotionEffect, par2);
-		// TODO:窶｢K窶牌窶堋ｩ窶堙・堋､窶堋ｩ窶堙姑蛋ﾆ巽ﾆ鍛ﾆ誰
+		// TODO:必要かどうかのチェック, Check whether you need
 //		if (mstatMasterEntity instanceof EntityPlayerMP) {
 //			((EntityPlayerMP)mstatMasterEntity).playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(this.entityId, par1PotionEffect));
 //		}
@@ -2042,7 +2081,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 
 	/**
-	 *  ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堋ｪ窶｢ﾃ擾ｿｽX窶堋ｳ窶堙ｪ窶堙懌堋ｵ窶堋ｽ・ｽB
+	 *  インベントリが変更されました。
+	 *  Inventory has changed.
 	 */
 	public void onInventoryChanged() {
 		checkClockMaid();
@@ -2053,11 +2093,12 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙俄堋窶堙ｩﾅｽﾅｸ窶堙娯倪｢窶敕ｵ窶｢i窶堙ｰ窶露窶佚ｰ
+	 * インベントリにある次の装備品を選択
+	 * Select equipment following in the inventory
 	 */
 	public boolean getNextEquipItem() {
 		if (worldObj.isRemote) {
-			// ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堙搾ｿｽﾋ・費ｿｽ窶堋ｵ窶堙遺堋｢
+			// クライアント側は処理しない, Client does not process
 			return false;
 		}
 		
@@ -2092,10 +2133,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 
 	/**
-	 * 窶佚寂ｰﾅｾﾅ耽ﾅｽﾃ暁停壺｢・ｽﾅﾃｭ窶堙姑椎ﾆ抵ｿｽ・ｽ[ﾆ檀窶敖ｻ窶凖ｨ
+	 * 対応型射撃武器のリロード判定
+	 * Reload judgment of corresponding type ranged weapons
 	 */
 	public void getWeaponStatus() {
-		// 窶敕ｲ窶堙鯛慊ｹ窶ｹﾃｯ窶廃窶堙娯愿・ｽﾃｪ・ｽﾋ・費ｿｽ
+		// 飛び道具用の特殊処理, Special processing for missile
 		ItemStack is = maidInventory.getCurrentItem();
 		if (is == null) return;
 		
@@ -2118,10 +2160,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		}
 	}
 
-	// 窶｢ﾃ崘ｽ・ｽﾆ但ﾆ辰ﾆ弾ﾆ停ぎﾅﾃ麺廣
+	// 保持アイテム関連, Retention-related items
 
 	/**
-	 * ﾅ陳ｻ・ｽﾃ昶堙娯倪｢窶敕ｵ窶｢i
+	 * 現在の装備品
+	 * Equipment of current
 	 */
 	public ItemStack getCurrentEquippedItem() {
 		return maidInventory.getCurrentItem();
@@ -2163,13 +2206,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			setTextureNames();
 		} else {
 			par1 -= 5;
-			// ﾅｽ・ｽ窶堋ｿ窶｢ﾂｨ窶堙姑但ﾆ鍛ﾆ致ﾆ断・ｽ[ﾆ暖
-			// 窶愿・ｽﾂｩﾅg窶卍｣:窶｢・ｽ窶凖岩堙家湛ﾆ抵ｿｽﾆ鍛ﾆ暖窶敕費ｿｽ窶窶堙娯凖岩堙ｨ・ｽA・ｽﾃ｣ﾋ・岩啗ﾆ池ﾆ鍛ﾆ暖窶堙坂倪｢窶敕ｵﾆ湛ﾆ抵ｿｽﾆ鍛ﾆ暖
-			// par1窶堙拘hort窶堙・從窶堋ｳ窶堙ｪ窶堙ｩ窶堙娯堙・堋ｻ窶堙娯堙ｦ窶堋､窶堙会ｿｽB
+			// 持ち物のアップデート, Update of belongings
+			// 独自拡張:普通にスロット番号の通り、上位８ビットは装備スロット
+			// As slot number, the upper 8 bits equipped slot normally: proprietary extension
+			//  par1はShortで渡されるのでそのように。, so par1 are passed in Short.
 			int lslotindex = par1 & 0x7f;
 			int lequip = (par1 >>> 8) & 0xff;
 			maidInventory.setInventorySlotContents(lslotindex, par2ItemStack);
-			maidInventory.resetChanged(lslotindex);	// 窶堋ｱ窶堙ｪ窶堙才・凪督｡窶堙遺堋｢窶堋ｯ窶堙・堙茨ｿｽB
+			maidInventory.resetChanged(lslotindex);	// これは意味ないけどな。, But I do not sense this.
 			maidInventory.inventoryChanged = true;
 //			if (par1 >= maidInventory.mainInventory.length) {
 //				LMM_Client.setArmorTextureValue(this);
@@ -2198,22 +2242,24 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	protected void checkClockMaid() {
-		// ﾅｽﾅｾﾅ致窶堙ｰﾅｽ・ｽ窶堙≫堙・堋｢窶堙ｩ窶堋ｩ・ｽH
+		// 時計を持っているか？, Do you have a watch?
 		mstatClockMaid = maidInventory.getInventorySlotContainItem(Item.pocketSundial.itemID) > -1;
 	}
 	/**
-	 * ﾅｽﾅｾﾅ致窶堙ｰﾅｽ・ｽ窶堙≫堙・堋｢窶堙ｩ窶堋ｩ?
+	 * 時計を持っているか?
+	 * Do you have a watch?
 	 */
 	public boolean isClockMaid() {
 		return mstatClockMaid;
 	}
 
 	protected void checkMaskedMaid() {
-		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙家蜘ﾆ停ｹﾆ停ぎ窶堋ｪ窶堋窶堙ｩ窶堋ｩ・ｽH
+		// インベントリにヘルムがあるか？
+		// Whether there is a helm in inventory?
 		for (int i = maidInventory.mainInventory.length - 1; i >= 0; i--) {
 			ItemStack is = maidInventory.getStackInSlot(i);
 			if (is != null && is.getItem() instanceof ItemArmor && ((ItemArmor)is.getItem()).armorType == 0) {
-				// ﾆ蜘ﾆ停ｹﾆ停ぎ窶堙ｰﾅｽ・ｽ窶堙≫堙・堙ｩ
+				// ヘルムを持ってる, I have a helm
 				mstatMaskSelect = i;
 				maidInventory.armorInventory[3] = is;
 				if (worldObj.isRemote) {
@@ -2228,14 +2274,16 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		return;
 	}
 	/**
-	 * ﾆ抵ｿｽﾆ鍛ﾆ暖窶堙ｰ窶敕ｭ窶堙≫堙・堙ｩ窶堋ｩ 
+	 * メットを被ってるか 
+	 * Are you wearing a Met
 	 */
 	public boolean isMaskedMaid() {
 		return mstatMaskSelect > -1;
 	}
 
 	protected void checkHeadMount() {
-		// 窶凖・ｰﾃ≫堙娯慊ｪ窶｢窶昶倪｢窶敕ｵ窶堙娯敖ｻ窶凖ｨ
+		// 追加の頭部装備の判定
+		// Decision of the head additional equipment
 		ItemStack lis = maidInventory.getHeadMount();
 		mstatPlanter = false;
 		mstatCamouflage = false;
@@ -2250,20 +2298,23 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		}		
 	}
 	/**
-	 * ﾆ谷ﾆ停堡稚ﾆ停ｰ・ｽ[ﾆ淡ﾆ停ｦ・ｽI 
+	 * カモフラージュ！ 
+	 * Camouflage!
 	 */
 	public boolean isCamouflage() {
 		return mstatCamouflage;
 	}
 	/**
-	 * 窶敖ｫ・ｽA窶堋ｦ・ｽﾃｳ窶佚・
+	 * 鉢植え状態 
+	 * Potted state
 	 */
 	public boolean isPlanter() {
 		return mstatPlanter;
 	}
 
 	/**
-	 * ﾆ竹・ｽ[ﾆ歎ﾆ停｡ﾆ停懌懌┐窶堙俄堙ｦ窶堙ｩﾋ徨・ｽU窶堙ｨﾆ停夲ｿｽ[ﾆ歎ﾆ停｡ﾆ停懌堙娯伉ｬ窶忸窶｢ﾃ｢・ｽﾂｳ
+	 * ポーション等による腕振りモーションの速度補正
+	 * Velocity correction of arm swing motion by potions, etc.
 	 */
 	public int getSwingSpeedModifier() {
 		if (isPotionActive(Potion.digSpeed)) {
@@ -2278,14 +2329,16 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾅｽﾃｨﾅｽ・ｽ窶堋ｿﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙娯挧窶ｰﾃｳ
+	 * 手持ちアイテムの破壊
+	 * Destruction of hand items
 	 */
 	public void destroyCurrentEquippedItem() {
 		maidInventory.setInventoryCurrentSlotContents(null);
 	}
 
 	/**
-	 * ﾆ抵ｿｽﾆ辰ﾆ檀ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙ｰﾅJ窶堋ｭ
+	 * メイドインベントリを開く
+	 * I open the maid inventory
 	 * @param pEntityPlayer
 	 */
 	public void displayGUIMaidInventory(EntityPlayer pEntityPlayer) {
@@ -2301,19 +2354,19 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		float lhealth = getHealth();
 		ItemStack itemstack1 = par1EntityPlayer.getCurrentEquippedItem();
 		
-		// ﾆ致ﾆ停ｰﾆ丹ﾆ辰ﾆ停懌堙・堙鯉ｿｽﾋ・費ｿｽ窶堙ｰ・ｽﾃｦ窶堙会ｿｽs窶堋､
+		// プラグインでの処理を先に行う, I do before processing in the plug-in
 		for (int li = 0; li < maidEntityModeList.size(); li++) {
 			if (maidEntityModeList.get(li).preInteract(par1EntityPlayer, itemstack1)) {
 				return true;
 			}
 		}
-		// 窶堋ｵ窶堙｡窶堋ｪ窶堙敘ｽﾅｾ窶堙搾ｿｽﾋ・費ｿｽ窶督ｳﾅ津ｸ
+		// しゃがみ時は処理無効, Processing disabled when squatting
 		if (par1EntityPlayer.isSneaking()) {
 			return false;
 		}
-		// ﾆ段ﾆ断ﾆ椎窶敖ｻ窶凖ｨ
+		// ナデリ判定, Naderi decision
 		if (lhealth > 0F && par1EntityPlayer.riddenByEntity != null && !(par1EntityPlayer.riddenByEntity instanceof LMM_EntityLittleMaid)) {
-			// ・ｽﾃ壺堋ｹ窶佚問堋ｦ
+			// 載せ替え, Reloading
 			par1EntityPlayer.riddenByEntity.mountEntity(this);
 			return true;
 		}
@@ -2322,7 +2375,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		
 		if (mstatgotcha == null && par1EntityPlayer.fishEntity == null) {
 			if(itemstack1 != null && itemstack1.itemID == Item.silk.itemID) {
-				// 窶｢R窶堙・智窶堋ｮ
+				// 紐で繋ぐ, I connect with a string
 				setGotcha(par1EntityPlayer.entityId);
 				mstatgotcha = par1EntityPlayer;
 				MMM_Helper.decPlayerInventory(par1EntityPlayer, -1, 1);
@@ -2331,21 +2384,21 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 			} 
 			
 			if (isContract()) {
-				// ﾅ胆窶禿ｱ・ｽﾃｳ窶佚・
+				// 契約状態, Agreement state
 				if (lhealth > 0F && isMaidContractOwner(par1EntityPlayer)) {
 					if (itemstack1 != null) {
-						// 窶凖・ｰﾃ≫｢ﾂｪ窶堙鯉ｿｽﾋ・費ｿｽ
+						// 追加分の処理, Processing an additional portion of
 						setPathToEntity(null);
-						// ﾆ致ﾆ停ｰﾆ丹ﾆ辰ﾆ停懌堙・堙鯉ｿｽﾋ・費ｿｽ窶堙ｰ・ｽﾃｦ窶堙会ｿｽs窶堋､
+						// プラグインでの処理を先に行う, I do before processing in the plug-in
 						for (int li = 0; li < maidEntityModeList.size(); li++) {
 							if (maidEntityModeList.get(li).interact(par1EntityPlayer, itemstack1)) {
 								return true;
 							}
 						}
 						if (isRemainsContract()) {
-							// 窶凖奇ｿｽﾃｭ
+							// 通常, Usually
 							if (itemstack1.itemID == Item.sugar.itemID) {
-								// ﾆ停夲ｿｽ[ﾆ檀・ｽﾃ倪佚・
+								// モード切替, Mode switching
 								MMM_Helper.decPlayerInventory(par1EntityPlayer, -1, 1);
 								eatSugar(false, true);
 								worldObj.setEntityState(this, (byte)11);
@@ -2354,7 +2407,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 								if (!worldObj.isRemote) {
 									setFreedom(isFreedom());
 									if (isMaidWait()) {
-										// 窶慊ｮ・ｽﾃｬﾆ停夲ｿｽ[ﾆ檀窶堙鯉ｿｽﾃ倪佚・
+										// 動作モードの切替, Switching of the operation mode
 										boolean lflag = false;
 										setActiveModeClass(null);
 										for (int li = 0; li < maidEntityModeList.size() && !lflag; li++) {
@@ -2371,14 +2424,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 										setMaidWait(false);
 										getNextEquipItem();
 									} else {
-										// 窶佚停ｹ@
+										// 待機, Wait
 										setMaidWait(true);
 									}
 								}
 								return true;
 							}
 							else if (itemstack1.itemID == Item.dyePowder.itemID) {
-								// ﾆ谷ﾆ停ｰ・ｽ[ﾆ抵ｿｽﾆ辰ﾆ檀
+								// カラーメイド, Color maid
 								if (!worldObj.isRemote) {
 									setColor(15 - itemstack1.getItemDamage());
 								}
@@ -2386,14 +2439,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 								return true;
 							}
 							else if (itemstack1.itemID == Item.feather.itemID) {
-								// ﾅｽﾂｩ窶燃・ｽs窶慊ｮ
+								// 自由行動, Free action
 								MMM_Helper.decPlayerInventory(par1EntityPlayer, -1, 1);
 								setFreedom(!isFreedom());
 								worldObj.setEntityState(this, isFreedom() ? (byte)12 : (byte)13);
 								return true;
 							}
 							else if (itemstack1.itemID == Item.saddle.itemID) {
-								// ﾅ陳ｨﾅｽﾃ・
+								// 肩車, Piggyback
 								if (!worldObj.isRemote) {
 									if (ridingEntity == par1EntityPlayer) {
 										this.mountEntity(null);
@@ -2411,7 +2464,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 								return true;
 							}
 							else if (itemstack1.itemID == Item.book.itemID) {
-								// IFF窶堙姑棚・ｽ[ﾆ致ﾆ停・
+								// IFFのオープン, Open the IFF
 								MMM_Helper.decPlayerInventory(par1EntityPlayer, -1, 1);
 //	    		            	ModLoader.openGUI(par1EntityPlayer, new LMM_GuiIFF(worldObj, this));
 								if (worldObj.isRemote) {
@@ -2420,7 +2473,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 								return true;
 							}
 							else if ((itemstack1.itemID == Item.glassBottle.itemID) && (experienceValue >= 5)) {
-								// Expﾆ畜ﾆ暖ﾆ停ｹ
+								// Expボトル, Exp bottle
 								MMM_Helper.decPlayerInventory(par1EntityPlayer, -1, 1);
 								if (!worldObj.isRemote) {
 									entityDropItem(new ItemStack(Item.expBottle), 0.5F);
@@ -2432,7 +2485,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 								return true;
 							}
 							else if (itemstack1.getItem() instanceof ItemPotion) {
-								// ﾆ竹・ｽ[ﾆ歎ﾆ停｡ﾆ停・
+								// ポーション, Portion
 								if(!worldObj.isRemote) {
 									List list = ((ItemPotion)itemstack1.getItem()).getEffects(itemstack1);
 									if (list != null) {
@@ -2460,13 +2513,13 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 								return true;
 							}
 						} else {
-							// ﾆ湛ﾆ暖ﾆ停ｰﾆ辰ﾆ鱈
+							// ストライキ, Strike
 							if (itemstack1.itemID == Item.sugar.itemID) {
-								// ﾅｽﾃｳﾅｽﾃｦ窶ｹ窶倪敕・
+								// 受取拒否, Receipt refusal
 								worldObj.setEntityState(this, (byte)10);
 								return true;
 							} else if (itemstack1.itemID == Item.cake.itemID) {
-								// ・ｽﾃ・胆窶禿ｱ
+								// 再契約, Re-signing
 								MMM_Helper.decPlayerInventory(par1EntityPlayer, -1, 1);
 								maidContractLimit = (24000 * 7);
 								setFreedom(false);
@@ -2479,7 +2532,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 							}
 						}
 					}
-					// ﾆ抵ｿｽﾆ辰ﾆ檀ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎
+					// メイドインベントリ, Made inventory
 					setOwner(par1EntityPlayer.username);
 					getNavigator().clearPathEntity();
 					isJumping = false;
@@ -2489,10 +2542,10 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 					return true;
 				}
 			} else {
-				// 窶督｢ﾅ胆窶禿ｱ
+				// 未契約, Unsigned
 				if (itemstack1 != null) {
 					if (itemstack1.itemID == Item.cake.itemID) {
-						// ﾅ胆窶禿ｱ
+						// 契約, Agreement
 						MMM_Helper.decPlayerInventory(par1EntityPlayer, -1, 1);
 						
 						deathTime = 0;
@@ -2508,10 +2561,10 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 //							playLittleMaidSound(LMM_EnumSound.getCake, true);
 //    	                    playTameEffect(true);
 							worldObj.setEntityState(this, (byte)7);
-							// ﾅ胆窶禿ｱ窶ｹL窶抂窶愿ｺ窶堙・ｿｽA・ｽ窶ｰﾅﾃｺﾅ胆窶禿ｱﾅﾃｺﾅﾃ・
+							// 契約記念日と、初期契約期間, Contract anniversary, the initial contract period
 							maidContractLimit = (24000 * 7);
 							maidAnniversary = worldObj.getWorldTime();
-							// ﾆ弾ﾆ誰ﾆ湛ﾆ蛋ﾆ槌停堙姑但ﾆ鍛ﾆ致ﾆ断・ｽ[ﾆ暖:窶堋｢窶堙ｧ窶堙ｱ・ｽH
+							// テクスチャのアップデート:いらん？, Iran: update of the texture?
 //							LMM_Net.sendToAllEClient(this, new byte[] {LMM_Net.LMN_Client_UpdateTexture, 0, 0, 0, 0});
 							
 						}
@@ -2534,7 +2587,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		return false;
 	}
 
-	// ﾆ抵ｿｽﾆ辰ﾆ檀窶堙固胆窶禿ｱ・ｽﾃ昶凖ｨ
+	// メイドの契約設定, Agreement setting of maid
 	@Override
 	public boolean isTamed() {
 		return isContract();
@@ -2562,7 +2615,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾅ胆窶禿ｱﾅﾃｺﾅﾃ披堙固ｽc窶堙ｨ窶堋ｪ窶堋窶堙ｩ窶堋ｩ窶堙ｰﾅm窶戳
+	 * 契約期間の残りがあるかを確認
+	 * Check whether there is a remainder of the contract period
 	 */
 	protected void updateRemainsContract() {
 		boolean lflag = false;
@@ -2575,7 +2629,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		}
 	}
 	/**
-	 * ﾆ湛ﾆ暖ﾆ停ｰﾆ辰ﾆ鱈窶堙俄愿ｼ窶堙≫堙・堋｢窶堙遺堋｢窶堋ｩ窶敖ｻ窶凖ｨ
+	 * ストライキに入っていないか判定
+	 * The judgment or not in the strike
 	 * @return
 	 */
 	public boolean isRemainsContract() {
@@ -2587,7 +2642,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	public boolean updateMaidContract() {
-		// 窶慊ｯﾋ・ｪ・ｽﾂｫ窶堙姑蛋ﾆ巽ﾆ鍛ﾆ誰
+		// 同一性のチェック, Check of identity
 		boolean lf = isContract();
 		if (textureData.isContract() != lf) {
 			textureData.setContract(lf);
@@ -2605,12 +2660,12 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	public EntityPlayer getMaidMasterEntity() {
-		// ﾅｽﾃ･窶堙ｰﾅl窶慊ｾ
+		// 主を獲得, Earn Master
 		if (isContract()) {
 			EntityPlayer entityplayer = mstatMasterEntity;
 			if (mstatMasterEntity == null || mstatMasterEntity.isDead) {
 				String lname; 
-				// ﾆ探・ｽ[ﾆ弛・ｽ[窶伉､窶堙遺堙ｧ窶堋ｿ窶堙｡窶堙ｱ窶堙・棚・ｽ[ﾆ段窶敖ｻ窶凖ｨ窶堋ｷ窶堙ｩ
+				// サーバー側ならちゃんとオーナ判定する, Owner determined properly if the server side
 				if (!MMM_Helper.isClient
 						|| mod_LMM_littleMaidMob.cfg_checkOwnerName 
 						|| MMM_Helper.mc.thePlayer == null) {
@@ -2619,8 +2674,9 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 					lname = MMM_Helper.mc.thePlayer.username;
 				}
 				entityplayer = worldObj.getPlayerEntityByName(lname);
-				// 窶堙・堙ｨ窶堋窶堋ｦ窶堋ｸﾅｽﾃ･窶堙娯督ｼ窶楼窶堙ｰ窶愿ｼ窶堙ｪ窶堙・堙昶堙ｩ
-				// TODO:・ｽﾃ・ｿｽﾃ昶凖ｨ窶堙坂｢s窶ｰﾃや堙俄堙遺堙≫堋ｽ窶堙娯堙・弛窶ｰﾃ淒ﾃ焦ｽ@
+				// とりあえず主の名前を入れてみる
+				// I try to put the name of the Lord for the time being
+				// TODO:再設定は不可になったので経過観察, Follow-up re-setting became so impossible
 //				maidAvatar.username = lname;
 				
 				if (entityplayer != null && maidAvatar != null) {
@@ -2644,7 +2700,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 //		return pentity == mstatMasterEntity;
 	}
 
-	// ﾆ抵ｿｽﾆ辰ﾆ檀窶堙娯佚停ｹ@・ｽﾃ昶凖ｨ
+	// メイドの待機設定, Standby setting of maid
 	public boolean isMaidWait() {
 		return maidWait;
 	}
@@ -2654,7 +2710,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	public void setMaidWait(boolean pflag) {
-		// 窶佚停ｹ@・ｽﾃｭ窶佚披堙鯉ｿｽﾃ昶凖ｨ・ｽA isMaidWaitﾅ地窶堙・rue窶堙ｰ窶｢ﾃ披堋ｷ窶堙遺堙ｧAI窶堋ｪ・ｽﾅｸﾅｽﾃｨ窶堙架・壺慊ｮ窶堙ｰ窶凖｢ﾅｽ~窶堋ｳ窶堋ｹ窶堙ｩ・ｽB
+		// 待機常態の設定、 isMaidWait系でtrueを返すならAIが勝手に移動を停止させる。
+		// Setting of waiting normal, AI stops the movement on its own if returns true in isMaidWait system.
 		maidWait = pflag;
 		setMaidFlags(pflag, dataWatch_Flags_Wait);
 		
@@ -2673,8 +2730,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	
-	// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙娯｢\ﾅｽﾂｦﾅﾃ滅淡
-	// 窶堙懌堋ｳ窶堋ｮ窶堙ｪ窶堙ｩ窶堙娯堙才・ｪ・ｽl窶堋ｾ窶堋ｯ
+	// インベントリの表示関係, Display status of inventory
+	// まさぐれるのは一人だけ, You are Masagu only one person
 	public void setOpenInventory(boolean flag) {
 		mstatOpenInventory = flag;
 	}
@@ -2684,14 +2741,16 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * GUI窶堙ｰﾅJ窶堋｢窶堋ｽﾅｽﾅｾ窶堙家探・ｽ[ﾆ弛・ｽ[窶伉､窶堙・津・堙寂堙ｪ窶堙ｩ・ｽB
+	 * GUIを開いた時にサーバー側で呼ばれる。
+	 * It is called on the server side when you open the GUI.
 	 */
 	public void onGuiOpened() {
 		setOpenInventory(true);
 	}
 
 	/**
-	 * GUI窶堙ｰ窶｢ﾃや堙溪堋ｽﾅｽﾅｾ窶堙家探・ｽ[ﾆ弛・ｽ[窶伉､窶堙・津・堙寂堙ｪ窶堙ｩ・ｽB
+	 * GUIを閉めた時にサーバー側で呼ばれる。
+	 * It is called on the server side when I closed the GUI.
 	 */
 	public void onGuiClosed() {
 		setOpenInventory(false);
@@ -2699,14 +2758,14 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		setMaidWaitCount((li == 0) ? 50 : 0);
 	}
 
-	// ﾋ徨・ｽU窶堙ｨ
+	// 腕振り, Arm swing
 	public void setSwing(int attacktime, LMM_EnumSound enumsound) {
 		setSwing(attacktime, enumsound, maidDominantArm);
 	}
 	public void setSwing(int pattacktime, LMM_EnumSound enumsound, int pArm) {
 		mstatSwingStatus[pArm].attackTime = pattacktime;
 //		maidAttackSound = enumsound;
-//        soundInterval = 0;// 窶堋｢窶堙ｩ窶堋ｩ・ｽH
+//        soundInterval = 0;// いるか？, Dolphin?
 		if (!weaponFullAuto) {
 			setSwinging(pArm, enumsound);
 		}
@@ -2741,7 +2800,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * 窶藩懌堋ｫﾋ徨窶堙姑椎ﾆ抵ｿｽ・ｽ[ﾆ檀ﾆ耽ﾆ辰ﾆ停ぎ
+	 * 利き腕のリロードタイム
+	 * Reload time of Handedness
 	 */
 	public LMM_SwingStatus getSwingStatusDominant() {
 		return mstatSwingStatus[maidDominantArm];
@@ -2752,7 +2812,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 
-	// ・ｽﾂ｡・ｽﾂｪ窶堙姑抵ｿｽﾆ辰ﾆ檀窶堙最椎停堙俄ｹQ窶堋ｦ窶堙・堋ｨ窶堙ｩ
+	// 今宵のメイドは血に飢えておる
+	// Maid of Tonight Nikki bloodthirsty
 	public void setBloodsuck(boolean pFlag) {
 		mstatBloodsuck = pFlag;
 		setMaidFlags(pFlag, dataWatch_Flags_Bloodsuck);
@@ -2763,7 +2824,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 
-	// ・ｽﾂｻ窶愬毒ﾃ麺廣
+	// 砂糖関連, Sugar-related
 	public void setLookSuger(boolean pFlag) {
 		mstatLookSuger = pFlag;
 		setMaidFlags(pFlag, dataWatch_Flags_LooksSugar);
@@ -2774,9 +2835,10 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾆ馳ﾆ抵ｿｽﾆ鍛・ｽE・ｽE・ｽE窶堋ｱ窶堙ｪ窶堙搾ｿｽE・ｽE・ｽE・ｽﾂｻ窶愬独鍛・ｽI・ｽI
-	 * motion : ﾋ徨窶堙ｰ・ｽU窶堙ｩ窶堋ｩ・ｽH
-	 * recontract : ﾅ胆窶禿ｱ窶ｰ窶樞卍ｷﾅ津ｸ窶ｰﾃ竿但ﾆ椎・ｽH
+	 * ペロッ・・・これは・・・砂糖ッ！！
+	 * Tsu sugar ... Gin-san ... This! !
+	 * motion : 腕を振るか？, Or arm waving?
+	 * recontract : 契約延長効果アリ？, 契約延長効果アリ？
 	 */
 	public void eatSugar(boolean motion, boolean recontract) {
 		if (motion) {
@@ -2789,44 +2851,48 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		mod_LMM_littleMaidMob.Debug(("eat Suger." + worldObj.isRemote));
 		
 		if (recontract) {
-			// ﾅ胆窶禿ｱﾅﾃｺﾅﾃ披堙娯ｰ窶樞卍ｷ
+			// 契約期間の延長, Extension of term of agreement
 			maidContractLimit += 24000;
 			if (maidContractLimit > 168000) {
 				maidContractLimit = 168000;	// 24000 * 7
 			}
 		}
 		
-		// ﾅｽb窶凖ｨ・ｽﾋ・費ｿｽ
+		// 暫定処理, Preliminary processing
 		if (maidAvatar != null) {
 			maidAvatar.getFoodStats().addStats(20, 20F);
 		}
 	}
 
 
-	// 窶堋ｨﾅｽdﾅｽ窶独蛋ﾆ停ｦ
+	// お仕事チュ, Your job Ju
 	/**
-	 * ﾅｽdﾅｽ窶凪吮窶堋ｩ窶堙・堋､窶堋ｩ窶堙鯉ｿｽﾃ昶凖ｨ
+	 * 仕事中かどうかの設定
+	 * Set whether or not at work
 	 */
 	public void setWorking(boolean pFlag) {
 		mstatWorkingCount.setEnable(pFlag);
 	}
 	
 	/**
-	 * ﾅｽdﾅｽ窶凪吮窶堋ｩ窶堙・堋､窶堋ｩ窶堙ｰ窶｢ﾃ披堋ｷ
+	 * 仕事中かどうかを返す
+	 * I return whether at work
 	 */
 	public boolean isWorking() {
 		return mstatWorkingCount.isEnable();
 	}
 
 	/**
-	 * ﾅｽdﾅｽ窶凪堋ｪ・ｽI窶板ｹ窶堋ｵ窶堙・堙窶脳窶ｰC窶堙ｰﾅﾃ懌堙溪堙・｢ﾃ披堋ｷ
+	 * 仕事が終了しても余韻を含めて返す
+	 * And returns, including the lingering work is finished
 	 */
 	public boolean isWorkingDelay() {
 		return mstatWorkingCount.isDelay();
 	}
 
 	/**
-	 * ﾆ暖ﾆ椎抵ｿｽ[ﾆ探・ｽ[ﾆ停夲ｿｽ[ﾆ檀窶堙鯉ｿｽﾃ昶凖ｨ
+	 * トレーサーモードの設定
+	 * Setting of tracer mode
 	 */
 	public void setTracer(boolean pFlag) {
 		maidTracer = pFlag;
@@ -2838,14 +2904,15 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾆ暖ﾆ椎抵ｿｽ[ﾆ探・ｽ[ﾆ停夲ｿｽ[ﾆ檀窶堙・堋窶堙ｩ窶堋ｩ・ｽH
+	 * トレーサーモードであるか？
+	 * Whether the tracer mode?
 	 */
 	public boolean isTracer() {
 		return maidTracer;
 	}
 
 
-	// 窶堋ｨ窶之窶堙柁停夲ｿｽ[ﾆ檀
+	// お遊びモード, For fun mode
 	public void setPlayingRole(int pValue) {
 		if (mstatPlayingRole != pValue) {
 			mstatPlayingRole = pValue;
@@ -2867,9 +2934,9 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 
-	// ﾅｽﾂｩ窶燃・ｽs窶慊ｮ
+	// 自由行動, Free action
 	public void setFreedom(boolean pFlag) {
-		// AIﾅﾃ麺廣窶堙姑椎ﾆ短ﾆ鍛ﾆ暖窶堙窶堋ｱ窶堋ｱ窶堙・ｿｽB
+		// AI関連のリセットもここで。, Reset of AI also relevant here.
 		maidFreedom = pFlag;
 		aiRestrictRain.setEnable(pFlag);
 		aiFreeRain.setEnable(pFlag);
@@ -2900,19 +2967,22 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 
 	/**
-	 * ﾆ探・ｽ[ﾆ弛・ｽ[窶堙免弾ﾆ誰ﾆ湛ﾆ蛋ﾆ槌槌恥ﾆ鍛ﾆ誰窶堙姑辰ﾆ停愴断ﾆ鍛ﾆ誰ﾆ湛窶堙ｰ窶倪披堙ｩ・ｽB
-	 * ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堙鯉ｿｽﾋ・費ｿｽ
+	 * サーバーへテクスチャパックのインデックスを送る。
+	 * クライアント側の処理
+	 * I will send the index of the texture pack to the server.
+	 * Client-side processing
 	 */
 	protected boolean sendTextureToServer() {
-		// 16bit窶堋窶堙ｪ窶堙屡弾ﾆ誰ﾆ湛ﾆ蛋ﾆ槌槌恥ﾆ鍛ﾆ誰窶堙鯉ｿｽ窶昶堙俄堋ｽ窶堙ｨ窶堙ｱ窶堙・
+		// 16bitあればテクスチャパックの数にたりんべ
+		// The Tarinbe the number of texture pack as long 16bit
 		MMM_TextureManager.instance.postSetTexturePack(this, textureData.getColor(), textureData.getTextureBox());
 		return true;
 	}
 
 
 	public boolean updateTexturePack() {
-		// ﾆ弾ﾆ誰ﾆ湛ﾆ蛋ﾆ槌槌恥ﾆ鍛ﾆ誰窶堋ｪ・ｽX・ｽV窶堋ｳ窶堙ｪ窶堙・堋｢窶堙遺堋｢窶堋ｩ窶堙ｰﾆ蛋ﾆ巽ﾆ鍛ﾆ誰
-		// ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､窶堙・
+		// テクスチャパックが更新されていないかをチェック, Check the texture pack is not being updated
+		// クライアント側の, Client-side
 		boolean lflag = false;
 		MMM_TextureBoxServer lbox;
 		
@@ -2946,7 +3016,7 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	public boolean updateMaidColor() {
-		// 窶慊ｯﾋ・ｪ・ｽﾂｫ窶堙姑蛋ﾆ巽ﾆ鍛ﾆ誰
+		// 同一性のチェック, Check of identity
 		int lc = getColor();
 		if (textureData.getColor() != lc) {
 			textureData.setColor(lc);
@@ -2956,7 +3026,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * 窶｢R窶堙固ｽ・ｽ窶堋ｿﾅｽﾃ･
+	 * 紐の持ち主
+	 * Owner of the string
 	 */
 	public void updateGotcha() {
 		int lid = dataWatcher.getWatchableObjectInt(dataWatch_Gotcha);
@@ -2984,7 +3055,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 
 	/**
-	 * 窶ｹ|・ｽ\窶堋ｦ窶堙ｰ・ｽX・ｽV
+	 * 弓構えを更新
+	 * Update bow stance
 	 */
 	public void updateAimebow() {
 		boolean lflag = (maidAvatar != null && maidAvatar.isUsingItemLittleMaid()) || mstatAimeBow;
@@ -2997,7 +3069,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 
 
 	/**
-	 * ﾅeﾅｽﾃｭﾆ稚ﾆ停ｰﾆ丹窶堙姑但ﾆ鍛ﾆ致ﾆ断・ｽ[ﾆ暖
+	 * 各種フラグのアップデート
+	 * Update of various flags
 	 */
 	public void updateMaidFlagsClient() {
 		int li = dataWatcher.getWatchableObjectInt(dataWatch_Flags);
@@ -3014,9 +3087,9 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾆ稚ﾆ停ｰﾆ丹ﾅ嘆窶堙俄冤窶堙ｰﾆ短ﾆ鍛ﾆ暖・ｽB
-	 * @param pCheck・ｽF 窶佚趣ｿｽﾃ帚冤・ｽB
-	 * @param pFlags・ｽF 窶佚趣ｿｽﾃ嵌稚ﾆ停ｰﾆ丹・ｽB
+	 * フラグ群に値をセット。, Set a value to the flag group.
+	 * @param pCheck: 対象値。, Target value.
+	 * @param pFlags: 対象フラグ。, Target flag.
 	 */
 	public void setMaidFlags(boolean pFlag, int pFlagvalue) {
 		int li = dataWatcher.getWatchableObjectInt(dataWatch_Flags);
@@ -3025,14 +3098,16 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾅｽw窶凖ｨ窶堋ｳ窶堙ｪ窶堋ｽﾆ稚ﾆ停ｰﾆ丹窶堙ｰﾅl窶慊ｾ
+	 * 指定されたフラグを獲得
+	 * Earn the specified flag
 	 */
 	public boolean getMaidFlags(int pFlagvalue) {
 		return (dataWatcher.getWatchableObjectInt(dataWatch_Flags) & pFlagvalue) > 0;
 	}
 
 	/**
-	 *  窶藩懌堋ｫﾋ徨窶堙鯉ｿｽﾃ昶凖ｨ
+	 * 利き腕の設定
+	 * Setting of Handedness
 	 */
 	public void setDominantArm(int pindex) {
 		if (mstatSwingStatus.length <= pindex) return;
@@ -3067,9 +3142,9 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		textureData.setTexturePackName(pTextureBox);
 		setTextureNames();
 		mod_LMM_littleMaidMob.Debug("ID:%d, TextureModel:%s", entityId, textureData.getTextureName(0));
-		// ﾆ停堡断ﾆ停ｹ窶堙鯉ｿｽ窶ｰﾅﾃｺ窶ｰﾂｻ
+		// モデルの初期化, Model initialization
 		((MMM_TextureBox)textureData.textureBox[0]).models[0].setCapsValue(MMM_IModelCaps.caps_changeModel, maidCaps);
-		// ﾆ湛ﾆ耽ﾆ池窶堙娯｢t窶堋ｯ窶佚問堋ｦ
+		// スタビの付け替え, The replacement of the stabilizer
 //		for (Entry<String, MMM_EquippedStabilizer> le : pEntity.maidStabilizer.entrySet()) {
 //			if (le.getValue() != null) {
 //				le.getValue().updateEquippedPoint(pEntity.textureModel0);
@@ -3080,7 +3155,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * Client窶廃
+	 * Client用
+	 * for Client
 	 */
 	public void setTextureNames() {
 		if (!textureData.setTextureNames()) {
@@ -3137,10 +3213,11 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 		return textureData;
 	}
 
-	// Tileﾅﾃ滅淡
+	// Tile関係, Tile relationship
 
 	/**
-	 * ﾅｽg窶堙≫堙・堋｢窶堙ｩTile窶堋ｩ窶堙・堋､窶堋ｩ窶敖ｻ窶凖ｨ窶堋ｵ窶堙・｢ﾃ披堋ｷ・ｽB
+	 * 使っているTileかどうか判定して返す。
+	 * And returns it is determined whether Tile are using.
 	 */
 	public boolean isUsingTile(TileEntity pTile) {
 		if (isActiveModeClass()) {
@@ -3172,7 +3249,8 @@ public class LMM_EntityLittleMaid extends EntityTameable implements MMM_ITexture
 	}
 
 	/**
-	 * ﾆ抵ｿｽ・ｽ[ﾆ谷ﾆ停ｹ窶｢ﾃ擾ｿｽ窶昶堙欝ile窶堙戸・岩冰窶堙ｰ窶愿ｼ窶堙ｪ窶堙ｩ・ｽB
+	 * 使っているTileかどうか判定して返す。
+	 * And returns it is determined whether Tile are using.
 	 */
 	public boolean getTilePos(int pIndex) {
 		if (pIndex < maidTiles.length && maidTiles[pIndex] != null) {

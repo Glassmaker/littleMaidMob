@@ -85,7 +85,7 @@ public class LMM_EntityAIFleeRain extends EntityAIBase implements LMM_IEntityAI 
 		return null;
 	}
 
-	// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽs繝ｻ・ｽ・り・繝ｻ・ｽt繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽO
+	// 実行可能フラグ, Executable flag
 	@Override
 	public void setEnable(boolean pFlag) {
 		isEnable = pFlag;

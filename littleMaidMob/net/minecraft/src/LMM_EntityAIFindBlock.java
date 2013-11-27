@@ -36,7 +36,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 			return fmodeBase.shouldBlock(theMaid.maidMode);
 		}
 		
-		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽT・ｽ[・ｽ`
+		// ターゲットをサーチ, Search on target
 		int lx = MathHelper.floor_double(theMaid.posX);
 		int ly = MathHelper.floor_double(theMaid.posY);
 		int lz = MathHelper.floor_double(theMaid.posZ);
@@ -49,7 +49,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 		MMM_EntityDummy.clearDummyEntity(theMaid);
 		boolean flagdammy = false;
 		
-		// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ 
+		// CW方向に検索領域を広げる , I expand the search area in the CW direction
 		for (int d = 0; d < 4; d++) {
 			for (int a = 0; a < 18; a += 2) {
 				int del = a / 2;
@@ -132,19 +132,19 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 	@Override
 	public boolean continueExecuting() {
 		fmodeBase.updateBlock();
-		// ・ｽﾚ難ｿｽ・ｽ・ｽ・ｽﾍ継・ｽ・ｽ
+		// 移動中は継続, Continue moving
 		if (!theMaid.getNavigator().noPath()) return true;
 		
 		double ld = theMaid.getDistanceTilePos();
 		if (ld > 100.0D) {
-			// ・ｽ・ｽ・ｽG・ｽﾍ囲外
+			// 索敵範囲外, Searching for the enemy out of range
 			theMaid.getActiveModeClass().farrangeBlock();
 			return false;
 		} else if (ld > 5.0D) {
-			// ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽO
+			// 射程距離外, Range out of range
 			return theMaid.getActiveModeClass().outrangeBlock(theMaid.maidMode);
 		} else {
-			// ・ｽﾋ抵ｿｽ・ｽ・ｽ・ｽ・ｽ
+			// 射程距離, Firing range
 			return theMaid.getActiveModeClass().executeBlock(theMaid.maidMode);
 		}
 	}
@@ -161,7 +161,7 @@ public class LMM_EntityAIFindBlock extends EntityAIBase implements LMM_IEntityAI
 
 	@Override
 	public void updateTask() {
-		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽ・ｽ・ｽﾂゑｿｽ・ｽﾄゑｿｽ・ｽ・ｽ
+		// ターゲットを見つけている, I have found the target
 		theMaid.looksTilePos();
 	}
 

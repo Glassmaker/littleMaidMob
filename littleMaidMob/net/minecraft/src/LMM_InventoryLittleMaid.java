@@ -26,15 +26,18 @@ import net.minecraft.world.Explosion;
 public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	/**
-	 * ・ｽﾃ・佚･ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎・ｽ窶・
+	 * 最大インベントリ数
+	 * The maximum number of inventory
 	 */
 	public static final int maxInventorySize = 18;
 	/**
-	 * ﾆ棚・ｽ[ﾆ段・ｽ[
+	 * オーナー
+	 * Owner
 	 */
 	public LMM_EntityLittleMaid entityLittleMaid;
 	/**
-	 * ﾆ湛ﾆ抵ｿｽﾆ鍛ﾆ暖窶｢ﾃ擾ｿｽXﾆ蛋ﾆ巽ﾆ鍛ﾆ誰窶廃
+	 * スロット変更チェック用
+	 * Slot change check
 	 */
 	public ItemStack prevItems[];
 	
@@ -81,7 +84,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	@Override
 	public int getSizeInventory() {
-		// ﾋ・ｪ窶ｰﾅｾ
+		// 一応, Once
 		return mainInventory.length + armorInventory.length;
 	}
 
@@ -107,13 +110,13 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	@Override
 	public int getTotalArmorValue() {
-		// ・ｽg窶堙俄吮ｦ窶堋ｯ窶堙・堋｢窶堙ｩﾆ但・ｽ[ﾆ筑・ｽ[窶堙娯塗ﾅ津､窶氾坂堙鯉ｿｽ窶｡ﾅｽZ
-		// 窶慊ｪ窶｢窶斃・闇O
+		// 身に着けているアーマーの防御力の合算, Combined defense of the armor wears
+		// 頭部以外, Except for the head
 		ItemStack lis = armorInventory[3];
 		armorInventory[3] = null;
 		// int li = super.getTotalArmorValue() * 20 / 17;
 		int li = super.getTotalArmorValue();
-		// ﾅ窶｢窶｢ﾂｪ窶堙娯｢ﾃ｢・ｽﾂｳ
+		// 兜分の補正, Correction of helmet worth
 		for (int lj = 0; lj < armorInventory.length; lj++) {
 			if (armorInventory[lj] != null
 					&& armorInventory[lj].getItem() instanceof ItemArmor) {
@@ -126,8 +129,8 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 
 	@Override
 	public void damageArmor(float pDamage) {
-		// 窶倪｢窶敕ｵﾆ但・ｽ[ﾆ筑・ｽ[窶堙俄佚寂堋ｷ窶堙ｩﾆ胆ﾆ抵ｿｽ・ｽ[ﾆ淡
-		// 窶慊ｪ窶｢窶昶堙搾ｿｽﾅ毒O
+		// 装備アーマーに対するダメージ, The damage to the equipment Armor
+		// 頭部は除外, Head exclusion
 		ItemStack lis = armorInventory[3];
 		armorInventory[3] = null;
 		super.damageArmor(pDamage);
@@ -144,7 +147,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 		ItemStack itemstack = getStackInSlot(index);
 		if (itemstack != null) {
 			if (itemstack.getItem() instanceof ItemAxe) {
-				// ﾆ但ﾆ鍛ﾆ誰ﾆ湛窶堙鯉ｿｽUﾅ停壺氾坂堙ｰ窶｢ﾃ｢・ｽﾂｳ
+				// アックスの攻撃力を補正, The correction attack power of Axe
 				return itemstack.getDamageVsEntity(entity) * 3 / 2 + 1;
 
 			} else {
@@ -156,10 +159,10 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 */
 	public void dropAllItems(boolean detonator) {
-		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙ｰﾆ置ﾆ蛋ﾆ筑ﾆ単ﾆ抵ｿｽ・ｽI
+		// インベントリをブチマケロ！, The Buchimakero inventory!
 		Explosion lexp = null;
 		if (detonator) {
-			// Mob窶堙俄堙ｦ窶堙ｩ窶挧窶ｰﾃｳ窶堙鯉ｿｽﾂ･窶敕ｱ
+			// Mobによる破壊の是非, All means of destruction by Mob
 			lexp = new Explosion(entityLittleMaid.worldObj, entityLittleMaid,
 					entityLittleMaid.posX, entityLittleMaid.posY, entityLittleMaid.posZ, 3F);
 			lexp.isFlaming = false;
@@ -173,7 +176,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 				if (detonator && isItemExplord(i)) {
 					int j = it.getItem().itemID;
 					for (int l = 0; l < it.stackSize; l++) {
-						// 窶敘｡窶禿ｲ窶堙披堋ｿ窶堙懌堋ｯ
+						// 爆薬ぶちまけ, The dumped explosives
 						((BlockTNT) Block.blocksList[j]).onBlockDestroyedByExplosion(
 								entityLittleMaid.worldObj,
 								MathHelper.floor_double(entityLittleMaid.posX)
@@ -224,7 +227,8 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	/**
-	 * 窶慊ｪ窶｢窶昶堙娯凖・ｰﾃ・但ﾆ辰ﾆ弾ﾆ停ぎ窶堙ｰ窶｢ﾃ披堋ｷ・ｽB
+	 * 頭部の追加アイテムを返す。
+	 * I return additional items of the head.
 	 */
 	public ItemStack getHeadMount() {
 		return mainInventory[mainInventory.length - 1];
@@ -237,7 +241,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected int getInventorySlotContainItem(int itemid) {
-		// ﾅｽw窶凖ｨ窶堋ｳ窶堙ｪ窶堋ｽﾆ但ﾆ辰ﾆ弾ﾆ停ぎID窶堙娯｢ﾂｨ窶堙ｰﾅｽ・ｽ窶堙≫堙・堋｢窶堙ｪ窶堙寂｢ﾃ披堋ｷ
+		// 指定されたアイテムIDの物を持っていれば返す, And return if you have a thing of the item ID specified
 		for (int j = 0; j < mainInventory.length; j++) {
 			if (mainInventory[j] != null && mainInventory[j].itemID == itemid) {
 				return j;
@@ -248,7 +252,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected int getInventorySlotContainItem(Class itemClass) {
-		// ﾅｽw窶凖ｨ窶堋ｳ窶堙ｪ窶堋ｽﾆ但ﾆ辰ﾆ弾ﾆ停ぎﾆ誰ﾆ停ｰﾆ湛窶堙娯｢ﾂｨ窶堙ｰﾅｽ・ｽ窶堙≫堙・堋｢窶堙ｪ窶堙寂｢ﾃ披堋ｷ
+		// 指定されたアイテムクラスの物を持っていれば返す, And return if you have a thing of the items specified class
 		for (int j = 0; j < mainInventory.length; j++) {
 			// if (mainInventory[j] != null &&
 			// mainInventory[j].getItem().getClass().isAssignableFrom(itemClass))
@@ -263,7 +267,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected int getInventorySlotContainItemAndDamage(int itemid, int damege) {
-		// 窶堙・胆ﾆ抵ｿｽ・ｽ[ﾆ淡窶冤
+		// とダメージ値, Damage value
 		for (int i = 0; i < mainInventory.length; i++) {
 			if (mainInventory[i] != null && mainInventory[i].itemID == itemid
 					&& mainInventory[i].getItemDamage() == damege) {
@@ -275,20 +279,20 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	protected ItemStack getInventorySlotContainItemStack(int itemid) {
-		// 窶堋｢窶堙ｧ窶堙ｱ窶堋ｩ窶堙・ｽH
+		// いらんかも？, Irankamo?
 		int j = getInventorySlotContainItem(itemid);
 		return j > -1 ? mainInventory[j] : null;
 	}
 
 	protected ItemStack getInventorySlotContainItemStackAndDamege(int itemid,
 			int damege) {
-		// 窶堋｢窶堙ｧ窶堙ｱ窶堋ｩ窶堙・ｽH
+		// いらんかも？ Irankamo?
 		int j = getInventorySlotContainItemAndDamage(itemid, damege);
 		return j > -1 ? mainInventory[j] : null;
 	}
 
 	public int getInventorySlotContainItemFood() {
-		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙鯉ｿｽﾃ・ｿｽ窶ｰ窶堙鯉ｿｽH窶板ｿ窶堙ｰ窶｢ﾃ披堋ｷ
+		// インベントリの最初の食料を返す, I return the first food of the inventory
 		for (int j = 0; j < mainInventory.length; j++) {
 			ItemStack mi = mainInventory[j];
 			if (mi != null && mi.getItem() instanceof ItemFood) {
@@ -301,15 +305,15 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public int getSmeltingItem() {
-		// 窶卍ｲ窶費ｿｽ窶ｰﾃや拿ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙ｰ窶｢ﾃ披堋ｷ
+		// 調理可能アイテムを返す, I return the item can cook
 		for (int i = 0; i < mainInventory.length; i++) {
 			if (isItemSmelting(i) && i != currentItem) {
 				ItemStack mi = mainInventory[i];
 				if (mi.getMaxDamage() > 0 && mi.getItemDamage() == 0) {
-					// ・ｽC窶｢ﾅ独椎槌歎ﾆ痴窶佚趣ｿｽﾃｴ
+					// 修復レシピ対策, Repair measures recipe
 					continue;
 				}
-				// ﾆ椎槌歎ﾆ痴窶佚寂ｰﾅｾ窶｢i
+				// レシピ対応品, Recipes counterparts
 				return i;
 			}
 		}
@@ -317,9 +321,10 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public int getInventorySlotContainItemPotion(boolean flag, int potionID, boolean isUndead) {
-		// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙鯉ｿｽﾃ・ｿｽ窶ｰ窶堙姑竹・ｽ[ﾆ歎ﾆ停｡ﾆ停懌堙ｰ窶｢ﾃ披堋ｷ
-		// flag = true: ・ｽUﾅ停夲ｿｽEﾆ断ﾆ弛ﾆ稚ﾅ地・ｽA false: 窶ｰﾃｱ窶｢ﾅ難ｿｽE窶｢ﾃ｢・ｽ窶｢ﾅ地
-		// potionID: 窶牌窶ｹ・ｽﾆ竹・ｽ[ﾆ歎ﾆ停｡ﾆ停懌堙栗D
+		// インベントリの最初のポーションを返す, I return a portion of the first inventory
+		// flag = true: 攻撃・デバフ系, Attack-debuff system
+		// false: 回復・補助系, Recovery and auxiliary system
+		// potionID: 要求ポーションのID, 要求ポーションのID
 		for (int j = 0; j < mainInventory.length; j++) {
 			if (mainInventory[j] != null
 					&& mainInventory[j].getItem() instanceof ItemPotion) {
@@ -361,7 +366,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public boolean isItemBurned(int index) {
-		// 窶抒窶堋ｦ窶堙ｩﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｩ?
+		// 燃えるアイテムか?, The item burn?
 		return index > -1 && isItemBurned(getStackInSlot(index));
 	}
 
@@ -371,7 +376,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public boolean isItemSmelting(int index) {
-		// 窶抒窶堋ｦ窶堙ｩﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堋ｩ?
+		// 燃えるアイテムか?, The item burn?
 		return isItemSmelting(getStackInSlot(index));
 	}
 
@@ -380,7 +385,7 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public boolean isItemExplord(int index) {
-		// 窶敘｡窶敖ｭ窶｢ﾂｨ・ｽH
+		// 爆発物？, Explosives?
 		return (index >= 0) && isItemExplord(getStackInSlot(index));
 	}
 
@@ -392,9 +397,9 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 				li instanceof ItemBlock && Block.blocksList[li.itemID].blockMaterial == Material.tnt);
 	}
 
-	// ﾆ辰ﾆ停愴遅ﾆ停愴暖ﾆ椎窶堙娯彎窶倪版ﾃ麺廣
+	// インベントリの転送関連, Transport-related inventory
 	public boolean isChanged(int pIndex) {
-		// 窶｢ﾃ鞘ｰﾂｻ窶堋ｪ窶堋窶堙≫堋ｽ窶堋ｩ窶堙娯敖ｻ窶凖ｨ
+		// 変化があったかの判定, Determined whether there was a change
 		ItemStack lis = getStackInSlot(pIndex);
 		return !ItemStack.areItemStacksEqual(lis, prevItems[pIndex]);
 		// return (lis == null || prevItems[pIndex] == null) ?
@@ -408,13 +413,14 @@ public class LMM_InventoryLittleMaid extends InventoryPlayer {
 	}
 
 	public void resetChanged(int pIndex) {
-		// ・ｽﾋ・費ｿｽ・ｽﾃ鞘堙昶堙姑蛋ﾆ巽ﾆ鍛ﾆ誰
+		// 処理済みのチェック, Check the processed
 		ItemStack lis = getStackInSlot(pIndex);
 		prevItems[pIndex] = (lis == null ? null : lis.copy());
 	}
 
 	public void clearChanged() {
-		// 窶ｹﾂｭ・ｽﾂｧﾆ椎ﾆ抵ｿｽ・ｽ[ﾆ檀窶廃・ｽAﾆ胆ﾆ蓄・ｽ[窶堙ｰ窶徙ﾋ弯窶堋ｵ窶堙・ｹﾂｭ・ｽﾂｧ窶廬窶堙架・ｪﾅｽﾃｼ窶堋ｳ窶堋ｹ窶堙ｩ
+		// 強制リロード用、ダミーを登録して強制的に一周させる
+		// It is round, forced to register for forced reload, the dummy
 		ItemStack lis = new ItemStack(Item.sugar);
 		for (int li = 0; li < prevItems.length; li++) {
 			prevItems[li] = lis;

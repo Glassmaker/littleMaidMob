@@ -44,21 +44,22 @@ public class LMM_EntityAIAvoidPlayer extends EntityAIBase implements
 
 		theMaster = theMaid.mstatMasterEntity;
 
-		// ・ｽﾎ象は鯉ｿｽ・ｽ・ｽ・ｽ驍ｩ・ｽH・ｽﾄゑｿｽ・ｽ・ｽ・ｽ黷｢・ｽ・ｽﾈゑｿｽ・ｽﾋ？
+		// 対象は見えるか？てかこれいらなくね
+		// You see the target? Heck I not need this?
 		if (!theMaid.getEntitySenses().canSee(theMaster)) {
 			return false;
 		}
 
-		// ・ｽﾚ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		// 移動先を策定, To develop a destination
 		Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(
 				theMaid, minDist, 7, Vec3.createVectorHelper(theMaster.posX,
 						theMaster.posY, theMaster.posZ));
 
-		// ・ｽﾚ難ｿｽ・ｽ謔ｪ・ｽ・ｽ・ｽ・ｽ
+		// 移動先が無い, There is no destination
 		if (vec3d == null) {
 			return false;
 		}
-		// ・ｽﾚ難ｿｽ・ｽ・ｽﾌ具ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾟゑｿｽ
+		// 移動先の距離が近い, Distance of the destination is close
 		if (theMaster.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) < theMaid.mstatMasterDistanceSq) {
 			return false;
 		}
@@ -88,11 +89,11 @@ public class LMM_EntityAIAvoidPlayer extends EntityAIBase implements
 	}
 
 	public void setActive() {
-		// ・ｽ・ｽ・ｽ・ｽJ・ｽn
+		// 動作開始, Operation start
 		isActive = true;
 	}
 
-	// ・ｽ・ｽ・ｽs・ｽﾂ能・ｽt・ｽ・ｽ・ｽO
+	// 実行可能フラグ, Executable flag
 	@Override
 	public void setEnable(boolean pFlag) {
 		isEnable = pFlag;

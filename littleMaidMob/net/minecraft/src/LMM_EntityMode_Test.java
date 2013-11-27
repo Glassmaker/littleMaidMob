@@ -23,7 +23,8 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	
 	
 	/**
-	 * ・ｽe・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽB 
+	 * 各種実験用。 
+	 * For various experiments.
 	 */
 	public LMM_EntityMode_Test(LMM_EntityLittleMaid pEntity) {
 		super(pEntity);
@@ -48,7 +49,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	public void showSpecial(LMM_RenderLittleMaid prenderlittlemaid, double px, double py, double pz) {
 		if (!isEnable) return;
 		
-		// ・ｽ・ｽ・ｽO・ｽﾆゑｿｽ・ｽﾌ表・ｽ・ｽ・ｽp
+		// 名前とかの表示用, Display of name, etc.
 		List<String> llist = new ArrayList<String>();
 		double ld;
 		
@@ -95,7 +96,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 	}
 
 	
-	// ・ｽf・ｽo・ｽb・ｽO・ｽ\・ｽ・ｽ・ｽR・ｽ}・ｽ・ｽ・ｽh・ｽﾇ会ｿｽ・ｽp
+	// デバッグ表示コマンド追加用, Display debug command for adding
 	
 	@Override
 	public int compareTo(Object arg0) {
@@ -169,7 +170,7 @@ public class LMM_EntityMode_Test extends LMM_EntityModeBase implements ICommand 
 
 	@Override
 	public List addTabCompletionOptions(ICommandSender var1, String[] var2) {
-		// ・ｽ・ｽ・ｽﾉ変奇ｿｽ・ｽ・ｽ・ｽﾈゑｿｽ
+		// 特に変換しない, You do not want to convert, especially
 		return null;
 	}
 

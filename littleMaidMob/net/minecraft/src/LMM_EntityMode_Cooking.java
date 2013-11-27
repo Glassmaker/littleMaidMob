@@ -77,11 +77,12 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 		int li;
 		ItemStack litemstack;
 		
-		// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ[繝ｻ・ｽh繝ｻ・ｽ・我ｼ夲ｽｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・願ｲｻ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽA繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽx繝ｻ・ｽD繝ｻ・ｽ繝ｻ・ｽ
+		// モードに応じた識別判定、速度優先
+		// Identification determined according to the mode and speed priority
 		switch (pMode) {
 		case mmode_Cooking :
 			for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
-				// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
+				// 調理, Cooking
 				if (owner.maidInventory.isItemBurned(li)) {
 					return li;
 				}
@@ -101,7 +102,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 	public boolean isSearchBlock() {
 		if (!super.isSearchBlock()) return false;
 		
-		// 繝ｻ・ｽR繝ｻ・ｽ・・い繝ｻ・ｽC繝ｻ・ｽe繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｑ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽH
+		// 燃焼アイテムを持っている？, You have a burning item?
 		if (owner.getCurrentEquippedItem() != null && owner.maidInventory.getSmeltingItem() > -1) {
 			fDistance = Double.MAX_VALUE;
 			owner.clearTilePos();
@@ -125,9 +126,9 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		
-		// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽE繝ｻ・ｽ・後・・ｿ・ｽ繝ｻ・ｽC繝ｻ・ｽh繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
+		// 世界のメイドから, Made from the world's
 		if (checkWorldMaid(ltile)) return false;
-		// 繝ｻ・ｽg繝ｻ・ｽp繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｑ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ}繝ｻ・ｽ・医ｉ縺昴・・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｵゅ・・ｽ繝ｻ・ｽ
+		// 使用していた竈ならそこで終了, If furnace that was used where the end
 		if (owner.isUsingTile(ltile)) return true;
 		
 		double ldis = owner.getDistanceTilePosSq(ltile);
@@ -151,7 +152,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 		int li;
 		
 		if (owner.getSwingStatusDominant().canAttack()) {
-			// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽi繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
+			// 完成品回収, Finished product recovery
 			litemstack = ltile.getStackInSlot(2);
 			if (litemstack != null) {
 				if (litemstack.stackSize > 0) {
@@ -169,14 +170,14 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				ltile.setInventorySlotContents(2, null);
 			}
 				
-			// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・り・繝ｻ・ｽi繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ}繝ｻ・ｽ・峨⊃繝ｼ繝ｻ・ｽ繝ｻ・ｽ
+			// 調理可能品を竈にぽーい, The POY in a furnace capable of cooking products
 			if (!lflag && ltile.getStackInSlot(0) == null) {
 				litemstack = ltile.getStackInSlot(2);
 				li = owner.maidInventory.getSmeltingItem();
 				owner.setEquipItem(li);
 				if (li > -1) {
 					litemstack = owner.maidInventory.getStackInSlot(li);
-					// 繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽV繝ｻ・ｽs繝ｻ・ｽ・惹ｼ夲ｽｿ・ｽ繝ｻ・ｽi
+					// レシピ対応品, Recipes counterparts
 					if (litemstack.stackSize >= ltile.getInventoryStackLimit()) {
 						ltile.setInventorySlotContents(0, litemstack.splitStack(ltile.getInventoryStackLimit()));
 					} else {
@@ -191,7 +192,7 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				}
 			}
 			
-			// 繝ｻ・ｽ髣疲劼・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ・檎㏍繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・帙・繝ｻ・ｽ繝ｻ・ｽ
+			// 手持ちの燃料をぽーい, The POY fuel on hand
 			if (!lflag && ltile.getStackInSlot(1) == null && ltile.getStackInSlot(0) != null) {
 				owner.getNextEquipItem();
 				litemstack = owner.getCurrentEquippedItem();
@@ -212,7 +213,8 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 					if (ltile.isBurning()) {
 						lflag = true;
 					} else {
-						// 繝ｻ・ｽR繝ｻ・ｽ遶・ｽｹ繝ｻ・ｽ繝ｻ・ｽA繝ｻ・ｽC繝ｻ・ｽe繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・↑繧托ｽｿ・ｽ繝ｻ・ｽ・後〒謚ｵ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・り・繝ｻ・ｽi繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
+						// 燃やせるアイテムを持ってないので調理可能品を回収
+						// he recovered product can cook As I do not have the item burnable
 						ItemStack litemstack2 = ltile.getStackInSlotOnClosing(0);
 						if (owner.maidInventory.addItemStackToInventory(litemstack2)) {
 							owner.playSound("random.pop");
@@ -226,7 +228,8 @@ public class LMM_EntityMode_Cooking extends LMM_EntityModeBlockBase {
 				}
 			} 
 			
-			// 繝ｻ・ｽR繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽI繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・・ｑ・ｿ・ｽ・後↓辯・・・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・我ｼ夲ｽｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ・医ｑ・ｿ・ｽ繝ｻ・ｽ繝ｻ・ｽ繝ｻ・ｽ
+			// 燃え終わってるのに燃料口に何かあるなら回収する
+			// To recover if there's something in the fuel inlet even though the finished burning
 			if (!lflag && !ltile.isBurning() && ltile.getStackInSlot(1) != null) {
 				ItemStack litemstack2 = ltile.getStackInSlotOnClosing(1);
 				if (owner.maidInventory.addItemStackToInventory(litemstack2)) {

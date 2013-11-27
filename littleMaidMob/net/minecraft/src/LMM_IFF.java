@@ -22,8 +22,10 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.server.MinecraftServer;
 
 /**
- * IFF窶堙ｰﾅﾃ・費ｿｽ窶堋ｷ窶堙ｩ窶堋ｽ窶堙溪堙姑誰ﾆ停ｰﾆ湛・ｽA窶堙吮堙堡筑ﾆ停ｹﾆ蛋窶廃・ｽB
- * username : null=ﾆ抵ｿｽ・ｽ[ﾆ谷ﾆ停ｹﾆ致ﾆ椎槌辰ﾅｽﾅｾ・ｽADefault窶堙ｰﾅｽg窶堋､
+ * IFFを管理するためのクラス、ほぼマルチ用。
+ * username : null=ローカルプレイ時、Defaultを使う
+ * Class for managing IFF, multi for almost.
+ * username : null = local play at the time, I use the Default
  */
 public class LMM_IFF {
 
@@ -32,16 +34,19 @@ public class LMM_IFF {
 	public static final int iff_Friendry = 2;
 
 	/**
-	 * ﾆ抵ｿｽ・ｽ[ﾆ谷ﾆ停ｹ窶廃・ｽAﾅｽﾃ｡窶堋ｵ窶堋ｭ窶堙哉筑ﾆ停ｹﾆ蛋窶堙姑断ﾆ稚ﾆ辿ﾆ停ｹﾆ暖・ｽﾃ昶凖ｨ
+	 * ローカル用、若しくはマルチのデフォルト設定
+	 * For local, or default setting of multi-
 	 */
 	public static Map<String, Integer> DefaultIFF = new TreeMap<String, Integer>();
 	/**
-	 * ﾆ停・ｽ[ﾆ旦窶突・堙栗FF
+	 * ユーザ毎のIFF
+	 * IFF for each user
 	 */
 	public static Map<String, Map<String, Integer>> UserIFF = new HashMap<String, Map<String, Integer>>();
 
 	/**
-	 * IFF窶堙姑嘆ﾆ鍛ﾆ暖
+	 * IFFのゲット
+	 * Get the IFF
 	 */
 	public static Map<String, Integer> getUserIFF(String pUsername) {
 		if (pUsername == null) {
@@ -52,7 +57,7 @@ public class LMM_IFF {
 		}
 		
 		if (!UserIFF.containsKey(pUsername)) {
-			// IFF窶堋ｪ窶堙遺堋｢窶堙娯堙・ｿｽﾃｬ・ｽﾂｬ
+			// IFFがないので作成, Created because there is no IFF
 			if (pUsername.isEmpty()) {
 				UserIFF.put(pUsername, DefaultIFF);
 			} else {
@@ -61,7 +66,7 @@ public class LMM_IFF {
 				UserIFF.put(pUsername, lmap);
 			}
 		}
-		// ﾅﾃｹ窶堙俄堋窶堙ｩ
+		// 既にある, I already
 		return UserIFF.get(pUsername);
 	}
 
@@ -77,17 +82,17 @@ public class LMM_IFF {
 			if (pEntity instanceof LMM_EntityLittleMaid) {
 				switch (pIndex) {
 				case 0:
-					// 窶禿ｬ・ｽﾂｶﾅｽﾃｭ
+					// 野生種, Wild species
 					liff = LMM_IFF.iff_Unknown;
 					break;
 				case 1:
-					// ﾅｽﾂｩ窶｢ﾂｪ窶堙固胆窶禿ｱﾅｽﾃ・
+					// 自分の契約者, Subscribers of their own
 					pName = (new StringBuilder()).append(pName).append(":Contract").toString();
 					((LMM_EntityLittleMaid) pEntity).setContract(true);
 					liff = LMM_IFF.iff_Friendry;
 					break;
 				case 2:
-					// 窶伉ｼ・ｽl窶堙固胆窶禿ｱﾅｽﾃ・
+					// 他人の契約者, Subscribers of others
 					pName = (new StringBuilder()).append(pName).append(":Others").toString();
 					((LMM_EntityLittleMaid) pEntity).setContract(true);
 					liff = LMM_IFF.iff_Friendry;
@@ -96,10 +101,10 @@ public class LMM_IFF {
 			} else if (pEntity instanceof EntityOwnable) {
 				switch (pIndex) {
 				case 0:
-					// 窶禿ｬ・ｽﾂｶﾅｽﾃｭ
+					// 野生種, Wild species
 					break;
 				case 1:
-					// ﾅｽﾂｩ窶｢ﾂｪ窶堙娯ｰﾃ・几
+					// 自分の家畜, Livestock of their own
 					pName = (new StringBuilder()).append(pName).append(":Taim").toString();
 					if (pEntity instanceof EntityTameable) {
 						((EntityTameable) pEntity).setTamed(true);
@@ -107,7 +112,7 @@ public class LMM_IFF {
 					liff = LMM_IFF.iff_Friendry;
 					break;
 				case 2:
-					// 窶伉ｼ・ｽl窶堙娯ｰﾃ・几
+					// 他人の家畜, Livestock of others
 					pName = (new StringBuilder()).append(pName).append(":Others").toString();
 					if (pEntity instanceof EntityTameable) {
 						((EntityTameable) pEntity).setTamed(true);
@@ -122,12 +127,12 @@ public class LMM_IFF {
 				}
 			}
 			if (pMap != null) {
-				// 窶｢\ﾅｽﾂｦ窶廃Entity窶堙娯凖・ｰﾃ・
+				// 表示用Entityの追加, Adding display for Entity
 				pMap.put(pName, pEntity);
 				mod_LMM_littleMaidMob.Debug(pName + " added.");
 			}
 			
-			// IFF窶堙鯉ｿｽ窶ｰﾅﾃｺ窶冤
+			// IFFの初期値, The initial value of the IFF
 			if (!DefaultIFF.containsKey(pName)) {
 				if (pEntity instanceof IMob) {
 					liff = LMM_IFF.iff_Enemy;
@@ -140,7 +145,8 @@ public class LMM_IFF {
 	}
 
 	/**
-	 * 窶廨窶督｡窶｢ﾃｻﾅｽﾂｯ窶｢ﾃ岩敖ｻ窶凖ｨ
+	 * 敵味方識別判定
+	 * Identification friend or foe judgment
 	 */
 	public static int getIFF(String pUsername, String entityname) {
 		if (entityname == null) {
@@ -151,11 +157,13 @@ public class LMM_IFF {
 		if (lmap.containsKey(entityname)) {
 			lt = lmap.get(entityname);
 		} else if (lmap != DefaultIFF && DefaultIFF.containsKey(entityname)) {
-			// 窶督｢窶徙ﾋ弯窶堋ｾ窶堋ｯ窶堙⑤efault窶堙俄堙搾ｿｽﾃ昶凖ｨ窶堋ｪ窶堋窶堙ｩﾅｽﾅｾ窶堙坂冤窶堙ｰﾆ坦ﾆ痴・ｽ[
+			// 未登録だけどDefaultには設定がある時は値をコピー
+			// It is unregistered but it copies the value when there is set to Default
 			lt = DefaultIFF.get(entityname);
 			lmap.put(entityname, lt);
 		} else {
-			// 窶督｢窶徙ﾋ弯Entity窶堙鯉ｿｽﾃｪ・ｽ窶｡窶堙坂徙ﾋ弯窶慊ｮ・ｽﾃｬ
+			// 未登録Entityの場合は登録動作
+			// The registration operation in the case of unregistered Entity
 			int li = entityname.indexOf(":");
 			String ls;
 			if (li > -1) {
@@ -181,7 +189,8 @@ public class LMM_IFF {
 	}
 
 	/**
-	 * 窶廨窶督｡窶｢ﾃｻﾅｽﾂｯ窶｢ﾃ岩敖ｻ窶凖ｨ
+	 * 敵味方識別判定
+	 * Identification friend or foe judgment
 	 */
 	public static int getIFF(String pUsername, Entity entity) {
 		if (entity == null || !(entity instanceof EntityLivingBase)) {
@@ -190,7 +199,7 @@ public class LMM_IFF {
 		String lename = EntityList.getEntityString(entity);
 		String lcname = lename;
 		if (lename == null) {
-			// 窶督ｼ・ｽﾃ娯督｢窶凖ｨ窶ｹ`MOB・ｽAﾆ致ﾆ椎抵ｿｽ[ﾆ停橸ｿｽ[窶堙・堋ｩ・ｽH
+			// 名称未定義MOB、プレーヤーとか？, Name undefined MOB, such as player?
 			return iff_Friendry;
 			// return mod_LMM_littleMaidMob.Aggressive ? iff_Unknown :
 			// iff_Friendry;
@@ -199,11 +208,11 @@ public class LMM_IFF {
 		if (entity instanceof LMM_EntityLittleMaid) {
 			if (((LMM_EntityLittleMaid) entity).isContract()) {
 				if (((LMM_EntityLittleMaid) entity).getMaidMaster().contentEquals(pUsername)) {
-					// ﾅｽﾂｩ窶｢ﾂｪ窶堙・
+					// 自分の, My own
 					lcname = (new StringBuilder()).append(lename).append(":Contract").toString();
 					li = 1;
 				} else {
-					// 窶伉ｼ・ｽl窶堙・
+					// 他人の, Of others
 					lcname = (new StringBuilder()).append(lename).append(":Others").toString();
 					li = 2;
 				}
@@ -212,11 +221,11 @@ public class LMM_IFF {
 			String loname = ((EntityOwnable)entity).getOwnerName();
 			if (!loname.isEmpty()) {
 				if (loname.contentEquals(pUsername)) {
-					// ﾅｽﾂｩ窶｢ﾂｪ窶堙・
+					// 自分の, My own
 					lcname = (new StringBuilder()).append(lename).append(":Taim").toString();
 					li = 1;
 				} else {
-					// 窶伉ｼ・ｽl窶堙・
+					// 他人の, Of others
 					lcname = (new StringBuilder()).append(lename).append(":Others").toString();
 					li = 2;
 				}
@@ -229,9 +238,9 @@ public class LMM_IFF {
 	}
 
 	public static void loadIFFs() {
-		// ﾆ探・ｽ[ﾆ弛・ｽ[窶伉､窶堙・
+		// ーバー側の, Of Ba side
 		if (!MMM_Helper.isClient) {
-			// ﾆ探・ｽ[ﾆ弛・ｽ[窶伉､・ｽﾋ・費ｿｽ
+			// サーバー側処理, Server-side processing
 			loadIFF("");
 			File lfile = MinecraftServer.getServer().getFile("");
 			for (File lf : lfile.listFiles()) {
@@ -242,7 +251,7 @@ public class LMM_IFF {
 				}
 			}
 		} else {
-			// ﾆ誰ﾆ停ｰﾆ辰ﾆ但ﾆ停愴暖窶伉､
+			// クライアント側, Client side
 			loadIFF(null);
 		}
 	}
@@ -265,8 +274,8 @@ public class LMM_IFF {
 	}
 
 	public static void loadIFF(String pUsername) {
-		// IFF ﾆ稚ﾆ叩ﾆ辰ﾆ停ｹ窶堙娯愿・ｿｽﾅｾ窶堙・
-		// 窶慊ｮ・ｽﾃｬ窶堙哉探・ｽ[ﾆ弛・ｽ[窶伉､窶堙・・窶凖ｨ
+		// IFF ファイルの読込み, Read IFF file
+		// 動作はサーバー側で想定, Behavior is expected on the server side
 		File lfile = getFile(pUsername);
 		if (!(lfile.exists() && lfile.canRead())) {
 			return;
@@ -301,7 +310,7 @@ public class LMM_IFF {
 	}
 
 	public static void saveIFF(String pUsername) {
-		// IFF ﾆ稚ﾆ叩ﾆ辰ﾆ停ｹ窶堙鯉ｿｽ窶假ｿｽﾅｾ窶堙・
+		// IFF ファイルの書込み, Writing of the IFF file
 		File lfile = getFile(MMM_Helper.isClient ? null : pUsername);
 		Map<String, Integer> lmap = getUserIFF(pUsername);
 		
@@ -310,7 +319,7 @@ public class LMM_IFF {
 				FileWriter fw = new FileWriter(lfile);
 				BufferedWriter bw = new BufferedWriter(fw);
 				
-				// ﾆ暖ﾆ椎ﾆ狸・ｽ[ﾆ但ﾆ辰ﾆ弾ﾆ停ぎ窶堙姑椎ﾆ湛ﾆ暖
+				// トリガーアイテムのリスト, List of trigger items
 				for (Entry<Integer, List<Integer>> le : LMM_TriggerSelect
 						.getUserTrigger(pUsername).entrySet()) {
 					StringBuilder sb = new StringBuilder();

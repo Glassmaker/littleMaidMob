@@ -62,7 +62,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	}
 
 	protected boolean checkSnows(int x, int y, int z) {
-		// ・ｽ・ｽ閧ｪ・ｽ痰ｩ・ｽH
+		// 周りが雪か？, Around snow?
 		boolean f = true;
 		f &= owner.worldObj.getBlockId(x, y, z) == Block.snow.blockID;
 		f &= owner.worldObj.getBlockId(x + 1, y, z) == Block.snow.blockID;
@@ -80,7 +80,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 		int z = MathHelper.floor_double(owner.posZ);
 		PathEntity pe = null;
 		
-		// CW・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽﾌ茨ｿｽ・ｽ・ｽL・ｽ・ｽ・ｽ・ｽ 
+		// CW方向に検索領域を広げる , I expand the search area in the CW direction 
 		loop_search:
 			for (int a = 2; a < 18 && pe == null; a += 2) {
 				x--;
@@ -114,7 +114,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	protected void playingSnowWar() {
 		switch (fcounter) {
 		case 0:
-			// ・ｽL・ｽ・ｽﾊ全・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+			// 有り玉全部投げる, I throw all ball there
 			owner.setSitting(false);
 			owner.setSneaking(false);
 			if (!owner.getNextEquipItem()) {
@@ -123,7 +123,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 				owner.getNavigator().clearPathEntity();
 				fcounter = 1;
 			} else if (owner.getAttackTarget() == null) {
-				// ・ｽ・ｽ・ｽC・ｽh・ｽﾆプ・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽ[・ｽi・ｽ・ｽ・ｽ・ｽ・ｽﾊ）・ｽ・ｽ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ
+				// メイドとプレーヤー（無差別）をターゲットに, To the target (non-discrimination) and player-made
 				List<Entity> list = owner.worldObj.getEntitiesWithinAABBExcludingEntity(owner, owner.boundingBox.expand(16D, 4D, 16D));
 				for (Entity e : list) {
 					if (e != null && (e instanceof EntityPlayer || e instanceof LMM_EntityLittleMaid)) {
@@ -136,7 +136,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 			}
 			break;
 		case 1:
-			// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+			// 乱数加速, Random acceleration
 			owner.setAttackTarget(null);
 			if (owner.getNavigator().noPath()) {
 				fcounter = 2;
@@ -144,7 +144,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 			break;
 		
 		case 2:
-			// ・ｽ瘡ｴ・ｽ・ｽT・ｽ・ｽ
+			// 雪原を探す, I look for a snowy field
 			if (owner.getAttackTarget() == null && owner.getNavigator().noPath()) {
 				if (movePlaying()) {
 					fcounter = 3;
@@ -158,7 +158,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 //			isMaidChaseWait = true;
 			break;
 		case 3:
-			// ・ｽ瘡ｴ・ｽﾖ難ｿｽ・ｽ・ｽ
+			// 雪原へ到着, Arrival to the snowfield
 			if (owner.getNavigator().noPath()) {
 				if (checkSnows(
 						MathHelper.floor_double(owner.posX),
@@ -172,7 +172,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 						fcounter = 4;
 					}
 				} else {
-					// ・ｽﾄ鯉ｿｽ・ｽ・ｽ
+					// 再検索, Search
 					fcounter = 2;
 				}
 			}
@@ -181,7 +181,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 		case 5:
 		case 6:
 		case 7:
-			// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh
+			// リロード, Reload
 			if (owner.attackTime <= 0) {
 				if (owner.maidInventory.addItemStackToInventory(new ItemStack(Item.snowball))) {
 					owner.playSound("random.pop");
@@ -208,7 +208,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 			owner.setSitting(true);
 			break;
 		case 8:
-			// ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh
+			// リロード, Reload
 //			isMaidChaseWait = true;
 			if (owner.attackTime <= 0) {
 				if (owner.maidInventory.addItemStackToInventory(new ItemStack(Item.snowball))) {
@@ -236,18 +236,18 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	@Override
 	public void updateAITick(int pMode) {
 		if (owner.isFreedom()) {
-			// ・ｽ・ｽ・ｽR・ｽs・ｽ・ｽ・ｽ・ｽ・ｽﾌ固体は虎趣ｿｽ眈々・ｽﾆ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+			// 自由行動中の固体は虎視眈々と隙をうかがう。, Solid of free action in the gap and hear on the alert.
 			if (owner.worldObj.isDaytime()) {
-				// ・ｽ・ｽ・ｽﾔのゑｿｽ・ｽV・ｽ・ｽ
+				// 昼間のお遊び, For fun in the daytime
 				
-				// ・ｽ瘡ｴ・ｽ・ｽ・ｽ・ｽ
+				// 雪原判定, Snowfield decision
 				if (!owner.isPlaying()) {
-					// TODO:・ｽ・ｽ・ｽV・ｽﾑ費ｿｽ・ｽ・ｽ
+					// TODO:お遊び判定, Joyride decision
 					int xx = MathHelper.floor_double(owner.posX);
 					int yy = MathHelper.floor_double(owner.posY);
 					int zz = MathHelper.floor_double(owner.posZ);
 					
-					// 3x3・ｽ・ｽ・ｽ・ｽﾌ包ｿｽ・ｽ・ｽ・ｽﾈらお・ｽV・ｽﾑ費ｿｽ・ｽ閧ｪ・ｽ・ｽ・ｽ・ｽ
+					// 3x3が雪の平原ならお遊び判定が発生, Joyride judgment occurs if 3x3 is plain of snow
 					boolean f = true;
 					for (int z = -1; z < 2; z++) {
 						for (int x = -1; x < 2; x++) {
@@ -263,11 +263,11 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 					}
 					
 				} else if (owner.getPlayingRole() >= 0x8000) {
-					// ・ｽ・ｽﾌ包ｿｽ・ｽI・ｽ・ｽ
+					// 夜の部終了, End part of the night
 					owner.setPlayingRole(mpr_NULL);
 					fcounter = 0;
 				} else {
-					// ・ｽ・ｽ・ｽV・ｽﾑの趣ｿｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽH
+					// お遊びの実行をここに書く？, Write here the execution of your play?
 					if (owner.getPlayingRole() == mpr_QuickShooter || 
 							owner.getPlayingRole() == mpr_StockShooter) {
 						playingSnowWar();
@@ -276,22 +276,22 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 				}
 				
 			} else {
-				// ・ｽ・ｽﾌゑｿｽ・ｽV・ｽ・ｽ
+				// 夜のお遊び, For fun night
 				if (!owner.isPlaying()) {
-					// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+					// 条件判定, Condition determination
 					
 				} else if (owner.getPlayingRole() < 0x8000) {
-					// ・ｽ・ｽ・ｽﾌ包ｿｽ・ｽI・ｽ・ｽ
+					// 昼の部終了, End part of the day
 					owner.setPlayingRole(mpr_NULL);
 					fcounter = 0;
 					
 				} else {
-					// ・ｽ・ｽ・ｽV・ｽﾑの趣ｿｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽH
+					// お遊びの実行をここに書く？, Write here the execution of your play?
 					
 				}
 			}
 			
-			// ・ｽ`・ｽF・ｽX・ｽg・ｽ・ｽ・ｽ・ｽ
+			// チェスト判定, Chest judgment
 			if (owner.getAttackTarget() == null
 					&& owner.maidInventory.getFirstEmptyStack() == -1) {
 				
@@ -302,7 +302,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 	@Override
 	public float attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (par1DamageSource.getSourceOfDamage() instanceof EntitySnowball) {
-			// ・ｽ・ｽ・ｽV・ｽﾑ費ｿｽ・ｽ・ｽp・ｽA・ｽ・ｽﾊゑｿｽ・ｽﾇゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+			// お遊び判定用、雪玉かどうか判定, Judgment for fun determination, whether snowball
 			owner.maidDamegeSound = LMM_EnumSound.hurt_snow;
 			if (!owner.isContract() || owner.isFreedom()) {
 				owner.setPlayingRole(mpr_QuickShooter);
@@ -335,7 +335,7 @@ public class LMM_EntityMode_Playing extends LMM_EntityModeBase {
 				litemstack = owner.maidInventory.getStackInSlot(li);
 				if (litemstack == null) continue;
 				
-				// ・ｽ瘠・
+				// 雪球, Snow ball
 				if (litemstack.getItem() instanceof ItemSnowball) {
 					return li;
 				}

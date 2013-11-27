@@ -49,10 +49,12 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 			double lfollowRange = this.getTargetDistance();
 			List llist = this.taskOwner.worldObj.getEntitiesWithinAABB(targetClass, taskOwner.boundingBox.expand(lfollowRange, 8.0D, lfollowRange));
 			if (theMaid.mstatMasterEntity != null && !theMaid.isBloodsuck()) {
-				// ・ｽ\・ｽ[・ｽ^・ｽ[・ｽ・ｽ・ｽ蜥・ｿｽS・ｽ・ｽ
+				// ソーターを主中心へ
+				// To the main center of the sorter
 				theNearestAttackableTargetSorter.setEntity(theMaid.mstatMasterEntity);
 			} else {
-				// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽS・ｽﾉソ・ｽ[・ｽg
+				// 自分中心にソート
+				// Sort the self-centered
 				theNearestAttackableTargetSorter.setEntity(theMaid);
 			}
 			Collections.sort(llist, theNearestAttackableTargetSorter);
@@ -83,8 +85,9 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 
 //	@Override
 	protected boolean isSuitableTargetLM(Entity pTarget, boolean par2) {
-		// LMM・ｽp・ｽﾉカ・ｽX・ｽ^・ｽ・ｽ
-		// ・ｽｶ包ｿｽ・ｽ・ｽ・ｽﾎ象のゑｿｽ・ｽﾟ別ク・ｽ・ｽ・ｽX
+		// LMM用にカスタム, The custom in the LMM for
+		// 非生物も対象のため別クラス
+		// Abiotic also another class for the subject
 		if (pTarget == null) {
 			return false;
 		}
@@ -111,18 +114,19 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 			}
 		}
 /*		
-		// ・ｽ・ｽ_・ｽ・ｽ・ｽ・ｽ・ｽ闍暦ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ鼾・ｿｽ・ｽ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ
+		// 基点から一定距離離れている場合も攻撃しない
+		// Do not attack even if you are a certain distance from the origin
 		if (!taskOwner.func_110176_b(MathHelper.floor_double(pTarget.posX), MathHelper.floor_double(pTarget.posY), MathHelper.floor_double(pTarget.posZ))) {
 //		if (!taskOwner.isWithinHomeDistance(MathHelper.floor_double(par1EntityLiving.posX), MathHelper.floor_double(par1EntityLiving.posY), MathHelper.floor_double(par1EntityLiving.posZ))) {
 			return false;
 		}
 */		
-		// ・ｽ^・ｽ[・ｽQ・ｽb・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈゑｿｽ
+		// ターゲットが見えない, Can not see target
 		if (shouldCheckSight && !taskOwner.getEntitySenses().canSee(pTarget)) {
 			return false;
 		}
 		
-		// ・ｽU・ｽ・ｽ・ｽ・ｽ・ｽ~・ｽ・ｽ・ｽ・ｽH
+		// 攻撃中止判定？, Attack abort decision?
 		if (this.fretarget) {
 			if (--this.fretryCounter <= 0) {
 				this.fcanAttack = 0;
@@ -140,7 +144,8 @@ public class LMM_EntityAINearestAttackableTarget extends EntityAINearestAttackab
 		return true;
 	}
 
-	// ・ｽﾅ終・ｽﾊ置・ｽ・ｽ・ｽU・ｽ・ｽ・ｽﾌ間搾ｿｽ・ｽ・ｽ・ｽﾅなゑｿｽ・ｽ・ｽﾎ趣ｿｽ・ｽs
+	// 最終位置が攻撃の間合いでなければ失敗
+	// Failure final position is not the Reach of attack
 	protected boolean func_75295_a(Entity par1EntityLiving) {
 		this.fretryCounter = 10 + this.taskOwner.getRNG().nextInt(5);
 		PathEntity var2 = taskOwner.getNavigator().getPathToXYZ(par1EntityLiving.posX, par1EntityLiving.posY, par1EntityLiving.posZ);

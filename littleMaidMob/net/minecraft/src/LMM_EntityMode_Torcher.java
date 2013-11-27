@@ -75,14 +75,14 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ・ｽ・ｽ・ｽ[・ｽh・ｽﾉ会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽA・ｽ・ｽ・ｽx・ｽD・ｽ・ｽ
+		// モードに応じた識別判定、速度優先, Identification determined according to the mode and speed priority
 		switch (pMode) {
 		case mmode_Torcher : 
 			for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
 				litemstack = owner.maidInventory.getStackInSlot(li);
 				if (litemstack == null) continue;
 				
-				// ・ｽ・ｽ・ｽ・ｽ
+				//  松明, The torch
 				if (litemstack.itemID == Block.torchWood.blockID || LMM_TriggerSelect.checkWeapon(owner.getMaidMaster(), "Torch", litemstack)) {
 					return li;
 				}
@@ -135,7 +135,7 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 		if (lis == null) return false;
 		
 		int li = lis.stackSize;
-		// TODO:・ｽ・ｽ・ｽ・ｽ・ｽ阡ｻ・ｽ・ｽ・ｽ・ｽﾇゑｿｽ・ｽ・ｽ・ｽ驍ｩ
+		// TODO:当たり判定をどうするか, What to do collision detection
 		if (lis.tryPlaceItemIntoWorld(owner.maidAvatar, owner.worldObj, px, py - 1, pz, 1, 0.5F, 1.0F, 0.5F)) {
 			owner.setSwing(10, LMM_EnumSound.installation);
 			
@@ -153,7 +153,8 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 
 	public boolean canPlaceItemBlockOnSide(World par1World, int par2, int par3, int par4, int par5,
 			EntityPlayer par6EntityPlayer, ItemStack par7ItemStack, ItemBlock pItemBlock) {
-		// TODO:・ｽ}・ｽ・ｽ・ｽ`・ｽﾎ搾ｿｽ・ｽp・ｽAItemBlock・ｽ・ｽ・ｽ・ｽﾛパ・ｽN・ｽ・ｽ・ｽo・ｽ[・ｽW・ｽ・ｽ・ｽ・ｽ・ｽA・ｽb・ｽv・ｽ・ｽ・ｽﾍ確・ｽF・ｽ・ｽ・ｽ驍ｱ・ｽ・ｽ
+		// TODO:マルチ対策用、ItemBlockから丸パクリバージョンアップ時は確認すること
+		// Be sure to round up rip-off version for multi measures, from ItemBlock
 		int var8 = par1World.getBlockId(par2, par3, par4);
 		
 		if (var8 == Block.snow.blockID) {
@@ -190,14 +191,14 @@ public class LMM_EntityMode_Torcher extends LMM_EntityModeBase {
 
 	@Override
 	public void updateAITick(int pMode) {
-		// ・ｽg・ｽ[・ｽ`・ｽﾌ設置
+		// トーチの設置, Placing a torch
 		if (pMode == mmode_Torcher && owner.getNextEquipItem()) {
 			ItemStack lis = owner.getCurrentEquippedItem();
 			int lic = lis.stackSize;
 			Item lii = lis.getItem();
 			World lworld = owner.worldObj;
 			
-			// ・ｽ・ｽﾍゑｿｽ・ｽ・ｽ・ｽ・ｽ
+			// 周囲を検索, Search around
 			int lxx = MathHelper.floor_double(owner.posX);
 			int lyy = MathHelper.floor_double(owner.posY);
 			int lzz = MathHelper.floor_double(owner.posZ);

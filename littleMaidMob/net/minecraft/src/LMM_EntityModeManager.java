@@ -11,6 +11,7 @@ public class LMM_EntityModeManager extends MMM_ManagerBase {
 
 	public static void init() {
 		// 特定名称をプリフィックスに持つmodファイをを獲得
+		// Earn a mod file with a specific prefix in name
 		MMM_FileManager.getModFile("EntityMode", prefix);
 	}
 	
@@ -25,8 +26,8 @@ public class LMM_EntityModeManager extends MMM_ManagerBase {
 
 	@Override
 	protected boolean append(Class pclass) {
-		// プライオリティー順に追加
-		// ソーター使う？
+		// プライオリティー順に追加, Add to the order of priority
+		// ソーター使う？, Use sorter?
 		if (!LMM_EntityModeBase.class.isAssignableFrom(pclass)) {
 			return false;
 		}
@@ -57,6 +58,7 @@ public class LMM_EntityModeManager extends MMM_ManagerBase {
 
 	/**
 	 * AI追加用のリストを獲得。 
+	 * To obtain a list of AI for adding.
 	 */
 	public static List<LMM_EntityModeBase> getModeList(LMM_EntityLittleMaid pentity) {
 		List<LMM_EntityModeBase> llist = new ArrayList<LMM_EntityModeBase>();
@@ -73,6 +75,7 @@ public class LMM_EntityModeManager extends MMM_ManagerBase {
 
 	/**
 	 * ロードされているモードリストを表示する。
+	 * I want to display a list of modes that are loaded.
 	 */
 	public static void showLoadedModes() {
 		mod_LMM_littleMaidMob.Debug("Loaded Mode lists(%d)", maidModeList.size());

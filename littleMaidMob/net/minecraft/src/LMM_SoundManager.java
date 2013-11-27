@@ -28,7 +28,7 @@ public class LMM_SoundManager {
 
 
 	public static void init() {
-		// 初期設定
+		// 初期設定, Default
 		sounddir = new File(MMM_FileManager.assetsDir, "/sound/littleMaidMob");
 		if (!sounddir.exists() || !sounddir.isDirectory()) {
 			sounddir.mkdir();
@@ -40,6 +40,7 @@ public class LMM_SoundManager {
 
 	public static void setSoundRate(int soundindex, String value, String target) {
 		// 文字列を解析して値を設定
+		// Set the value by analyzing the string
 		String arg[] = value.split(",");
 		String tvalue;
 		Map<Integer, Float> mif;
@@ -51,7 +52,7 @@ public class LMM_SoundManager {
 		
 		for (String s : arg) {
 			if (s.indexOf(';') == -1) {
-				// テクスチャ指定詞が無い
+				// テクスチャ指定詞が無い, There is no texture specifies that
 				s = s.trim();
 				float lf = s.isEmpty() ? 1.0F : Float.valueOf(s);
 				if (target.isEmpty()) {
@@ -65,7 +66,7 @@ public class LMM_SoundManager {
 					mif.put(-1, lf);
 				}
 			} else {
-				// テクスチャ指定詞解析
+				// テクスチャ指定詞解析, Specify that texture analysis
 				String ss[] = s.trim().split(";");
 				String ls[];
 				if (ss.length < 2) continue;
@@ -101,6 +102,7 @@ public class LMM_SoundManager {
 		Map<Integer, Float> mif = soundRateTexture.get(texturename);
 		if (mif == null) {
 			// 指定詞のものが無ければ無指定のものを検索
+			// Return results of unspecified If there is no specified lyrics
 			mif = soundRateTexture.get(";");
 			if (mif == null) {
 				return soundRateDefault;
@@ -118,19 +120,20 @@ public class LMM_SoundManager {
 
 	public static void setSoundValue(int soundindex, String value, String target) {
 		// 文字列を解析して値を設定
+		// Set the value by analyzing the string
 		String arg[] = value.split(",");
 		
 		for (String s : arg) {
 			String tvalue;
 			if (s.indexOf(';') == -1) {
-				// テクスチャ指定詞が無い
+				// テクスチャ指定詞が無い, There is no texture specifies that
 				if (target == null || target.isEmpty()) {
 					tvalue = value;
 				} else {
 					tvalue = (new StringBuilder()).append(target).append(";-1;").append(value).toString();
 				}
 			} else {
-				// テクスチャ指定詞解析
+				// テクスチャ指定詞解析, Specify that texture analysis
 				String ss[] = s.trim().split(";");
 				if (ss.length == 2) {
 					tvalue = (new StringBuilder()).append(target).append(";").append(value).toString();
@@ -143,15 +146,15 @@ public class LMM_SoundManager {
 	}
 
 	public static void setSoundValue(int soundindex, String value) {
-		// 文字列を解析して値を設定
+		// 文字列を解析して値を設定, Set the value by analyzing the string
 		String arg[] = value.split(",");
 		
 		for (String s : arg) {
 			if (s.indexOf(';') == -1) {
-				// テクスチャ指定詞が無い
+				// テクスチャ指定詞が無い, There is no texture specifies that
 				soundsDefault.put(soundindex, s.trim());
 			} else {
-				// テクスチャ指定詞解析
+				// テクスチャ指定詞解析, Specify that texture analysis
 				Map<String, Map<Integer, String>> msi = soundsTexture.get(soundindex);
 				if (msi == null) {
 					msi = new HashMap<String, Map<Integer,String>>();
@@ -188,6 +191,7 @@ public class LMM_SoundManager {
 		Map<Integer, String> mst = msi.get(texturename);
 		if (mst == null) {
 			// 指定詞のものが無ければ無指定のものを検索
+			// Return results of unspecified If there is no specified lyrics
 			mst = msi.get(";");
 			if (mst == null) {
 				return soundsDefault.get(enumsound.index);
@@ -204,7 +208,7 @@ public class LMM_SoundManager {
 	}
 
 	public static void rebuildSoundPack() {
-		// 特殊文字を値に変換
+		// 特殊文字を値に変換, Convert to value the special character
 		// Default
 		Map<Integer, String> lmap = new HashMap<Integer, String>();
 		lmap.putAll(soundsDefault);
@@ -259,6 +263,7 @@ public class LMM_SoundManager {
 
 	public static void decodeSoundPack(File file, boolean isdefault) {
 		// サウンドパックを解析して音声を設定
+		// Set the voice by analyzing the sound pack
 		try {
 			List<LMM_EnumSound> list1 = new ArrayList<LMM_EnumSound>();
 			list1.addAll(Arrays.asList(LMM_EnumSound.values()));
@@ -306,6 +311,7 @@ public class LMM_SoundManager {
 			breader.close();
 			
 			// 無かった項目をcfgへ追加
+			// Add to cfg the item was not
 			if (!list1.isEmpty()) {
 				BufferedWriter bwriter = new BufferedWriter(new FileWriter(file, true));
 				for (int i = 0; i < list1.size(); i++) {
@@ -333,6 +339,7 @@ public class LMM_SoundManager {
 				}
 				if (file.isFile() && file.canRead() && file.getName().endsWith(".cfg")) {
 					// 音声定義ファイルと認識
+					// Voice recognition and definition file
 					mod_LMM_littleMaidMob.Debug("Load SoundPack:" + file.getName());
 					decodeSoundPack(file, false);
 				}
@@ -346,6 +353,7 @@ public class LMM_SoundManager {
 
 	public static boolean loadDefaultSoundPack() {
 		// getAppDir使うとディレクトリがなければ作成される
+		// will be created if there is no directory Using getAppDir
 //		File sounddir = Minecraft.getAppDir("minecraft/resources/mod/sound/littleMaidMob"); 
 		File soundfile = new File(sounddir, "littleMaidMob.cfg"); 
 		if (soundfile.exists() && soundfile.isFile()) {
@@ -361,12 +369,14 @@ public class LMM_SoundManager {
 
 	public static boolean createDefaultSoundPack(File file1) {
 		// サウンドのデフォルト値を設定
+		// Set the default value of sound
 		for (LMM_EnumSound eslm : LMM_EnumSound.values()) {
 			if (eslm == LMM_EnumSound.Null) continue;
 			setSoundValue(eslm.index, eslm.DefaultValue);
 		}
 		
 		// デフォルトサウンドパックを作成
+		// Create a default sound pack
 		if (file1.exists()) {
 			return false;
 		}
@@ -393,6 +403,7 @@ public class LMM_SoundManager {
 
 	protected static void writeBuffer(BufferedWriter buffer, LMM_EnumSound enumsound) throws IOException {
 		// 渡されたWBufferへ書き込む
+		// Write to WBuffer that was passed
 		if (enumsound == LMM_EnumSound.Null) return;
 		
 		buffer.write("# ");
@@ -409,6 +420,7 @@ public class LMM_SoundManager {
 
 	protected static void writeBufferSoundRate(BufferedWriter buffer, float prate) throws IOException {
 		// 渡されたWBufferへ書き込む
+		// Write to WBuffer that was passed
 		buffer.write("# Living Voice Rate. 1.0=100%, 0.5=50%, 0.0=0%");
 		buffer.newLine();
 		buffer.write("LivingVoiceRate=" + prate);

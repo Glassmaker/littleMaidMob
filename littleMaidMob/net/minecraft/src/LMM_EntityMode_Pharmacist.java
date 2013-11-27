@@ -78,7 +78,8 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ・ｽ・ｽ・ｽ[・ｽh・ｽﾉ会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽA・ｽ・ｽ・ｽx・ｽD・ｽ・ｽ
+		// モードに応じた識別判定、速度優先
+		// Identification determined according to the mode and speed priority
 		switch (pMode) {
 		case mmode_Pharmacist :
 			litemstack = owner.getCurrentEquippedItem();
@@ -86,7 +87,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 				for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
 					litemstack = owner.maidInventory.getStackInSlot(li);
 					if (litemstack != null) {
-						// ・ｽﾎ象は撰ｿｽ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ
+						// 対象は水ポーション, Target water potion
 						if (litemstack.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack)) {
 							return li;
 						}
@@ -119,7 +120,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 
 	@Override
 	public boolean shouldBlock(int pMode) {
-		// ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		// 実行中判定, Running decision
 		return owner.maidTileEntity instanceof TileEntityBrewingStand &&
 				(((TileEntityBrewingStand)owner.maidTileEntity).getBrewTime() > 0 ||
 						(owner.getCurrentEquippedItem() != null) || inventryPos > 0);
@@ -135,9 +136,9 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			return false;
 		}
 		
-		// ・ｽ・ｽ・ｽE・ｽﾌ・ｿｽ・ｽC・ｽh・ｽ・ｽ・ｽ・ｽ
+		// 世界のメイドから, Made from the world's
 		checkWorldMaid(ltile);
-		// ・ｽg・ｽp・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾈらそ・ｽ・ｽ・ｽﾅ終・ｽ・ｽ
+		// 使用していた蒸留器ならそこで終了, If distiller that has been used where the end
 		if (owner.isUsingTile(ltile)) return true;
 		
 		double ldis = owner.getDistanceTilePosSq(ltile);
@@ -160,10 +161,10 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 		boolean lflag = false;
 		LMM_SwingStatus lswing = owner.getSwingStatusDominant();
 		
-		// ・ｽ・ｽ・ｽ・ｽ・ｽﾒ機
+		// 蒸留待機, Distillation wait
 //    	isMaidChaseWait = true;
 		if (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null || ltile.getStackInSlot(3) != null || !lswing.canAttack()) {
-			// ・ｽ・ｽ・ｽd・ｽ・ｽ・ｽ・ｽ
+			// お仕事中, Your work in
 			owner.setWorking(true);
 		}
 		
@@ -171,7 +172,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			ItemStack litemstack2 = ltile.getStackInSlot(3);
 			
 			if (litemstack2 != null && ltile.getBrewTime() <= 0) {
-				// ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ\・ｽﾈので会ｿｽ・ｽ
+				// 蒸留不能なので回収, Recovery because it is non-distilled
 				if (py <= owner.posY) {
 					owner.setSneaking(true);
 				}
@@ -182,9 +183,9 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 					owner.setSwing(5, LMM_EnumSound.Null);
 				}
 			}
-			// ・ｽ・ｽ・ｽ・ｽ・ｽi
+			// 完成品, Finished product
 			if (!lflag && inventryPos > owner.maidInventory.mainInventory.length) {
-				// ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ・ｽﾌ会ｿｽ・ｽ
+				// ポーションの回収, Recovery of Potion
 				for (int li = 0; li < 3 && !lflag; li ++) {
 					litemstack1 = ltile.getStackInSlot(li);
 					if (litemstack1 != null && owner.maidInventory.addItemStackToInventory(litemstack1)) {
@@ -203,7 +204,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			
 			litemstack1 = owner.maidInventory.getCurrentItem();
 			if (!lflag && (litemstack1 != null && litemstack1.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack1))) {
-				// ・ｽ・ｽ・ｽr・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾆゑｿｽﾅゑｿｽ
+				// 水瓶をげっとれでぃ, The Get Water bottle ready
 				int li = 0;
 				for (li = 0; li < 3 && !lflag; li++) {
 					if (ltile.getStackInSlot(li) == null) {
@@ -218,7 +219,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			if (!lflag && (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null)
 					&& (owner.maidInventory.currentItem == -1 || (litemstack1 != null && litemstack1.getItem() instanceof ItemPotion && !MMM_Helper.hasEffect(litemstack1)))) {
-				// ・ｽ|・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ・ｽﾈ外・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+				// ポーション以外を検索, Find potions other than
 //				for (inventryPos = 0; inventryPos < owner.maidInventory.mainInventory.length; inventryPos++) {
 				for (; inventryPos < owner.maidInventory.mainInventory.length; inventryPos++) {
 					litemstack1 = owner.maidInventory.getStackInSlot(inventryPos);
@@ -231,7 +232,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			
 			if (!lflag && litemstack2 == null && (ltile.getStackInSlot(0) != null || ltile.getStackInSlot(1) != null || ltile.getStackInSlot(2) != null)) {
-				// ・ｽ闔晢ｿｽ・ｽ・ｽﾌア・ｽC・ｽe・ｽ・ｽ・ｽ・ｽ・ｽﾛー・ｽ・ｽ
+				//  手持ちのアイテムをぽーい, The POY the item in stock
 				if (litemstack1 != null && !(litemstack1.getItem() instanceof ItemPotion) && litemstack1.getItem().isPotionIngredient()) {
 					ltile.setInventorySlotContents(3, litemstack1);
 					owner.maidInventory.setInventorySlotContents(inventryPos, null);
@@ -240,7 +241,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 					lflag = true;
 				} 
 				else if (litemstack1 == null || (litemstack1.getItem() instanceof ItemPotion && MMM_Helper.hasEffect(litemstack1)) || !litemstack1.getItem().isPotionIngredient()) {
-					// ・ｽﾎ象外・ｽA・ｽC・ｽe・ｽ・ｽ・ｽｭ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ終・ｽ・ｽ
+					// 対象外アイテムを発見した時に終了, It ends when you have found the excluded items
 					inventryPos = owner.maidInventory.mainInventory.length;
 					lflag = true;
 				}
@@ -250,7 +251,7 @@ public class LMM_EntityMode_Pharmacist extends LMM_EntityModeBlockBase {
 			}
 			
 			
-			// ・ｽI・ｽ・ｽ・ｽ・ｽﾔのキ・ｽ・ｽ・ｽ・ｽ・ｽZ・ｽ・ｽ
+			// 終了状態のキャンセル, Cancellation of the end state
 			if (owner.getSwingStatusDominant().index == -1 && litemstack2 == null) {
 				owner.getNextEquipItem();
 			}

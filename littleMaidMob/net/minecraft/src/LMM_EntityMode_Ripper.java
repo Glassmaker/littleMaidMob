@@ -35,15 +35,15 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 
 	@Override
 	public void init() {
-		// ・ｽo・ｽ^・ｽ・ｽ・ｽ[・ｽh・ｽﾌ厄ｿｽ・ｽﾌ追会ｿｽ
+		// 登録モードの名称追加, Add name registration mode
 		ModLoader.addLocalization("littleMaidMob.mode.Ripper", "Ripper");
 		ModLoader.addLocalization("littleMaidMob.mode.F-Ripper", "F-Ripper");
 		ModLoader.addLocalization("littleMaidMob.mode.D-Ripper", "D-Ripper");
 		ModLoader.addLocalization("littleMaidMob.mode.T-Ripper", "T-Ripper");
-		ModLoader.addLocalization("littleMaidMob.mode.Ripper", "ja_JP", "・ｽﾑ趣ｿｽ・ｽ・ｽ");
-		ModLoader.addLocalization("littleMaidMob.mode.F-Ripper", "ja_JP", "・ｽﾑ趣ｿｽ・ｽ・ｽ");
-		ModLoader.addLocalization("littleMaidMob.mode.D-Ripper", "ja_JP", "・ｽﾑ趣ｿｽ・ｽ・ｽ");
-		ModLoader.addLocalization("littleMaidMob.mode.T-Ripper", "ja_JP", "・ｽﾑ趣ｿｽ・ｽ・ｽ");
+		ModLoader.addLocalization("littleMaidMob.mode.Ripper", "ja_JP", "毛狩り隊");
+		ModLoader.addLocalization("littleMaidMob.mode.F-Ripper", "ja_JP", "毛狩り隊");
+		ModLoader.addLocalization("littleMaidMob.mode.D-Ripper", "ja_JP", "毛狩り隊");
+		ModLoader.addLocalization("littleMaidMob.mode.T-Ripper", "ja_JP", "毛狩り隊");
 		ModLoader.addLocalization("littleMaidMob.mode.TNT-D", "TNT-D");
 		ModLoader.addLocalization("littleMaidMob.mode.F-TNT-D", "TNT-D");
 		ModLoader.addLocalization("littleMaidMob.mode.D-TNT-D", "TNT-D");
@@ -129,7 +129,7 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 
 	@Override
 	public void onUpdate(int pMode) {
-		// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽh
+		// 自爆モード, Suicide mode
 		if (pMode == mmode_Detonator && owner.isEntityAlive()) {
 			if (timeSinceIgnited < 0) {
 				if (lastTimeSinceIgnited != timeSinceIgnited) {
@@ -141,7 +141,7 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 			}
 			lastTimeSinceIgnited = timeSinceIgnited;
 			if (timeSinceIgnited > -1) {
-				// ・ｽﾅ奇ｿｽﾌ瞬・ｽﾔはセ・ｽc・ｽi・ｽC
+				// 最期の瞬間はセツナイ, It is painful last moment
 				//XXX: experimenting
 				//if (owner.isMovementCeased() || timeSinceIgnited > 22) {
 				if ( timeSinceIgnited > 22) {
@@ -150,13 +150,13 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 				mod_LMM_littleMaidMob.Debug(String.format("ID:%d(%s)-dom:%d(%d)", owner.entityId, owner.worldObj.isRemote ? "C" : "W", owner.maidDominantArm, owner.maidInventory.currentItem));
 				
 				if (owner.maidInventory.isItemExplord(owner.maidInventory.currentItem) && timeSinceIgnited++ > 30) {
-					// TODO:・ｽ・ｽ・ｽ・ｽ・ｽﾐ力ゑｿｽﾎ会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾇ厄ｿｽ・ｽ・ｽ・ｽﾛ？
+					// TODO:自爆威力を対応させたいけど無理ぽ？, You want to support the suicide power but Po impossible?
 					owner.maidInventory.decrStackSize(owner.maidInventory.currentItem, 1);
-					// ・ｽC・ｽ・ｽ・ｽx・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ・ｽ・ｽu・ｽ`・ｽ}・ｽP・ｽ・ｽ・ｽI
+					// インベントリをブチマケロ！, The Buchimakero inventory!
 					owner.maidInventory.dropAllItems(true);
 					timeSinceIgnited = -1;
 					owner.setDead();
-					// Mob・ｽﾉゑｿｽ・ｽj・ｽ・ｽﾌ撰ｿｽ・ｽ・ｽ
+					// Mobによる破壊の是非, All means of destruction by Mob
 //					boolean lflag = owner.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
 //					owner.worldObj.createExplosion(owner, owner.posX, owner.posY, owner.posZ, 3F, lflag);
 				}
@@ -205,7 +205,8 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 		int li;
 		ItemStack litemstack;
 		
-		// ・ｽ・ｽ・ｽ[・ｽh・ｽﾉ会ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽA・ｽ・ｽ・ｽx・ｽD・ｽ・ｽ
+		// モードに応じた識別判定、速度優先
+		// Identification determined according to the mode and speed priority
 		switch (pMode) {
 		case mmode_Ripper :
 		case mmode_TNTD :
@@ -213,7 +214,7 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 				litemstack = owner.maidInventory.getStackInSlot(li);
 				if (litemstack == null) continue;
 				
-				// ・ｽﾍゑｿｽ・ｽ・ｽ
+				// はさみ, Shears
 				if (litemstack.getItem() instanceof ItemShears) {
 					return li;
 				}
@@ -221,7 +222,7 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 			break;
 		case mmode_Detonator :
 			for (li = 0; li < owner.maidInventory.maxInventorySize; li++) {
-				// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+				// 爆発物, Explosive
 				if (owner.maidInventory.isItemExplord(li)) {
 					return li;
 				}
@@ -237,15 +238,15 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 	@Override
 	public boolean attackEntityAsMob(int pMode, Entity pEntity) {
 		if (pMode == mmode_Detonator) {
-			// ・ｽﾊ常殴・ｽ・ｽ
+			// 通常殴り,The beat usually
 			return false;
 		}
 		
 		if (owner.getSwingStatusDominant().canAttack()) {
 			ItemStack lis = owner.getCurrentEquippedItem();
 			if (pEntity instanceof EntityCreeper) {
-				// TODO:・ｽJ・ｽb・ｽg・ｽI・ｽt
-				// ・ｽﾈゑｿｽ・ｽPrivate・ｽﾉゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+				// TODO:カットオフ, Cut-off
+				// なんでPrivateにかえたし, It was changed to the Private why
 				try {
 					lis.damageItem((Integer)ModLoader.getPrivateValue(EntityCreeper.class,
 							(EntityCreeper)pEntity, 1), owner);
@@ -308,7 +309,7 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 	}
 	
 	protected float setLittleMaidFlashTime(float f) {
-		// ・ｽ・ｽ・ｽ・ｽ・ｽJ・ｽE・ｽ・ｽ・ｽg・ｽ_・ｽE・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		// 爆発カウントダウン発光時間, Explosion countdown igniting time
 		if (timeSinceIgnited > -1) {
 			return ((float)this.lastTimeSinceIgnited + (float)(this.timeSinceIgnited - this.lastTimeSinceIgnited) * f) / 28.0F;
 		} else { 
@@ -341,7 +342,7 @@ public class LMM_EntityMode_Ripper extends LMM_EntityModeBase {
 	
 	@Override
 	public boolean damageEntity(int pMode, DamageSource par1DamageSource, float par2) {
-		// ・ｽN・ｽ・ｽ
+		// 起爆, Initiation
 		if (pMode == mmode_Detonator && owner.maidInventory.isItemExplord(owner.getCurrentEquippedItem())) {
 			if (timeSinceIgnited == -1) {
 				owner.playSound("random.fuse", 1.0F, 0.5F);
