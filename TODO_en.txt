@@ -1,0 +1,288 @@
+Add to ModelRenderer (hard points) the object of items for display
+It supports more than one item of equipment in future expansion
+
+
+
+Position of the arm of the body armor of Aug is funny.
+Confirmation of baked recipes Forge.
+Creating a sound directory: done.
+\ AppData \ Roaming \. Minecraft \ assets \ sound \ littleMaidMob
+I was confirmed that all the components are not created in the MCP804: confirmation of the cfg file.
+
+
+
+
+Confirmation of the line of fire check
+Check the operation of shearing: that does not fall if ML environment: DONE.
+no: chignon of default is funny.
+
+
+Movement of the neck at the time of the piggyback
+
+
+
+
+
+The separation from the GUI trigger items around in multi for.
+(Becomes a wait you do not have the fuel or baked items) dishes State at Restart
+The registration system to target the cooking item?
+Vibration of the mystery of boarding at the time (such as load time)
+After the restart tracer stops
+I cook to match the behavior of Yakushi
+Behavior when a texture that has been used is no longer
+
+
+
+For coming to MOD load before timing performance of state acquisition unlike the ML: DONE. : (. Falling it's Forge at the time of the pre-acquisition performance) to fall in Achieve
+DONE:?: IsWorkingDelay operation is not successful.
+Bug elimination of head decoration items: DONE
+DONE: armor texture modification of the behavior of NULL when the specified
+It is not shot in the PE14: DONE?
+DONE: notation Tracer is wrong.
+The range extension of Archer: extension to 15 range: done.
+
+Doka eating sugar in the strike: DONE
+
+
+DONE: SKALL display
+Corresponding model of zooming: DONE?
+World corresponding base position of Freedom: DONE
+I do a base change of tracer: DONE.
+Transmission of Armor: DONE
+
+(The cause of the default search operation is of such as Fencer's on) adjustment of IFF: DONE
+Modified to recovery priority when you are not hungry in the blood: DONE.
+Modification of weapon display: DONE
+The DONE: error occurs in a texture that does not exist (different)
+(Renovation, such as a fuel, luggage full-time) confirmation of Cooking: DONE
+Judgment of the GUI at the time of death: DONE
+To stop the movement when you open the GUI: DONE
+
+
+I would like to target those closest to the time of block search: DONE.
+The slightly modify the rendering around: DONE
+Search mode of the nearest block: DONE
+Vibration of piggyback: DONE
+
+
+
+make mmode_Waitng = 1;
+make mmode_Freedom = 3;
+	mmode_Tracer = 14;
+0000 ing mmode_WildMaid = 0;
+0001 make mmode_Escorter = 2;
+0020 make mmode_Torcher = 13;
+0021 make mmode_Cooking = 6;
+0022 mmode_Pharmacist = 15;
+0080 make mmode_Fencer = 4;
+0081 make mmode_Ripper = 10;
+0082 mmode_Healer = 5;
+0083 mmode_Archer = 8;
+00c0 make mmode_Bloodsucker = 7;
+00c1 maek mmode_TNTD = 12;
+00c2 make mmode_Detonator = 11;
+00c3 mmode_Blazingstar = 9;
+
+
+Shooting:
+	Masked maid: ray confirmation
+		Shoot it stops in the shooting distance: iron
+		Gold: snipe from the ultra-long-range, critical
+		Da:
+
+
+TODO: respawn: registration of position in bed, respawn in exchange for 100 experience
+
+
+
+Move to the sound pack the livingSoundRate: TODO
+Add Sound: DONE
+Adding a cause of death message: TODO
+Add discriminants work: DONE
+DONE: maid Ride (PC)
+
+(It can not be determined because there is no Entity player) that IFF is not applied immediately after loading
+
+
+
+
+
+
+
+
+
+Modification of clock behavior relationship: Maybe you do not need: TODO
+Get off of ladder climbing: TODO
+Growth of the Force at the end: TODO?
+TODO:? Open maid inventory through walls (Creative) measures not
+When the texture is funny it came Al (lMaid) is extra texture IFF: TODO?
+TODO: (do not inherit the furnace) red stove I had done in the furnace side.
+(Fall because it supplemented from player inventory arrows) bow RopePlus: DONE
+
+
+>> MMM's
+Maid defect report.
+It seems to repeat the Settosuru them as well by recovering soon as it comes compounding is done in an effort to put the item where you remembering items that can not be used in potions and water bottle in an attempt to create a potion to the maid.
+
+
+Moving light source lanthanum: TODO
+TODO: Freedom of child sleep in a bed
+Gather flowers on your picking flowers, the grass: TODO
+TODO: beds
+TODO: Made a good friend
+TODO: Animal rider
+TODO: Tamer
+SimpleNPC compliance to the setting of the movement range: TODO.
+I control the number of occurrences of terrain generation time: TODO
+(Low priority of the battle mode for item) to change the order of judgment trigger item: TODO
+TODO:? Reaction of the trigger item is funny (bow)
+Elimination of multiple registration item: TODO
+TODO: Netherlands Little maid
+TODO: and soaked maid
+Child left-handed sometimes: TODO
+(I dangle the sugar in the absence of the rest of the contract in days) here and there made: TODO
+Hunger judgment of Avatar: TODO
+The visible again determined immediately prior to use, such as chest: TODO
+TODO: check up and use chess, foot equipment
+Confirmation of re-signing operation in tracer mode: TODO.
+Attack does not hit the large slime: TODO.
+TODO: magma cream?
+
+
+The fog pumpkin: Disabling the nether Ya-kai: DONE
+
+
+Function create potions: trouble is probably: DONE
+Resurrection When the contract at the time of death: to trigger the special agreement: DONE
+
+DONE: Death pawn switch
+I change the sound effect of food when using the healer: Damage to voice properly: DONE
+Reordering armor slot: Version Checking up: DONE
+
+
+
+
+Modification of addPlate: DONE
+DONE: burial measures
+I put a unique ID: DONE
+It is really out at the time of the snowball fight: DONE
+Snowfield installation of torch: DONE
+Fixed a texture are not completely transparent part: DONE
+
+
+
+
+
+To play the voice of snowball hit because it spoils the judgment Nodame time: DONE: unnecessary
+
+
+
+To reconsider the trigger processing of ranged weapons: DONE
+Fine-tune the display around: DONE
+
+
+
+I make a trigger for items class setting GUI: DONE
+Fixed a bug to fall You have set up an item that does not exist in the trigger item: DONE
+Fixed display around, SR2 Aug: DONE
+
+
+
+
+
+Modification of the display position of the bow, the display of the potion: DONE
+Shift corresponding defect fixes and trigger GUI: DONE
+
+Checking the state of use of the chest: DONE
+Adjust the TNT-D trigger: DONE
+Fixed adding items for sound configuration: DONE
+Peaceful and avoidance of Neitan in: DONE
+Modify the axis of judgment when shooting: DONE
+DONE: (without resolving whereabouts unknown) behavior of Cooking maid (baked> Water> grilled reset), the release of sneak state
+DONE: modification of the texture (1.0.0)
+
+
+
+Correcting lock on determining from MOB: DONE
+DONE: Figure measures
+DONE: support of Blaze rod (fuel)
+
+
+
+Treatment of potion by healer: Undead judgment at the time of the attack: DONE
+Locally variable net system: DONE
+(Using EntityID) avoid blinking from becoming synchronized: DONE
+DONE: appearance: Defense: Attack: Enchant relationship
+I changed the formula of the drop: DONE
+Player in the damage calculation specifications: DONE. (Measures of Concord ton Sword is out)
+Increase of damage sound effects: DONE
+
+
+
+Set the helm behavior of Archer: DONE
+
+Check the light source around the items on hand: you do not know well: DONE
+Fixed that there are times when it does not stop when you open the inventory: DONE
+Fixed sound pack is making a weird directory: DONE
+Division of cfg: DONE
+I was able to use a wheel-made IFF: DONE
+
+
+I want to display the items on hand at any WAITHING: DONE
+DONE: alpha test (OK for the time being)
+
+
+Special attacks of the sword: DONE
+Changing the method of attack bow: DONE
+The separation of the type of model used and the body armor: DONE
+
+
+Multi-model corresponding to the version up: DONE? 
+Feedback of the search: DONE
+Compatible with chest cart: DONE
+DONE: Line tracer
+Add the sound of snowballs relationship: DONE
+(To read the crowded there by creating a config file for sound) Sound Pack correspondence: DONE
+Was set to not Desupon: DONE.
+
+
+Relock is multiple items when searching: DONE
+In the CCW type search the chest: DONE
+There are times when the operation of the chest search is funny: DONE. (Movement of maid stops)
+Determination of large chest: DONE
+I suppress the instinct of the beast of the bad time: DONE.
+DONE: se_living_night "" se_living_whine "is funny?
+DONE: Display of the AP change
+Change of condition to invoke TNT-D: DONE
+
+DONE: Damaged Armor
+In each material the armor texture: DONE
+	* _3 Png: standard color of maid of wild?
+	?. (Default | cioth | chain | iron | diamond | gold) _4 png: Armor texture,
+	0,1:100%,% 2,3:75, 4,5:50%, 6,7:25%
+	0,1:100%,% 2,3:80, 4,5:60%,% 6,7:40, 8,9:20%
+Adjust the target range of Torcher: DONE
+Ensure the blank of a snowball fight at the time: DONE
+To suppress the movement to reload your play mode: DONE.
+Child avoidance of the contract is not to start a fight snowball fight time: TODO.
+To enable shooting other weapons: DONE
+
+
+Setting the voice of snowball creation: DONE
+Setting Adding Voice modulation: DONE
+I keep from falling in the attack from non-living: DONE.
+Voice of TNT-D: DONE
+
+DONE: for fun mode
+Implementation of Torcher: DONE
+I got to pick up the arrow: DONE
+DONE: maid IFF
+
+Compatible with multi-model: DONE
+I was set to GUI texture pack * _20.png: DONE.
+I further extend the reaction zone of exclusion items of recovery around the main: DONE.
+Add a check of whether there is a hair in the target judgment at the time of the shearing: DONE.
+It is now become Escorter cooking time, if you submerge away from the stove: DONE.
+Clear Tage full when item: DONE
+I will offset the coordinates of the main upon confirmation of the line of fire: DONE
+I put a load of chunk decision to coordinate transition at the time of Freedom: DONE
